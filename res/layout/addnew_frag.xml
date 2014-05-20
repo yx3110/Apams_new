@@ -1,0 +1,67 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="329dp"
+    tools:context="com.example.apams.addNewActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="378dp"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/addNewName"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/Item_name"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/addCID"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/addCID"
+            android:inputType="number"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/addRoom"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/addRoom"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/addChooseType"
+            android:layout_width="292dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/addType"
+            android:onClick="chooseItemType"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/addTakePicture"
+            android:layout_width="292dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/addPic"
+            android:onClick="newPic"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/add_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_confirm" />
+
+    </LinearLayout>
+
+</ScrollView>

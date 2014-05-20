@@ -1,0 +1,141 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" >
+
+    <TextView
+        android:id="@string/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="@string/register"
+        android:textSize="23dp" />
+
+    <Button
+        android:id="@+id/button_register_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="confirmRegister"
+        android:text="@string/button_register_confirm" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@string/register"
+        android:layout_below="@+id/editText_passwordFirst"
+        android:text="Re-enter password" />
+
+    <EditText
+        android:id="@+id/editText_CID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignRight="@+id/editText_passwordSecond"
+        android:layout_below="@+id/textView4"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editText_passwordFirst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_CID"
+        android:layout_alignRight="@+id/editText_username"
+        android:layout_below="@+id/textView_CID"
+        android:ems="10"
+        android:inputType="textPassword" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editText_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_CID"
+        android:layout_below="@+id/textView3"
+        android:ems="10"
+        android:inputType="textWebEmailAddress" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_username"
+        android:layout_below="@string/register"
+        android:layout_marginTop="27dp"
+        android:text="Username" />
+
+    <TextView
+        android:id="@+id/textView_CID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/editText_username"
+        android:text="Password" />
+
+    <EditText
+        android:id="@+id/editText_passwordSecond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignRight="@+id/editText_passwordFirst"
+        android:layout_below="@+id/textView2"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_passwordSecond"
+        android:layout_below="@+id/editText_passwordSecond"
+        android:text="College ID" />
+
+    <CheckBox
+        android:id="@+id/checkBox_owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_CID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:hint="@string/regis_owner" />
+
+    <EditText
+        android:id="@+id/regis_dataName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_CID"
+        android:layout_below="@+id/checkBox_owner"
+        android:layout_marginTop="9dp"
+        android:ems="10"
+        android:hint="@string/regis_dataName" />
+
+    <EditText
+        android:id="@+id/regis_invite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/regis_dataName"
+        android:layout_alignBottom="@+id/regis_dataName"
+        android:layout_alignLeft="@+id/regis_dataName"
+        android:ems="10"
+        android:hint="@string/regis_invite" />
+
+    <EditText
+        android:id="@+id/editText_regisLvl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox_owner"
+        android:layout_alignRight="@+id/checkBox_owner"
+        android:layout_below="@+id/regis_dataName"
+        android:ems="10"
+        android:hint="@string/regis_lvl"
+        android:inputType="numberDecimal" />
+
+</RelativeLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Apams</string>
+    <string name="title_account">Account</string>
+    <string name="title_addNew">Add New Asset</string>
+    <string name="title_Map">Map</string>
+    <string name="title_scan">Scan Barcode</string>
+    <string name="acc_user">Username</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+    <string name="Item_name">Item Name</string>
+    <string name="addCID">User CID</string>
+    <string name="addRoom">Item Room Number</string>
+    <string name="addType">Type of Item</string>
+    <string name="addPic">Picture of Item</string>
+    <string name="addNew_progress_signing_in">Adding New Item</string>
+    <string name="add_confirm">Confirm</string>
+    <string name="desc">userProfile</string>
+    <string name="register_button">Register</string>
+    <string name="title_activity_apams_register">Apams_register</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="button_register_confirm">Confirm</string>
+    <string name="register">Apams Registration</string>
+    <string name="acc_CID">CID</string>
+    <string name="acc_priority">Priority</string>
+    <string name="regis_owner">Are you the manager of the Assets?</string>
+    <string name="regis_dataName">Name of your new asset database</string>
+    <string name="regis_invite">Invitation Code</string>
+    <string name="regis_lvl">Maximum level of administration</string>
+
+</resources>
