@@ -51,12 +51,12 @@ public class BackGroundRegister extends Thread {
 
 					switch (pack.getType()) {
 
-					case REGISTER_AD:
+					case CREATE:
 						System.out.println("Package type = " + pack.getType());
 
-						apams_network_package_regisAD regisADpack = (apams_network_package_regisAD) pack;
-						int maxLvl = regisADpack.getMaxLvl();
-						String databaseName = regisADpack.getDataName();
+						apams_network_package_create Cpack = (apams_network_package_create) pack;
+						int maxLvl = Cpack.getMaxlvl();
+						String databaseName = Cpack.getDataName();
 
 						String createquery = "CREATE TABLE ? (" + "name text,"
 								+ "building text," + "room text,"
@@ -71,18 +71,39 @@ public class BackGroundRegister extends Thread {
 						} catch (SQLException e) {
 							replyStr = "Database name already used";
 						}
+						
+						String insertQuery = "INSERT INTO databases(databaseName,owner,maxlvl)"+"VALUES(?,?,?)";
+						try{
+							insertpst = conn.prepareStatement(insertQuery);
+							insertpst.setString(1,databaseName);
+							insertpst.setString(2, username);
+							insertpst.setInt(3, maxLvl);
+							int result =insertpst.executeUpdate();
+							if (result != 0) {
+								replyStr = "GOOD";
+							} else {
+								replyStr = "Sth wrong happened, database not updated";
+							}
+							insertpst.close();
+						}catch(Exception e){
+							replyStr = "Insert into databases wrong";
+ 						}
+						break;
+
+					case REGISTER_AD:
+						System.out.println("Package type = " + pack.getType());
 
 						query = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto)"
 								+ "VALUES(?,?,?,?,?,?)";
-						
+
 						try {
 							insertpst = conn.prepareStatement(query);
 							insertpst.setString(1, username);
 							insertpst.setString(2, password);
 							insertpst.setString(3, CID);
 							insertpst.setByte(4, (byte) 0);
-							insertpst.setInt(5, maxLvl);
-							insertpst.setString(6, databaseName);
+							insertpst.setInt(5, 1000);
+							insertpst.setString(6, "Admin");
 
 							try {
 								int result = insertpst.executeUpdate();
@@ -195,6 +216,9 @@ public class BackGroundRegister extends Thread {
 									if (rs.getString("password").equals(
 											password)) {
 										replyStr = "GOOD";
+										if(rs.getInt("priority")==1000){
+											replyStr = "ISADMIN";
+										}
 									} else {
 										replyStr = "Wrong password";
 									}
