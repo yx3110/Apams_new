@@ -3,6 +3,7 @@ package com.example.apams_new;
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apams_network_package;
+import com.example.apams_newUtil.apams_network_package_Login;
 import com.example.apams_newUtil.apams_network_package.packageType;
 
 import android.animation.Animator;
@@ -158,8 +159,8 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
-			apams_network_package pack = new apams_network_package(mEmail,
-					mPassword, packageType.LOGIN);
+			apams_network_package_Login pack = new apams_network_package_Login(mEmail,
+					mPassword);
 			mAuthTask = new apamsTCPclient(this);
 			mAuthTask.execute(pack);
 		}

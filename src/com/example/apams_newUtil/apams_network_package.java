@@ -5,27 +5,29 @@ import java.io.Serializable;
 
 public class apams_network_package implements Serializable {
 	public enum packageType{
-		REGISTER,LOGIN,QUERY,IMAGE
+		REGISTER_AD,REGISTER_N,LOGIN,QUERY
 	}
 	private packageType type;
 	private String username;
 	private String password;
 	private String CID;
 	public apams_network_package(String username,String password,String CID,packageType type){
+		this.type = type;
 		this.username = username;
 		this.password = password;
 		this.CID = CID;
-		this.type = type;
 	}
-	
-	public apams_network_package(String username,String password,packageType type){
-		this.username = username;
-		this.password = password;
-		this.type = type;
+	public apams_network_package(String mEmail, String mPassword,
+			packageType login) {
+		this.username =mEmail;
+		this.password = mPassword;
+		this.type = login;
 	}
-	
 	public packageType getType(){
 		return this.type;
+	}
+	public void setType(packageType type){
+		this.type = type;
 	}
 	public String getUsername(){
 		return this.username;

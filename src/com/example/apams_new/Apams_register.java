@@ -3,8 +3,8 @@ package com.example.apams_new;
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apams_network_package;
-import com.example.apams_newUtil.apams_network_package.packageType;
-
+import com.example.apams_newUtil.apams_network_package_regisAD;
+import com.example.apams_newUtil.apams_network_package_regisN;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class Apams_register extends Activity implements OnTaskCompleted {
 
 	private CheckBox manager;
-	private EditText dataName, invite,maxLvl;
+	private EditText dataName, invite, maxLvl;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +70,22 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 		EditText password1 = (EditText) findViewById(R.id.editText_passwordFirst);
 		EditText password2 = (EditText) findViewById(R.id.editText_passwordSecond);
 		EditText CID = (EditText) findViewById(R.id.editText_CID);
-		if (manager.isChecked()) {
-			String databaseName = dataName.getText().toString();
-			int lvlStr = Integer.parseInt(maxLvl.getText().toString());
-		} else {
-			String inviteStr = this.invite.getText().toString();
-		}
+
 		String CIDStr = CID.getText().toString();
 		String usernameStr = username.getText().toString();
 		String password1Str = password1.getText().toString();
 		String password2Str = password2.getText().toString();
+		apams_network_package pack = null;
+		if (manager.isChecked()) {
+			String databaseName = dataName.getText().toString();
+			int lvlStr = Integer.parseInt(maxLvl.getText().toString());
+			pack = new apams_network_package_regisAD(usernameStr, password1Str,
+					CIDStr, databaseName, lvlStr);
+		} else {
+			String inviteStr = this.invite.getText().toString();
+			pack = new apams_network_package_regisN(usernameStr, password1Str,
+					CIDStr, inviteStr);
+		}
 		if (password1Str.length() == 0 || usernameStr.length() == 0
 				|| CIDStr.length() == 0) {
 			popMsg("Please fill in all the fields!");
@@ -96,8 +102,6 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 			popMsg("CID has to be a valid Imperial CID with 8 digits long");
 		} else {
 			try {
-				apams_network_package pack = new apams_network_package(
-						usernameStr, password1Str, CIDStr, packageType.REGISTER);
 				new apamsTCPclient(this).execute(pack);
 			} catch (Exception e) {
 				Log.e("exception", e.getMessage());

@@ -1,5 +1,4 @@
 package com.example.apams_newUtil;
-
 import java.io.*;
 import java.net.*;
 
@@ -14,7 +13,7 @@ public class apamsTCPclient extends
 		this.listener = listener;
 	}
 
-	public static final String SERVERIP = "146.169.53.186";
+	public static final String SERVERIP = "146.169.53.22";
 	public static final int SERVERPORT = 8888;
 	private String answer;
 	private Socket socket;
