@@ -6,15 +6,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
  
 public class Account_frag extends Fragment {
 	public Account_frag(){}
 	
-	public static Account_frag newAccInstance(String username, int position) {
+	public static Account_frag newAccInstance(String username, int position,boolean isAdmin) {
 		Account_frag fragment = new Account_frag();
 		Bundle args = new Bundle();
 		args.putInt("position", position);
+		args.putBoolean("isAdmin", isAdmin);
 		args.putString("username", username);
 		fragment.setArguments(args);
 		return fragment;
@@ -27,6 +29,13 @@ public class Account_frag extends Fragment {
         View rootView = inflater.inflate(R.layout.account_frag, container, false);
         Bundle args = this.getArguments();
         String CID = null;
+        boolean isAdmin = args.getBoolean("isAdmin");
+        
+		Button createData = (Button) rootView.findViewById(R.id.acc_addData);
+		if(!isAdmin){
+			createData.setEnabled(false);
+			createData.setVisibility(View.INVISIBLE);
+		}
         
         ((TextView)rootView.findViewById(R.id.textView_username)).setText(CID);
         ((TextView)rootView.findViewById(R.id.textView_username)).setText(args.getString("username"));

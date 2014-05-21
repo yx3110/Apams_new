@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:text="@string/register"
-        android:textSize="23dp" />
+        android:textSize="23sp" />
 
     <Button
         android:id="@+id/button_register_confirm"
@@ -108,34 +108,12 @@
         android:hint="@string/regis_owner" />
 
     <EditText
-        android:id="@+id/regis_dataName"
+        android:id="@+id/regis_invite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText_CID"
         android:layout_below="@+id/checkBox_owner"
-        android:layout_marginTop="9dp"
-        android:ems="10"
-        android:hint="@string/regis_dataName" />
-
-    <EditText
-        android:id="@+id/regis_invite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/regis_dataName"
-        android:layout_alignBottom="@+id/regis_dataName"
-        android:layout_alignLeft="@+id/regis_dataName"
         android:ems="10"
         android:hint="@string/regis_invite" />
-
-    <EditText
-        android:id="@+id/editText_regisLvl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox_owner"
-        android:layout_alignRight="@+id/checkBox_owner"
-        android:layout_below="@+id/regis_dataName"
-        android:ems="10"
-        android:hint="@string/regis_lvl"
-        android:inputType="numberDecimal" />
 
 </RelativeLayout>

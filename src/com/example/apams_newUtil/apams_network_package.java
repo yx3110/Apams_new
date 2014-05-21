@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class apams_network_package implements Serializable {
 	public enum packageType{
-		REGISTER_AD,REGISTER_N,LOGIN,QUERY
+		REGISTER_AD,REGISTER_N,LOGIN,QUERY,CREATE
 	}
 	private packageType type;
 	private String username;

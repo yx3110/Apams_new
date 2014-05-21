@@ -18,8 +18,8 @@ public class map_frag extends Fragment {
 		return rootView;
 	}
 
-	public static Addnew_frag newMapInstance(int i) {
-		Addnew_frag fragment = new Addnew_frag();
+	public static map_frag newMapInstance(int i) {
+		map_frag fragment = new map_frag();
 		Bundle args = new Bundle();
 		args.putInt("position", i);
 		fragment.setArguments(args);

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/ET_acc_dataName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/acc_dataName"
+        android:inputType="text"
+        android:minWidth="100dip" />
+
+    <requestFocus />
+
+    <EditText
+        android:id="@+id/ET_acc_maxLvl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/acc_maxLvl"
+        android:inputType="number"
+        android:minWidth="100dip" >
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/ET_acc_pw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_password"
+        android:inputType="text"
+        android:minWidth="100dip" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/create_confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_confirm"
+        android:onClick="sendCreate" />
+
+</LinearLayout>

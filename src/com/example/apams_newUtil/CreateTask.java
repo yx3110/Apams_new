@@ -1,22 +1,15 @@
 package com.example.apams_newUtil;
-import java.io.*;
-import java.net.*;
 
-import com.example.apams_new.R;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 
 import android.os.AsyncTask;
-import android.util.*;
+import android.util.Log;
 
-public class apamsTCPclient extends
-		AsyncTask<apams_network_package, Integer, String> {
-	private OnTaskCompleted listener;
-
-	public apamsTCPclient(OnTaskCompleted listener) {
-		this.listener = listener;
-	}
-	public apamsTCPclient() {
-	}
-
+public class CreateTask extends AsyncTask<apams_network_package, Integer, String> {
 	public static final String SERVERIP = "146.169.53.22";
 	public static final int SERVERPORT = 8888;
 	private String answer;
@@ -24,7 +17,6 @@ public class apamsTCPclient extends
 
 	private ObjectOutputStream Oout;
 	private BufferedReader in;
-
 	@Override
 	protected String doInBackground(apams_network_package... pack) {
 		try {
@@ -51,10 +43,7 @@ public class apamsTCPclient extends
 		} catch (Exception e) {
 			answer = "Error occurred during connection"+e;
 		}
-		return answer;
+		return answer;		
 	}
 
-	protected void onPostExecute(String answer) {
-		listener.onTaskCompleted(answer);
-	}
 }

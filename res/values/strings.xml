@@ -30,5 +30,9 @@
     <string name="regis_dataName">Name of your new asset database</string>
     <string name="regis_invite">Invitation Code</string>
     <string name="regis_lvl">Maximum level of administration</string>
+    <string name="acc_addData">Create New Asset Database</string>
+    <string name="acc_dataName">Name of database</string>
+    <string name="acc_maxLvl">Max priority lvl of database</string>
+    <string name="create_confirm">Confirm</string>
 
 </resources>

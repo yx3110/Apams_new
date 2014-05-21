@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 public class scan_frag extends Fragment {
 	public scan_frag(){}
 	
-	public static scan_frag newAccInstance( int position) {
+	public static scan_frag newScanInstance( int position) {
 		scan_frag fragment = new scan_frag();
 		Bundle args = new Bundle();
 		args.putInt("position", position);
@@ -22,7 +22,7 @@ public class scan_frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
   
-        View rootView = inflater.inflate(R.layout.account_frag, container, false);
+        View rootView = inflater.inflate(R.layout.scan_frag, container, false);
         
         return rootView;
     }

@@ -53,7 +53,6 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		mEmail = "Default";
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
@@ -92,7 +91,9 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 
 	public void gotoMain(View view) {
 		Intent intent = new Intent(this, MainActivity.class);
+		mEmail = "Default";
 		intent.putExtra("username", mEmail);
+		intent.putExtra("isAdmin", true);
 		startActivity(intent);
 		finish();
 	}
@@ -115,7 +116,7 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 	 * errors are presented and no actual login attempt is made.
 	 */
 	public void attemptLogin() {
-		
+
 		mAuthTask = null;
 		// Reset errors.
 		mEmailView.setError(null);
@@ -159,8 +160,8 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
-			apams_network_package_Login pack = new apams_network_package_Login(mEmail,
-					mPassword);
+			apams_network_package_Login pack = new apams_network_package_Login(
+					mEmail, mPassword);
 			mAuthTask = new apamsTCPclient(this);
 			mAuthTask.execute(pack);
 		}
@@ -209,9 +210,17 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 
 	@Override
 	public void onTaskCompleted(String answer) {
-		if (answer.equals("GOOD")) {
+		if (answer.equals("ISADMIN")) {
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.putExtra("username", mEmail);
+			intent.putExtra("isAdmin", true);
+			startActivity(intent);
+			finish();
+		}
+		else if (answer.equals("GOOD")) {
+			Intent intent = new Intent(this, MainActivity.class);
+			intent.putExtra("username", mEmail);
+			intent.putExtra("isAdmin", false);
 			startActivity(intent);
 			finish();
 		} else if (answer.equals("Wrong email")) {

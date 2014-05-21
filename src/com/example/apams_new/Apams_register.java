@@ -20,46 +20,30 @@ import android.widget.Toast;
 public class Apams_register extends Activity implements OnTaskCompleted {
 
 	private CheckBox manager;
-	private EditText dataName, invite, maxLvl;
+	private EditText invite;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_apams_register);
 
-		dataName = (EditText) findViewById(R.id.regis_dataName);
 		invite = (EditText) findViewById(R.id.regis_invite);
-		maxLvl = (EditText) findViewById(R.id.editText_regisLvl);
-
-		dataName.setEnabled(false);
-		maxLvl.setEnabled(false);
-		dataName.setVisibility(100);
-		maxLvl.setVisibility(100);
 
 		manager = (CheckBox) findViewById(R.id.checkBox_owner);
-		manager.setOnCheckedChangeListener(new ApamsRegisBoxListener(dataName,
-				invite));
+		manager.setOnCheckedChangeListener(new ApamsRegisBoxListener());
 	}
 
 	class ApamsRegisBoxListener implements OnCheckedChangeListener {
-		private EditText dataName, invite;
 
-		public ApamsRegisBoxListener(EditText dataName, EditText invite) {
-			this.dataName = dataName;
-			this.invite = invite;
+		public ApamsRegisBoxListener() {
+
 		}
 
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView,
 				boolean isChecked) {
 			int inviteVis = isChecked ? 100 : 0;
-			int dataVis = isChecked ? 0 : 100;
-
-			dataName.setEnabled(isChecked);
-			maxLvl.setEnabled(isChecked);
 			invite.setEnabled(!isChecked);
-			dataName.setVisibility(dataVis);
-			maxLvl.setVisibility(dataVis);
 			invite.setVisibility(inviteVis);
 		}
 
@@ -77,10 +61,8 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 		String password2Str = password2.getText().toString();
 		apams_network_package pack = null;
 		if (manager.isChecked()) {
-			String databaseName = dataName.getText().toString();
-			int lvlStr = Integer.parseInt(maxLvl.getText().toString());
 			pack = new apams_network_package_regisAD(usernameStr, password1Str,
-					CIDStr, databaseName, lvlStr);
+					CIDStr);
 		} else {
 			String inviteStr = this.invite.getText().toString();
 			pack = new apams_network_package_regisN(usernameStr, password1Str,
