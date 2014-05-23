@@ -30,6 +30,7 @@ public class Account_frag extends Fragment {
         Bundle args = this.getArguments();
         String CID = null;
         boolean isAdmin = args.getBoolean("isAdmin");
+        String priority = isAdmin?"Admin":null;
         
 		Button createData = (Button) rootView.findViewById(R.id.acc_addData);
 		if(!isAdmin){
@@ -37,7 +38,8 @@ public class Account_frag extends Fragment {
 			createData.setVisibility(View.INVISIBLE);
 		}
         
-        ((TextView)rootView.findViewById(R.id.textView_username)).setText(CID);
+        ((TextView)rootView.findViewById(R.id.textView_CID)).setText(CID);
+        ((TextView)rootView.findViewById(R.id.textView_priority)).setText(priority);        
         ((TextView)rootView.findViewById(R.id.textView_username)).setText(args.getString("username"));
         return rootView;
     }

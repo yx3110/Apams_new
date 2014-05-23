@@ -1,13 +1,6 @@
 package com.example.apams_new;
 
-import com.example.apams_newUtil.CreateTask;
 import com.example.apams_newUtil.OnTaskCompleted;
-import com.example.apams_newUtil.apamsTCPclient;
-import com.example.apams_newUtil.apams_network_package;
-import com.example.apams_newUtil.apams_network_package_Login;
-import com.example.apams_newUtil.apams_network_package_create;
-import com.example.apams_newUtil.apams_network_package.packageType;
-
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -15,7 +8,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -30,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
