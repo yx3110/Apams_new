@@ -244,4 +244,10 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 	}
+
+	@Override
+	public void onPackReceived(apams_network_package pack) {
+		// TODO Auto-generated method stub
+		
+	}
 }

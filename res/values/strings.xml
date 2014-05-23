@@ -34,5 +34,7 @@
     <string name="acc_dataName">Name of database</string>
     <string name="acc_maxLvl">Max priority lvl of database</string>
     <string name="create_confirm">Confirm</string>
+    <string name="acc_Database">Failed to load database</string>
+    <string name="acc_getData">Get all database under management</string>
 
 </resources>

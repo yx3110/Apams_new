@@ -1,9 +1,16 @@
 package com.example.apams_new;
 
+import java.io.Serializable;
+
 import com.example.apams_newUtil.OnTaskCompleted;
+import com.example.apams_newUtil.apams_acc_package;
+import com.example.apams_newUtil.apams_network_package;
+import com.example.apams_newUtil.apams_network_package.packageType;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -14,6 +21,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +36,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks,OnTaskCompleted {
+		NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted,
+		Serializable {
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
@@ -44,7 +54,7 @@ public class MainActivity extends Activity implements
 	private boolean isAdmin;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)  {
+	protected void onCreate(Bundle savedInstanceState) {
 
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
@@ -68,7 +78,7 @@ public class MainActivity extends Activity implements
 		switch (position) {
 		case 0:
 			Account_frag accFrag = Account_frag.newAccInstance(mUsername,
-					position + 1,isAdmin);
+					position + 1, isAdmin, this);
 			fragmentManager.beginTransaction().replace(R.id.container, accFrag)
 					.commit();
 			break;
@@ -79,8 +89,8 @@ public class MainActivity extends Activity implements
 			break;
 		case 2:
 			map_frag mapFrag = map_frag.newMapInstance(position + 1);
-			fragmentManager.beginTransaction()
-					.replace(R.id.container, mapFrag).commit();
+			fragmentManager.beginTransaction().replace(R.id.container, mapFrag)
+					.commit();
 			break;
 		case 3:
 			scan_frag scanFrag = scan_frag.newScanInstance(position + 1);
@@ -146,6 +156,25 @@ public class MainActivity extends Activity implements
 		intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 	}
+	
+	public void getDatabase(View view){
+		String databases =null;
+		
+		//TODO: implement database seeking.
+		
+		
+		AlertDialog.Builder builder = new Builder(this);
+		
+		if(databases.equals(null)){
+			databases = "No database is found under you management";
+		}
+		builder.setMessage(databases);
+		builder.setTitle("Databases under you management");
+		builder.setNegativeButton("ok", null);
+		
+		builder.create().show();
+
+	}
 
 	private final int RESULT_LOAD_IMAGE = 1;
 
@@ -205,19 +234,21 @@ public class MainActivity extends Activity implements
 					}
 
 				}).setNegativeButton("Cancel", null).show();
-				
+
 	}
 
 	public void createDatabase(View view) {
 		LayoutInflater inflater = getLayoutInflater();
-		   View layout = inflater.inflate(R.layout.acc_create ,
-		     (ViewGroup) findViewById(R.id.dialog));
+		View layout = inflater.inflate(R.layout.acc_create,
+				(ViewGroup) findViewById(R.id.dialog));
 
-		   new AlertDialog.Builder(this).setTitle("Create Database").setView(layout)
-		     .setNegativeButton("Cancel", null).show();
+		new AlertDialog.Builder(this).setTitle("Create Database")
+				.setView(layout).setNegativeButton("Cancel", null).show();
 	}
+
 	public void sendCreate(View view) {
 	}
+
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -264,7 +295,7 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public void onTaskCompleted(String answer) {
-		
+
 	}
 
 	@Override
@@ -273,7 +304,10 @@ public class MainActivity extends Activity implements
 		CharSequence text = msg;
 		int duration = Toast.LENGTH_SHORT;
 		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();		
+		toast.show();
 	}
 
+	@Override
+	public void onPackReceived(apams_network_package pack) {
+	}
 }

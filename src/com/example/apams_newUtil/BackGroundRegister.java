@@ -59,28 +59,28 @@ public class BackGroundRegister extends Thread {
 					case ACC:
 						System.out.println("Package type = " + pack.getType());
 						
-						String Accquery = "SELECT cid,priority FROM userinformation where username =? ";
+						String Accquery = "SELECT cid,priority,belongto FROM userinformation where username =? ";
 						try{
 							PreparedStatement accpst = conn.prepareStatement(Accquery);
 							accpst.setString(1, username);
 							ResultSet rs =accpst.executeQuery();
 							String rscid = null;
+							String rsBelong = null;
 							int rsPriority = 0;
 							while(rs.next()){
+								rsBelong = rs.getString("belongto");
 								rscid = rs.getString("cid");
 								rsPriority = rs.getInt("priority");
 							}
 							
-							apams_network_package accResult = new apams_acc_package(username,rscid,rsPriority);
+							apams_network_package accResult = new apams_acc_package(username,rscid,rsPriority,rsBelong);
 							oOutputs.writeObject(accResult);
 							oOutputs.close();
 							System.out.println("return package sent");
-
-							
+							run();
 						}catch(SQLException e){
-							
+							System.out.println(e);
 						}
-
 						break;
 						
 					case CREATE:
