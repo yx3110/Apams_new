@@ -5,6 +5,7 @@ import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package_regisAD;
 import com.example.apams_newUtil.apams_network_package_regisN;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -93,12 +94,16 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 
 	@Override
 	public void onTaskCompleted(String answer) {
+		Log.e("answer", answer);
 		if (answer.equals("GOOD")) {
 			popMsg("Registration done!Login using this account.");
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.putExtra("username",
 					((EditText) findViewById(R.id.editText_username))
 							.toString());
+			boolean isChecked = ((CheckBox)findViewById(R.id.checkBox_owner)).isChecked();
+			intent.putExtra("isAdmin",
+					isChecked);
 			startActivity(intent);
 			finish();
 		} else if (answer.equals("Username already exist")) {

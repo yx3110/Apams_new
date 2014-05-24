@@ -59,7 +59,7 @@ public class BackGroundRegister extends Thread {
 					case ACC:
 						System.out.println("Package type = " + pack.getType());
 						
-						String Accquery = "SELECT cid,priority,belongto FROM userinformation where username =? ";
+						String Accquery = "SELECT cid,priority,belongto FROM user_information where username =? ";
 						try{
 							PreparedStatement accpst = conn.prepareStatement(Accquery);
 							accpst.setString(1, username);
