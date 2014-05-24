@@ -95,22 +95,22 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 	@Override
 	public void onTaskCompleted(String answer) {
 		Log.e("answer", answer);
-		if (answer.equals("GOOD")) {
+		if (answer.contains("GOOD")) {
 			popMsg("Registration done!Login using this account.");
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.putExtra("username",
-					((EditText) findViewById(R.id.editText_username))
+					((EditText) findViewById(R.id.editText_username)).getText()
 							.toString());
 			boolean isChecked = ((CheckBox)findViewById(R.id.checkBox_owner)).isChecked();
 			intent.putExtra("isAdmin",
 					isChecked);
 			startActivity(intent);
 			finish();
-		} else if (answer.equals("Username already exist")) {
+		} else if (answer.contains("Username already exist")) {
 			popMsg("Username or CID already exist,please change username or CID!");
 			EditText username = (EditText) findViewById(R.id.editText_username);
 			username.requestFocus();
-		} else if (answer.equals("Error occurred during connection")) {
+		} else if (answer.contains("Error occurred during connection")) {
 			popMsg("Connection failed. Server not online");
 		} else {
 			popMsg("Please try again!" + " " + answer);

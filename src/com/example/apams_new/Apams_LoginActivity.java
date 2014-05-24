@@ -210,24 +210,24 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 
 	@Override
 	public void onTaskCompleted(String answer) {
-		if (answer.equals("ISADMIN")) {
+		if (answer.contains("ISADMIN")) {
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.putExtra("username", mEmail);
 			intent.putExtra("isAdmin", true);
 			startActivity(intent);
 			finish();
 		}
-		else if (answer.equals("GOOD")) {
+		else if (answer.contains("GOOD")) {
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.putExtra("username", mEmail);
 			intent.putExtra("isAdmin", false);
 			startActivity(intent);
 			finish();
-		} else if (answer.equals("Wrong email")) {
+		} else if (answer.contains("Wrong email")) {
 			popMsg("Wrong email address");
 			mEmailView.requestFocus();
 			showProgress(false);
-		} else if (answer.equals("Error occurred during connection")) {
+		} else if (answer.contains("Error occurred during connection")) {
 			popMsg("Connection failed. Server not online");
 			showProgress(false);
 		} else {

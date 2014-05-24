@@ -36,5 +36,7 @@
     <string name="create_confirm">Confirm</string>
     <string name="acc_Database">Failed to load database</string>
     <string name="acc_getData">Get all database under management</string>
+    <string name="acc_invite">Create invitation code</string>
+    <string name="acc_manageInvite">Manage current invitation code</string>
 
 </resources>

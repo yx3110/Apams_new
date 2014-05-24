@@ -38,16 +38,6 @@
         android:text="@string/acc_user"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/acc_addData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp"
-        android:onClick="createDatabase"
-        android:text="@string/acc_addData" />
-
     <TextView
         android:id="@+id/textView_database"
         android:layout_width="wrap_content"
@@ -67,12 +57,39 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
+        android:id="@+id/acc_addData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/acc_invite"
+        android:layout_centerHorizontal="true"
+        android:onClick="createDatabase"
+        android:text="@string/acc_addData" />
+
+    <Button
+        android:id="@+id/manageInvite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/acc_addData"
+        android:layout_centerHorizontal="true"
+        android:text="@string/acc_manageInvite"
+        android:onClick="manageInvite" />
+
+    <Button
+        android:id="@+id/acc_invite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_priority"
+        android:layout_centerHorizontal="true"
+        android:text="@string/acc_invite"
+        android:onClick="createInvite" />
+
+    <Button
         android:id="@+id/acc_checkData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView_database"
+        android:layout_below="@+id/manageInvite"
         android:layout_centerHorizontal="true"
-        android:text="@string/acc_getData" 
-        android:onClick="getDatabase"/>
+        android:onClick="getDatabase"
+        android:text="@string/acc_getData" />
 
 </RelativeLayout>

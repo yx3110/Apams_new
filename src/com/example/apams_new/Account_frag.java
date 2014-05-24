@@ -11,6 +11,7 @@ import com.example.apams_newUtil.apams_network_package.packageType;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 		((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
 		((TextView) rootView.findViewById(R.id.textView_priority))
 				.setText(priority);
+		
 		((TextView) rootView.findViewById(R.id.textView_username)).setText(args
 				.getString("username"));
 		return rootView;
@@ -90,11 +92,13 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 		String CID = accPack.getCID();
 		int priority = accPack.getPriory();
 		String database = accPack.getBelongto();
+		Log.e("pack", CID+" "+ database);
 
 		((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
 		if (this.getArguments().getBoolean("isAdmin")) {
 			((TextView) rootView.findViewById(R.id.textView_priority))
 					.setText("Admin");
+			((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
 		} else {
 			((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
 			((TextView) rootView.findViewById(R.id.textView_database)).setText(database);

@@ -39,7 +39,7 @@ public class apamsTCPclient extends
 						socket.getInputStream()));
 				Log.e("TCP", "" + in.ready());
 				answer = in.readLine();
-				Log.e("TCP", "answer got");
+				Log.e("TCP", "answer got"+answer);
 			} catch (Exception e) {
 				answer = "Error occurred during connections";
 				Log.e("TCP", "S:Error", e);

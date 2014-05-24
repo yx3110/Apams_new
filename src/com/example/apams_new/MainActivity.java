@@ -150,6 +150,13 @@ public class MainActivity extends Activity implements
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	public void createInvite(View view) {
+		//TODO:create invite;
+	}
+	public void manageInvite(View view){
+		//TODO show invite list;
+	}
 
 	public void newPic(View view) {
 		Intent intent = new Intent();
