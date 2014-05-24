@@ -101,6 +101,7 @@ public class BackGroundRegister extends Thread {
 							createpst.execute();
 							createpst.close();
 						} catch (SQLException e) {
+							System.out.println(e);
 							replyStr = "Database name already used";
 						}
 						
@@ -118,6 +119,8 @@ public class BackGroundRegister extends Thread {
 							}
 							insertpst.close();
 						}catch(Exception e){
+							System.out.println(e);
+
 							replyStr = "Insert into databases wrong";
  						}
 						StrOut.write(replyStr);
@@ -152,6 +155,7 @@ public class BackGroundRegister extends Thread {
 									replyStr = "Sth wrong happened, database not updated";
 								}
 							} catch (SQLException e) {
+								System.out.println(e);
 								replyStr = "Username already exist";
 							}
 							insertpst.close();
@@ -193,6 +197,8 @@ public class BackGroundRegister extends Thread {
 								querypst.close();
 
 							} catch (SQLException e) {
+								System.out.println(e);
+
 								replyStr = "Error during finding invite code";
 							}
 						} catch (SQLException e) {
