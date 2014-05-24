@@ -157,6 +157,13 @@ public class MainActivity extends Activity implements
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 	}
 	
+	public void apams_scan_barcode(View view) {
+		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		startActivityForResult(intent, 0);
+	}
+
+	
 	public void getDatabase(View view){
 		String databases =null;
 		
@@ -306,6 +313,8 @@ public class MainActivity extends Activity implements
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 	}
+	
+	
 
 	@Override
 	public void onPackReceived(apams_network_package pack) {
