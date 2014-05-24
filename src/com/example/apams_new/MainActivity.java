@@ -165,14 +165,14 @@ public class MainActivity extends Activity implements
 
 	
 	public void getDatabase(View view){
-		String databases =null;
+		String databases ="No database found";
 		
 		//TODO: implement database seeking.
 		
 		
 		AlertDialog.Builder builder = new Builder(this);
 		
-		if(databases.equals(null)){
+		if(databases.equals("No database found")){
 			databases = "No database is found under you management";
 		}
 		builder.setMessage(databases);
