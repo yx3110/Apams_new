@@ -137,11 +137,12 @@ public class BackGroundRegister extends Thread {
 								+ "VALUES(?,?,?,?,?,?)";
 
 						try {
+							byte[] emptypic = new byte[100];
 							insertpst = conn.prepareStatement(query);
 							insertpst.setString(1, username);
 							insertpst.setString(2, password);
 							insertpst.setString(3, CID);
-							insertpst.setByte(4, (byte) 0);
+							insertpst.setBytes(4, emptypic);
 							insertpst.setInt(5, 1000);
 							insertpst.setString(6, "Admin");
 
