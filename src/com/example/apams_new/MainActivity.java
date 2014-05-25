@@ -5,11 +5,13 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 import com.example.apams_newUtil.OnTaskCompleted;
+import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_acc_package;
 import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
+import com.example.apams_newUtil.apams_network_package_create;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -58,6 +60,8 @@ public class MainActivity extends Activity implements
 	private String mUsername;
 	private boolean isAdmin;
 	private String[] datalist;
+	
+	private View createLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -283,12 +287,19 @@ public class MainActivity extends Activity implements
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.acc_create,
 				(ViewGroup) findViewById(R.id.dialog));
+		
+		this.createLayout = layout;
 
 		new AlertDialog.Builder(this).setTitle("Create Database")
 				.setView(layout).setNegativeButton("Cancel", null).show();
 	}
 
 	public void sendCreate(View view) {
+		String dataname =((TextView) this.createLayout.findViewById(R.id.ET_acc_dataName)).getText().toString();
+		int maxLvl = Integer.parseInt(((TextView) this.createLayout.findViewById(R.id.ET_acc_maxLvl)).getText().toString());
+		apams_network_package pack = new apams_network_package_create(mUsername,maxLvl,dataname);
+		apamsTCPclient task = new apamsTCPclient(this);
+		task.execute(pack);
 	}
 
 	/**
@@ -337,7 +348,11 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public void onTaskCompleted(String answer) {
-
+		if(answer.contains("GOOD")){
+			popMsg("Database created!");
+		}else{
+			popMsg("Error");
+		}
 	}
 
 	@Override

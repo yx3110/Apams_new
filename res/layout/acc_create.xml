@@ -26,16 +26,6 @@
 
     </EditText>
 
-    <EditText
-        android:id="@+id/ET_acc_pw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prompt_password"
-        android:inputType="text"
-        android:minWidth="100dip" >
-
-    </EditText>
-
     <Button
         android:id="@+id/create_confirm_button"
         android:layout_width="match_parent"
