@@ -267,7 +267,7 @@ public class BackGroundRegister extends Thread {
 						System.out.println("Package type = " + pack.getType()
 								+ " " + "username = " + username);
 
-						String Lquery = "SELECT password FROM user_information WHERE username = ?";
+						String Lquery = "SELECT password,priority FROM user_information WHERE username = ?";
 
 						try {
 							insertpst = conn.prepareStatement(Lquery);
