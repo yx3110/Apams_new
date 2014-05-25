@@ -3,6 +3,7 @@ package com.example.apams_new;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
@@ -31,6 +32,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,7 +62,7 @@ public class MainActivity extends Activity implements
 	private CharSequence mTitle;
 	private String mUsername;
 	private boolean isAdmin;
-	private String[] datalist;
+	private ArrayList<String> datalist;
 	
 	private View createLayout;
 
@@ -76,12 +78,8 @@ public class MainActivity extends Activity implements
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
-		this.datalist = new String[0];
 
-		apams_network_package pack = new apams_network_package(mUsername,
-				packageType.DATALIST);
-		apamsTCPclient_package task = new apamsTCPclient_package(this);
-		task.execute(pack);
+
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -173,11 +171,10 @@ public class MainActivity extends Activity implements
 		SecureRandom random = new SecureRandom();
 		String answer = new BigInteger(130, random).toString(8);
 		String belongto;
-		if (datalist.length == 0) {
+		if (this.datalist.size() == 0) {
 			popMsg("You need to create a database first");
 			return;
 		}
-		;
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.acc_invitecreate,
 				(ViewGroup) findViewById(R.id.dialog));
@@ -205,18 +202,21 @@ public class MainActivity extends Activity implements
 
 	public void getDatabase(View view) {
 		String databases = "Name of databases under management:";
-
-		for (int i = 0; i > datalist.length; i++) {
-			databases = databases + "," + datalist[i];
-		}
 		apams_network_package pack = new apams_network_package(mUsername,
 				packageType.DATALIST);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
+		Log.e("length", ""+this.datalist.size());
+		
+		task.execute(pack);
+		for (int i = 0; i > datalist.size(); i++) {
+			databases = databases + "," + datalist.get(i);
+		}
+
 
 		AlertDialog.Builder builder = new Builder(this);
 
-		if (this.datalist.length == 0) {
+		if (this.datalist.isEmpty()) {
 			databases = "No database is found under you management";
 		}
 		builder.setMessage(databases);

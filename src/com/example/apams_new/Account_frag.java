@@ -65,13 +65,10 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 				args.getString("username"), packageType.ACC);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
-
-		((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
-		((TextView) rootView.findViewById(R.id.textView_priority))
-				.setText(priority);
 		
 		((TextView) rootView.findViewById(R.id.textView_username)).setText(args
 				.getString("username"));
+		rootView = this.rootView;
 		return rootView;
 	}
 
@@ -90,7 +87,7 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 	public void onPackReceived(apams_network_package pack) {
 		apams_acc_package accPack = (apams_acc_package) pack;
 		String CID = accPack.getCID();
-		int priority = accPack.getPriory();
+		String priority = String.valueOf(accPack.getPriory());
 		String database = accPack.getBelongto();
 		Log.e("pack", CID+" "+ database);
 

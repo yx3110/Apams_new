@@ -57,6 +57,8 @@ public class BackGroundRegister extends Thread {
 					switch (pack.getType()) {
 
 					case DATALIST:
+						System.out.println("Package type = " + pack.getType());
+
 						String datalistQuery = "SELECT name FROM databases WHERE owner = ?";
 						try {
 							PreparedStatement datalistpst = conn
@@ -68,10 +70,8 @@ public class BackGroundRegister extends Thread {
 								String data = rs.getString("name");
 								resultAL.add(data);
 							}
-							String[] result = new String[resultAL.size()];
-							result = resultAL.toArray(result);
 							apams_network_package resultPack = new apams_datalist_package(
-									username, result);
+									username, resultAL);
 							oOutputs.writeObject(resultPack);
 							oOutputs.close();
 							System.out.println("return package sent");

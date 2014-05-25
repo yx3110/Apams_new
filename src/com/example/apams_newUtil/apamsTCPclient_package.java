@@ -44,7 +44,7 @@ public class apamsTCPclient_package extends
 				Oin = new ObjectInputStream(socket.getInputStream());
 				Log.e("TCP", "");
 				answer =(apams_network_package) Oin.readObject();
-				Log.e("TCP", "answer got");
+				Log.e("TCP", "answer package got");
 			} catch (Exception e) {
 				Log.e("TCP", "S:Error", e);
 			} finally {
@@ -58,8 +58,8 @@ public class apamsTCPclient_package extends
 		return answer;
 	}
 	
-	protected void onPostExecute(String answer) {
-		listener.onTaskCompleted(answer);
+	protected void onPostExecute(apams_network_package pack) {
+		listener.onPackReceived(pack);;
 	}
 
 }
