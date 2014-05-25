@@ -59,19 +59,22 @@ public class BackGroundRegister extends Thread {
 					case DATALIST:
 						System.out.println("Package type = " + pack.getType());
 
-						String datalistQuery = "SELECT name FROM databases WHERE owner = ?";
+						String datalistQuery = "SELECT name,maxlvl FROM databases WHERE owner = ?";
 						try {
 							PreparedStatement datalistpst = conn
 									.prepareStatement(datalistQuery);
 							datalistpst.setString(1, username);
 							ResultSet rs = datalistpst.executeQuery();
 							ArrayList<String> resultAL = new ArrayList<String>();
+							ArrayList<String> resultLVL = new ArrayList<String>();
 							while (rs.next()) {
 								String data = rs.getString("name");
+								String lvl = String.valueOf(rs.getInt("maxlvl"));
 								resultAL.add(data);
+								resultLVL.add(lvl);
 							}
 							apams_network_package resultPack = new apams_datalist_package(
-									username, resultAL);
+									username, resultAL,resultLVL);
 							oOutputs.writeObject(resultPack);
 							oOutputs.close();
 							System.out.println("return package sent");

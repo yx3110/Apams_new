@@ -63,6 +63,7 @@ public class MainActivity extends Activity implements
 	private String mUsername;
 	private boolean isAdmin;
 	private ArrayList<String> datalist;
+	private ArrayList<String> lvllist;
 	
 	private View createLayout;
 
@@ -78,8 +79,13 @@ public class MainActivity extends Activity implements
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
-
-
+		datalist = new ArrayList<String>();
+		lvllist = new ArrayList<String>();
+		
+		apams_network_package pack = new apams_network_package(mUsername,
+				packageType.DATALIST);
+		apamsTCPclient_package task = new apamsTCPclient_package(this);
+		task.execute(pack);
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -201,23 +207,19 @@ public class MainActivity extends Activity implements
 	}
 
 	public void getDatabase(View view) {
-		String databases = "Name of databases under management:";
-		apams_network_package pack = new apams_network_package(mUsername,
-				packageType.DATALIST);
-		apamsTCPclient_package task = new apamsTCPclient_package(this);
-		task.execute(pack);
+		String databases = "Name of databases under management: \n";
+		
 		Log.e("length", ""+this.datalist.size());
 		
-		task.execute(pack);
-		for (int i = 0; i > datalist.size(); i++) {
-			databases = databases + "," + datalist.get(i);
+		for (int i = 0; i < datalist.size(); i++) {
+			databases = databases + datalist.get(i)+","+  "Max Lvl:"+lvllist.get(i)+"\n";
 		}
 
 
 		AlertDialog.Builder builder = new Builder(this);
 
 		if (this.datalist.isEmpty()) {
-			databases = "No database is found under you management";
+			databases = "No database is found under you management.";
 		}
 		builder.setMessage(databases);
 		builder.setTitle("Databases under you management");
@@ -228,6 +230,7 @@ public class MainActivity extends Activity implements
 	}
 
 	private final int RESULT_LOAD_IMAGE = 1;
+
 
 	public void changeUserPic(View view) {
 		Intent i = new Intent(Intent.ACTION_PICK,
@@ -355,7 +358,10 @@ public class MainActivity extends Activity implements
 	public void onTaskCompleted(String answer) {
 		if(answer.contains("GOOD")){
 			popMsg("Database created!Stay in this dialog to create more or click quit if you are finished.");
-
+			apams_network_package pack = new apams_network_package(mUsername,
+					packageType.DATALIST);
+			apamsTCPclient_package task = new apamsTCPclient_package(this);
+			task.execute(pack);
 		}else{
 			popMsg("Error");
 		}
@@ -377,6 +383,7 @@ public class MainActivity extends Activity implements
 		case DATALIST:
 			apams_datalist_package dataPack = (apams_datalist_package) pack;
 			this.datalist = dataPack.getDatalist();
+			this.lvllist = dataPack.getLvllist();
 			break;
 		default:
 			break;
