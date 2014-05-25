@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.example.apams_newUtil.apams_network_package;
 
@@ -51,11 +52,33 @@ public class BackGroundRegister extends Thread {
 					String CID = pack.getCID();
 					String replyStr = null;
 
-					String query;
 
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					
+					case DATALIST:
+						String datalistQuery = "SELECT name FROM databases WHERE owner = ?";
+						try{
+							PreparedStatement datalistpst = conn.prepareStatement(datalistQuery);
+							datalistpst.setString(1, username);
+							ResultSet rs = datalistpst.executeQuery();
+							ArrayList<String> resultAL= new ArrayList<String>();
+							while(rs.next()){
+								String data = rs.getString("name");
+								resultAL.add(data);
+							}
+							String[] result = (String[])resultAL.toArray();
+							apams_network_package resultPack= new apams_datalist_package(username,result);
+							oOutputs.writeObject(resultPack);
+							oOutputs.close();
+							System.out.println("return package sent");
+							run();
+						}catch(SQLException e){
+							System.out.println(e);
+						}
+						break;
+						
 					case ACC:
 						System.out.println("Package type = " + pack.getType());
 						
@@ -133,12 +156,12 @@ public class BackGroundRegister extends Thread {
 					case REGISTER_AD:
 						System.out.println("Package type = " + pack.getType());
 
-						query = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto)"
+						String ADquery = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto)"
 								+ "VALUES(?,?,?,?,?,?)";
 
 						try {
 							byte[] emptypic = new byte[100];
-							insertpst = conn.prepareStatement(query);
+							insertpst = conn.prepareStatement(ADquery);
 							insertpst.setString(1, username);
 							insertpst.setString(2, password);
 							insertpst.setString(3, CID);
@@ -181,9 +204,9 @@ public class BackGroundRegister extends Thread {
 						String belongTo = null;
 
 						try {
-							query = "SELECT level,belongto FROM invitelevel WHERE code = ? ";
+							String Nquery = "SELECT level,belongto FROM invitelevel WHERE code = ? ";
 							PreparedStatement querypst = conn
-									.prepareStatement(query);
+									.prepareStatement(Nquery);
 							querypst.setString(1, invite);
 							try {
 								ResultSet rs = querypst.executeQuery();
@@ -206,11 +229,11 @@ public class BackGroundRegister extends Thread {
 							e.printStackTrace();
 						}
 
-						query = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto)"
+						String NIquery = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto)"
 								+ "VALUES(?,?,?,?,?,?)";
 
 						try {
-							insertpst = conn.prepareStatement(query);
+							insertpst = conn.prepareStatement(NIquery);
 							insertpst.setString(1, username);
 							insertpst.setString(2, password);
 							insertpst.setString(3, CID);
@@ -244,10 +267,10 @@ public class BackGroundRegister extends Thread {
 						System.out.println("Package type = " + pack.getType()
 								+ " " + "username = " + username);
 
-						query = "SELECT password FROM user_information WHERE username = ?";
+						String Lquery = "SELECT password FROM user_information WHERE username = ?";
 
 						try {
-							insertpst = conn.prepareStatement(query);
+							insertpst = conn.prepareStatement(Lquery);
 							insertpst.setString(1, username);
 							try {
 								ResultSet rs = insertpst.executeQuery();

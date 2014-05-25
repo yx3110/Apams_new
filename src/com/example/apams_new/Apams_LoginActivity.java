@@ -247,7 +247,6 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 
 	@Override
 	public void onPackReceived(apams_network_package pack) {
-		// TODO Auto-generated method stub
 		
 	}
 }

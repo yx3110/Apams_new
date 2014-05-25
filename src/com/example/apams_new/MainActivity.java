@@ -1,9 +1,13 @@
 package com.example.apams_new;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 import com.example.apams_newUtil.OnTaskCompleted;
+import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_acc_package;
+import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 
@@ -24,6 +28,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +57,7 @@ public class MainActivity extends Activity implements
 	private CharSequence mTitle;
 	private String mUsername;
 	private boolean isAdmin;
+	private String[] datalist;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,12 @@ public class MainActivity extends Activity implements
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
+		this.datalist = new String[0];
+
+		apams_network_package pack = new apams_network_package(mUsername,
+				packageType.DATALIST);
+		apamsTCPclient_package task = new apamsTCPclient_package(this);
+		task.execute(pack);
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -150,12 +162,28 @@ public class MainActivity extends Activity implements
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public void createInvite(View view) {
-		//TODO:create invite;
+
+		SecureRandom random = new SecureRandom();
+		String answer = new BigInteger(130, random).toString(8);
+		String belongto;
+		if (datalist.length == 0) {
+			popMsg("You need to create a database first");
+			return;
+		}
+		;
+		LayoutInflater inflater = getLayoutInflater();
+		View layout = inflater.inflate(R.layout.acc_invitecreate,
+				(ViewGroup) findViewById(R.id.dialog));
+		new AlertDialog.Builder(this).setTitle("Create new APAMS Invite code")
+				.setView(layout).show();
+
+		// TODO:create invite;
 	}
-	public void manageInvite(View view){
-		//TODO show invite list;
+
+	public void manageInvite(View view) {
+		// TODO show invite list;
 	}
 
 	public void newPic(View view) {
@@ -163,29 +191,29 @@ public class MainActivity extends Activity implements
 		intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 	}
-	
+
 	public void apams_scan_barcode(View view) {
 		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		startActivityForResult(intent, 0);
 	}
 
-	
-	public void getDatabase(View view){
-		String databases ="No database found";
-		
-		//TODO: implement database seeking.
-		
-		
+	public void getDatabase(View view) {
+		String databases = "Name of databases under management:";
+
+		for (int i = 0; i > datalist.length; i++) {
+			databases = databases + "," + datalist[i];
+		}
+
 		AlertDialog.Builder builder = new Builder(this);
-		
-		if(databases.equals("No database found")){
+
+		if (this.datalist.length == 0) {
 			databases = "No database is found under you management";
 		}
 		builder.setMessage(databases);
 		builder.setTitle("Databases under you management");
 		builder.setNegativeButton("ok", null);
-		
+
 		builder.create().show();
 
 	}
@@ -320,10 +348,46 @@ public class MainActivity extends Activity implements
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 	}
-	
-	
 
 	@Override
 	public void onPackReceived(apams_network_package pack) {
+		packageType type = pack.getType();
+		switch (type) {
+		case DATALIST:
+			apams_datalist_package dataPack = (apams_datalist_package) pack;
+			this.datalist = dataPack.getDatalist();
+			break;
+		default:
+			break;
+		}
+	}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    //Handle the back button
+	    if(keyCode == KeyEvent.KEYCODE_BACK) {
+	        //Ask the user if they want to quit
+	        new AlertDialog.Builder(this)
+	        .setIcon(android.R.drawable.ic_dialog_alert)
+	        .setTitle("Quitting APAMS")
+	        .setMessage("Are you sure you want to log out and quit APAMS?")
+	        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+
+	                //Stop the activity
+	                MainActivity.this.finish();    
+	            }
+
+	        })
+	        .setNegativeButton("Cancel", null)
+	        .show();
+
+	        return true;
+	    }
+	    else {
+	        return super.onKeyDown(keyCode, event);
+	    }
+
 	}
 }
