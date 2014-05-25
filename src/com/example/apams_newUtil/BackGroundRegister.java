@@ -128,7 +128,7 @@ public class BackGroundRegister extends Thread {
 							replyStr = "Database name already used";
 						}
 						
-						String insertQuery = "INSERT INTO databases(databaseName,owner,maxlvl)"+"VALUES(?,?,?)";
+						String insertQuery = "INSERT INTO databases(name,owner,maxlvl)"+"VALUES(?,?,?)";
 						try{
 							insertpst = conn.prepareStatement(insertQuery);
 							insertpst.setString(1,databaseName);
