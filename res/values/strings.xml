@@ -38,5 +38,8 @@
     <string name="acc_getData">Get all database under management</string>
     <string name="acc_invite">Create invitation code</string>
     <string name="acc_manageInvite">Manage current invitation code</string>
+    <string name="invite_choose">Choose the database of invitation code</string>
+    <string name="invite_generate">Generate an invitation code</string>
+    <string name="scan_activate">Scan Barcode</string>
 
 </resources>

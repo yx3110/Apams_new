@@ -40,8 +40,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,8 +66,9 @@ public class MainActivity extends Activity implements
 	private boolean isAdmin;
 	private ArrayList<String> datalist;
 	private ArrayList<String> lvllist;
-	
+
 	private View createLayout;
+	private View inviteLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,7 @@ public class MainActivity extends Activity implements
 		mTitle = getTitle();
 		datalist = new ArrayList<String>();
 		lvllist = new ArrayList<String>();
-		
+
 		apams_network_package pack = new apams_network_package(mUsername,
 				packageType.DATALIST);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
@@ -174,8 +177,7 @@ public class MainActivity extends Activity implements
 
 	public void createInvite(View view) {
 
-		SecureRandom random = new SecureRandom();
-		String answer = new BigInteger(130, random).toString(8);
+		
 		String belongto;
 		if (this.datalist.size() == 0) {
 			popMsg("You need to create a database first");
@@ -184,10 +186,31 @@ public class MainActivity extends Activity implements
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.acc_invitecreate,
 				(ViewGroup) findViewById(R.id.dialog));
+		
+		this.inviteLayout = layout;
+		Spinner spinner = (Spinner) layout
+				.findViewById(R.id.invite_dataspinner);
+		String[] dataarray = new String[datalist.size()];
+		dataarray = datalist.toArray(dataarray);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item,dataarray);
+		spinner.setAdapter(adapter);
 		new AlertDialog.Builder(this).setTitle("Create new APAMS Invite code")
 				.setView(layout).show();
 
 		// TODO:create invite;
+	}
+	
+	public void generateCode(View view){
+		SecureRandom random = new SecureRandom();
+		String answer = new BigInteger(200, random).toString(32).substring(0, 14);
+		((Button) view).setText(answer);
+		this.popMsg("Code generated but not activiated,press the same button to generate again");
+	}
+	
+	public void confirmInvite(View view){
+		View layout = (View) view.getParent();
+		//TODO:layout.findViewById(R.id.invite_dataspinner).
 	}
 
 	public void manageInvite(View view) {
@@ -205,16 +228,18 @@ public class MainActivity extends Activity implements
 		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 		startActivityForResult(intent, 0);
 	}
+	
+	
 
 	public void getDatabase(View view) {
 		String databases = "Name of databases under management: \n";
-		
-		Log.e("length", ""+this.datalist.size());
-		
-		for (int i = 0; i < datalist.size(); i++) {
-			databases = databases + datalist.get(i)+","+  "Max Lvl:"+lvllist.get(i)+"\n";
-		}
 
+		Log.e("length", "" + this.datalist.size());
+
+		for (int i = 0; i < datalist.size(); i++) {
+			databases = databases + datalist.get(i) + "," + "Max Lvl:"
+					+ lvllist.get(i) + "\n";
+		}
 
 		AlertDialog.Builder builder = new Builder(this);
 
@@ -230,7 +255,6 @@ public class MainActivity extends Activity implements
 	}
 
 	private final int RESULT_LOAD_IMAGE = 1;
-
 
 	public void changeUserPic(View view) {
 		Intent i = new Intent(Intent.ACTION_PICK,
@@ -295,17 +319,21 @@ public class MainActivity extends Activity implements
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.acc_create,
 				(ViewGroup) findViewById(R.id.dialog));
-		
+
 		this.createLayout = layout;
 
 		new AlertDialog.Builder(this).setTitle("Create Database")
-				.setView(layout).setNegativeButton("Quit creating", null).show();
+				.setView(layout).setNegativeButton("Quit creating", null)
+				.show();
 	}
 
 	public void sendCreate(View view) {
-		String dataname =((TextView) this.createLayout.findViewById(R.id.ET_acc_dataName)).getText().toString();
-		int maxLvl = Integer.parseInt(((TextView) this.createLayout.findViewById(R.id.ET_acc_maxLvl)).getText().toString());
-		apams_network_package pack = new apams_network_package_create(mUsername,maxLvl,dataname);
+		String dataname = ((TextView) this.createLayout
+				.findViewById(R.id.ET_acc_dataName)).getText().toString();
+		int maxLvl = Integer.parseInt(((TextView) this.createLayout
+				.findViewById(R.id.ET_acc_maxLvl)).getText().toString());
+		apams_network_package pack = new apams_network_package_create(
+				mUsername, maxLvl, dataname);
 		apamsTCPclient task = new apamsTCPclient(this);
 		task.execute(pack);
 	}
@@ -356,13 +384,13 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public void onTaskCompleted(String answer) {
-		if(answer.contains("GOOD")){
+		if (answer.contains("GOOD")) {
 			popMsg("Database created!Stay in this dialog to create more or click quit if you are finished.");
 			apams_network_package pack = new apams_network_package(mUsername,
 					packageType.DATALIST);
 			apamsTCPclient_package task = new apamsTCPclient_package(this);
 			task.execute(pack);
-		}else{
+		} else {
 			popMsg("Error");
 		}
 	}
@@ -389,33 +417,34 @@ public class MainActivity extends Activity implements
 			break;
 		}
 	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-	    //Handle the back button
-	    if(keyCode == KeyEvent.KEYCODE_BACK) {
-	        //Ask the user if they want to quit
-	        new AlertDialog.Builder(this)
-	        .setIcon(android.R.drawable.ic_dialog_alert)
-	        .setTitle("Quitting APAMS")
-	        .setMessage("Are you sure you want to log out and quit APAMS?")
-	        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+		// Handle the back button
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			// Ask the user if they want to quit
+			new AlertDialog.Builder(this)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle("Quitting APAMS")
+					.setMessage(
+							"Are you sure you want to log out and quit APAMS?")
+					.setPositiveButton("Confirm",
+							new DialogInterface.OnClickListener() {
 
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
 
-	                //Stop the activity
-	                MainActivity.this.finish();    
-	            }
+									// Stop the activity
+									MainActivity.this.finish();
+								}
 
-	        })
-	        .setNegativeButton("Cancel", null)
-	        .show();
+							}).setNegativeButton("Cancel", null).show();
 
-	        return true;
-	    }
-	    else {
-	        return super.onKeyDown(keyCode, event);
-	    }
+			return true;
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
 
 	}
 }
