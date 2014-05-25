@@ -34,10 +34,10 @@ public class BackGroundRegister extends Thread {
 
 			InputStream inputS = socket.getInputStream();
 			ObjectInputStream OinputS = new ObjectInputStream(inputS);
-			
+
 			OutputStream outputs = socket.getOutputStream();
 			ObjectOutputStream oOutputs = new ObjectOutputStream(outputs);
-			
+
 			BufferedWriter StrOut = new BufferedWriter(new OutputStreamWriter(
 					socket.getOutputStream()));
 
@@ -52,60 +52,64 @@ public class BackGroundRegister extends Thread {
 					String CID = pack.getCID();
 					String replyStr = null;
 
-
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
-					
+
 					case DATALIST:
 						String datalistQuery = "SELECT name FROM databases WHERE owner = ?";
-						try{
-							PreparedStatement datalistpst = conn.prepareStatement(datalistQuery);
+						try {
+							PreparedStatement datalistpst = conn
+									.prepareStatement(datalistQuery);
 							datalistpst.setString(1, username);
 							ResultSet rs = datalistpst.executeQuery();
-							ArrayList<String> resultAL= new ArrayList<String>();
-							while(rs.next()){
+							ArrayList<String> resultAL = new ArrayList<String>();
+							while (rs.next()) {
 								String data = rs.getString("name");
 								resultAL.add(data);
 							}
-							String[] result = (String[])resultAL.toArray();
-							apams_network_package resultPack= new apams_datalist_package(username,result);
+							String[] result = new String[resultAL.size()];
+							result = resultAL.toArray(result);
+							apams_network_package resultPack = new apams_datalist_package(
+									username, result);
 							oOutputs.writeObject(resultPack);
 							oOutputs.close();
 							System.out.println("return package sent");
 							run();
-						}catch(SQLException e){
+						} catch (SQLException e) {
 							System.out.println(e);
 						}
 						break;
-						
+
 					case ACC:
 						System.out.println("Package type = " + pack.getType());
-						
+
 						String Accquery = "SELECT cid,priority,belongto FROM user_information where username =? ";
-						try{
-							PreparedStatement accpst = conn.prepareStatement(Accquery);
+						try {
+							PreparedStatement accpst = conn
+									.prepareStatement(Accquery);
 							accpst.setString(1, username);
-							ResultSet rs =accpst.executeQuery();
+							ResultSet rs = accpst.executeQuery();
 							String rscid = null;
 							String rsBelong = null;
 							int rsPriority = 0;
-							while(rs.next()){
+							while (rs.next()) {
 								rsBelong = rs.getString("belongto");
 								rscid = rs.getString("cid");
 								rsPriority = rs.getInt("priority");
 							}
-							
-							apams_network_package accResult = new apams_acc_package(username,rscid,rsPriority,rsBelong);
+
+							apams_network_package accResult = new apams_acc_package(
+									username, rscid, rsPriority, rsBelong);
 							oOutputs.writeObject(accResult);
 							oOutputs.close();
 							System.out.println("return package sent");
 							run();
-						}catch(SQLException e){
+						} catch (SQLException e) {
 							System.out.println(e);
 						}
 						break;
-						
+
 					case CREATE:
 						System.out.println("Package type = " + pack.getType());
 
@@ -127,25 +131,26 @@ public class BackGroundRegister extends Thread {
 							System.out.println(e);
 							replyStr = "Database name already used";
 						}
-						
-						String insertQuery = "INSERT INTO databases(name,owner,maxlvl)"+"VALUES(?,?,?)";
-						try{
+
+						String insertQuery = "INSERT INTO databases(name,owner,maxlvl)"
+								+ "VALUES(?,?,?)";
+						try {
 							insertpst = conn.prepareStatement(insertQuery);
-							insertpst.setString(1,databaseName);
+							insertpst.setString(1, databaseName);
 							insertpst.setString(2, username);
 							insertpst.setInt(3, maxLvl);
-							int result =insertpst.executeUpdate();
+							int result = insertpst.executeUpdate();
 							if (result != 0) {
 								replyStr = "GOOD";
 							} else {
 								replyStr = "Sth wrong happened, database not updated";
 							}
 							insertpst.close();
-						}catch(Exception e){
+						} catch (Exception e) {
 							System.out.println(e);
 
 							replyStr = "Insert into databases wrong";
- 						}
+						}
 						StrOut.write(replyStr);
 						StrOut.flush();
 						System.out.println("Reply String sent" + replyStr);
@@ -283,7 +288,7 @@ public class BackGroundRegister extends Thread {
 									if (rs.getString("password").equals(
 											password)) {
 										replyStr = "GOOD";
-										if(rs.getInt("priority")==1000){
+										if (rs.getInt("priority") == 1000) {
 											replyStr = "ISADMIN";
 										}
 									} else {

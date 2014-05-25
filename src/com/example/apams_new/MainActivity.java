@@ -21,6 +21,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -208,6 +209,10 @@ public class MainActivity extends Activity implements
 		for (int i = 0; i > datalist.length; i++) {
 			databases = databases + "," + datalist[i];
 		}
+		apams_network_package pack = new apams_network_package(mUsername,
+				packageType.DATALIST);
+		apamsTCPclient_package task = new apamsTCPclient_package(this);
+		task.execute(pack);
 
 		AlertDialog.Builder builder = new Builder(this);
 
@@ -291,7 +296,7 @@ public class MainActivity extends Activity implements
 		this.createLayout = layout;
 
 		new AlertDialog.Builder(this).setTitle("Create Database")
-				.setView(layout).setNegativeButton("Cancel", null).show();
+				.setView(layout).setNegativeButton("Quit creating", null).show();
 	}
 
 	public void sendCreate(View view) {
@@ -349,7 +354,8 @@ public class MainActivity extends Activity implements
 	@Override
 	public void onTaskCompleted(String answer) {
 		if(answer.contains("GOOD")){
-			popMsg("Database created!");
+			popMsg("Database created!Stay in this dialog to create more or click quit if you are finished.");
+
 		}else{
 			popMsg("Error");
 		}
