@@ -44,5 +44,7 @@
     <string name="add_generateQR">Generate unique QR code for item</string>
     <string name="addBuilding">BuildingName</string>
     <string name="invite_maxlvl">Max priority level of this database.</string>
+    <string name="invite_shareinvite">Share this invite code.</string>
+    
 
 </resources>

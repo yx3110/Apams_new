@@ -48,7 +48,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.EditText;
 
-
 public class MainActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted {
 
@@ -196,11 +195,12 @@ public class MainActivity extends Activity implements
 		spinner.setAdapter(adapter);
 		new AlertDialog.Builder(this).setTitle("Create new APAMS Invite code")
 				.setView(layout).show();
-		this.addListenerToInviteSpinner(lvllist,layout);
+		this.addListenerToInviteSpinner(lvllist, layout);
 
 	}
 
-	private void addListenerToInviteSpinner(ArrayList<String> lvllist,final View layout) {
+	private void addListenerToInviteSpinner(ArrayList<String> lvllist,
+			final View layout) {
 		Spinner spinner = (Spinner) this.inviteLayout
 				.findViewById(R.id.invite_dataspinner);
 
@@ -234,12 +234,33 @@ public class MainActivity extends Activity implements
 
 	public void confirmInvite(View view) {
 		View layout = this.inviteLayout;
-		String code = ((Button) layout.findViewById(R.id.invite_generate)).getText().toString();
-		String belongto =(String)((Spinner) layout.findViewById(R.id.invite_dataspinner)).getSelectedItem();
-		int level = Integer.parseInt(((EditText) layout.findViewById(R.id.invite_lvl)).getText().toString());
-		apams_network_package pack = new apams_inviteCreate_package(mUsername,code,belongto,level);
+		String code = ((Button) layout.findViewById(R.id.invite_generate))
+				.getText().toString();
+		String belongto = (String) ((Spinner) layout
+				.findViewById(R.id.invite_dataspinner)).getSelectedItem();
+		int maxLvl = Integer.parseInt(this.lvllist.get(((Spinner) layout
+				.findViewById(R.id.invite_dataspinner))
+				.getSelectedItemPosition()));
+		int level = Integer.parseInt(((EditText) layout
+				.findViewById(R.id.invite_lvl)).getText().toString());
+		if(level>maxLvl){
+			popMsg("Current priority level is higher than max priority level");
+			layout.findViewById(R.id.invite_lvl).requestFocus();
+		}else{
+		apams_network_package pack = new apams_inviteCreate_package(mUsername,
+				code, belongto, level);
 		apamsTCPclient task = new apamsTCPclient(this);
 		task.execute(pack);
+		}
+	}
+	
+	public void shareInvite(View view){
+		//TODO share invite;
+		String invite = ((Button) this.inviteLayout.findViewById(R.id.invite_generate)).getText().toString();
+		Intent share = new Intent(Intent.ACTION_SEND);
+		share.setType("text/plain");
+		share.putExtra(Intent.EXTRA_TEXT, invite);
+		startActivity(Intent.createChooser(share, "Share invite code"));
 	}
 
 	public void manageInvite(View view) {
@@ -449,8 +470,12 @@ public class MainActivity extends Activity implements
 			task.execute(pack);
 		} else if (answer.contains("UPDATED")) {
 			popMsg("Profile pic updated in database");
-		} else {
-
+		}else if(answer.contains("INVITED")){ 
+			Button share = (Button)this.inviteLayout.findViewById(R.id.invite_share);
+			share.setVisibility(View.VISIBLE);
+			share.setEnabled(true);
+			popMsg("Invite code created.Stay in this dialog to create more or click quit if you are finished.");
+		}else {
 			popMsg("Error");
 		}
 	}
