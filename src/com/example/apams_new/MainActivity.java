@@ -48,8 +48,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted,
-		Serializable {
+		NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted {
 
 	/**
 	 * Fragment managing the behaviours, interactions and presentation of the
@@ -102,7 +101,7 @@ public class MainActivity extends Activity implements
 		switch (position) {
 		case 0:
 			Account_frag accFrag = Account_frag.newAccInstance(mUsername,
-					position + 1, isAdmin, this);
+					position + 1, isAdmin);
 			fragmentManager.beginTransaction().replace(R.id.container, accFrag)
 					.commit();
 			break;

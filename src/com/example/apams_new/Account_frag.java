@@ -27,10 +27,9 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 	}
 
 	public static Account_frag newAccInstance(String username, int position,
-			boolean isAdmin, OnTaskCompleted listener) {
+			boolean isAdmin) {
 		Account_frag fragment = new Account_frag();
 		Bundle args = new Bundle();
-		args.putSerializable("listener", (Serializable) listener);
 		args.putInt("position", position);
 		args.putBoolean("isAdmin", isAdmin);
 		args.putString("username", username);
@@ -114,7 +113,7 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 
 	@Override
 	public void popMsg(String string) {
-		((OnTaskCompleted) this.getArguments().getSerializable("listener")).popMsg(string);
+		((OnTaskCompleted) this.getActivity()).popMsg(string);
 	}
 
 }

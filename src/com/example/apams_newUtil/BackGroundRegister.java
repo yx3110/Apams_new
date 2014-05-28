@@ -71,7 +71,7 @@ public class BackGroundRegister extends Thread {
 							PreparedStatement profilepst = conn
 									.prepareStatement(profileQuery);
 							profilepst.setBytes(1, byteArray);
-							profilepst.setString(1, username);
+							profilepst.setString(2, username);
 							int result = profilepst.executeUpdate();
 							if (result != 0) {
 								replyStr = "UPDATED";
