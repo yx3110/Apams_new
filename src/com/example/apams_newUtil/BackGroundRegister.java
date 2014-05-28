@@ -1,6 +1,7 @@
 package com.example.apams_newUtil;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import android.graphics.Bitmap;
 
 import com.example.apams_newUtil.apams_network_package;
 
@@ -55,7 +58,14 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
-
+					case PROFILE:
+						apams_profile_package proPack = (apams_profile_package) pack;
+						Bitmap pic = proPack.getPic();
+						ByteArrayOutputStream stream = new ByteArrayOutputStream();
+						pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
+						byte[] byteArray = stream.toByteArray();						
+						
+						break;
 					case DATALIST:
 						System.out.println("Package type = " + pack.getType());
 

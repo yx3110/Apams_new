@@ -13,6 +13,7 @@ import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package_create;
+import com.example.apams_newUtil.apams_profile_package;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -259,7 +260,6 @@ public class MainActivity extends Activity implements
 	public void changeUserPic(View view) {
 		Intent i = new Intent(Intent.ACTION_PICK,
 				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
 		startActivityForResult(i, RESULT_LOAD_IMAGE);
 	}
 
@@ -288,11 +288,14 @@ public class MainActivity extends Activity implements
 			if (scale <= 0) {
 				scale = 1;
 			}
+			
 			options.inSampleSize = scale;
 			options.inJustDecodeBounds = false;
 			bitmap = BitmapFactory.decodeFile(picturePath, options);
 			imageButton.setImageBitmap(bitmap);
-
+			apams_network_package pack=new apams_profile_package(mUsername,bitmap);
+			apamsTCPclient task = new apamsTCPclient(this);
+			task.execute(pack);
 		}
 	}
 
