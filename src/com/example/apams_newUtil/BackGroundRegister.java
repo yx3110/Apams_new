@@ -55,6 +55,7 @@ public class BackGroundRegister extends Thread {
 					String password = pack.getPassword();
 					String CID = pack.getCID();
 					String replyStr = null;
+					String time = pack.getTime();
 
 					PreparedStatement insertpst;
 
@@ -68,14 +69,15 @@ public class BackGroundRegister extends Thread {
 						pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
 						byte[] byteArray = stream.toByteArray();
 						String profileQuery = "UPDATE user_information SET profilepic = ? WHERE username = ?";
-						try{
-							PreparedStatement profilepst = conn.prepareStatement(profileQuery);
+						try {
+							PreparedStatement profilepst = conn
+									.prepareStatement(profileQuery);
 							profilepst.setBytes(1, byteArray);
 							profilepst.setString(1, username);
 							int result = profilepst.executeUpdate();
-							if(result != 0){
+							if (result != 0) {
 								replyStr = "UPDATED";
-							}else{
+							} else {
 								replyStr = "Not updated";
 							}
 							StrOut.write(replyStr);
@@ -83,10 +85,10 @@ public class BackGroundRegister extends Thread {
 							System.out.println("return String sent");
 							StrOut.close();
 							run();
-						}catch(SQLException e){
+						} catch (SQLException e) {
 							System.out.println(e);
 						}
-						
+
 						break;
 					case DATALIST:
 						System.out.println("Package type = " + pack.getType());
@@ -101,12 +103,13 @@ public class BackGroundRegister extends Thread {
 							ArrayList<String> resultLVL = new ArrayList<String>();
 							while (rs.next()) {
 								String data = rs.getString("name");
-								String lvl = String.valueOf(rs.getInt("maxlvl"));
+								String lvl = String
+										.valueOf(rs.getInt("maxlvl"));
 								resultAL.add(data);
 								resultLVL.add(lvl);
 							}
 							apams_network_package resultPack = new apams_datalist_package(
-									username, resultAL,resultLVL);
+									username, resultAL, resultLVL);
 							oOutputs.writeObject(resultPack);
 							oOutputs.close();
 							System.out.println("return package sent");
@@ -135,11 +138,13 @@ public class BackGroundRegister extends Thread {
 								rsPriority = rs.getInt("priority");
 								profilepic = rs.getBytes("profilepic");
 							}
-							
-							Bitmap bitpic = BitmapFactory.decodeByteArray(profilepic , 0, profilepic .length);
+
+							Bitmap bitpic = BitmapFactory.decodeByteArray(
+									profilepic, 0, profilepic.length);
 
 							apams_network_package accResult = new apams_acc_package(
-									username, rscid, rsPriority, rsBelong,bitpic);
+									username, rscid, rsPriority, rsBelong,
+									bitpic);
 							oOutputs.writeObject(accResult);
 							oOutputs.close();
 							System.out.println("return package sent");
@@ -159,7 +164,7 @@ public class BackGroundRegister extends Thread {
 						String createquery = "CREATE TABLE ? (" + "name text,"
 								+ "building text," + "room text,"
 								+ "type text," + "img bytea," + "assetlvl int,"
-								+ "PRIMARY KEY(name))";
+								+ "time text" + "PRIMARY KEY(name))";
 						try {
 							PreparedStatement createpst = conn
 									.prepareStatement(createquery);
@@ -171,13 +176,14 @@ public class BackGroundRegister extends Thread {
 							replyStr = "Database name already used";
 						}
 
-						String insertQuery = "INSERT INTO databases(name,owner,maxlvl)"
+						String insertQuery = "INSERT INTO databases(name,owner,maxlvl,time)"
 								+ "VALUES(?,?,?)";
 						try {
 							insertpst = conn.prepareStatement(insertQuery);
 							insertpst.setString(1, databaseName);
 							insertpst.setString(2, username);
 							insertpst.setInt(3, maxLvl);
+							insertpst.setString(4, time);
 							int result = insertpst.executeUpdate();
 							if (result != 0) {
 								replyStr = "GOOD";
@@ -212,7 +218,9 @@ public class BackGroundRegister extends Thread {
 							insertpst.setBytes(4, emptypic);
 							insertpst.setInt(5, 1000);
 							insertpst.setString(6, "Admin");
-							insertpst.setString(7, ((apams_network_package_regisAD)pack).getTime());
+							insertpst.setString(7,
+									((apams_network_package_regisAD) pack)
+											.getTime());
 
 							try {
 								int result = insertpst.executeUpdate();
