@@ -64,10 +64,8 @@ public class BackGroundRegister extends Thread {
 						System.out.println("Package type = " + pack.getType());
 
 						apams_profile_package proPack = (apams_profile_package) pack;
-						Bitmap pic = proPack.getPic();
-						ByteArrayOutputStream stream = new ByteArrayOutputStream();
-						pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
-						byte[] byteArray = stream.toByteArray();
+						byte[] byteArray = proPack.getPic();
+
 						String profileQuery = "UPDATE user_information SET profilepic = ? WHERE username = ?";
 						try {
 							PreparedStatement profilepst = conn
@@ -139,12 +137,9 @@ public class BackGroundRegister extends Thread {
 								profilepic = rs.getBytes("profilepic");
 							}
 
-							Bitmap bitpic = BitmapFactory.decodeByteArray(
-									profilepic, 0, profilepic.length);
-
 							apams_network_package accResult = new apams_acc_package(
 									username, rscid, rsPriority, rsBelong,
-									bitpic);
+									profilepic);
 							oOutputs.writeObject(accResult);
 							oOutputs.close();
 							System.out.println("return package sent");

@@ -1,5 +1,6 @@
 package com.example.apams_new;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -312,9 +313,13 @@ public class MainActivity extends Activity implements
 			options.inPurgeable = true;
 			Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
 			imageButton.setImageBitmap(bitmap);
+			
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			byte[] byteArray = stream.toByteArray();
 
 			apams_network_package pack = new apams_profile_package(mUsername,
-					bitmap);
+					byteArray);
 			apamsTCPclient task = new apamsTCPclient(this);
 			task.execute(pack);
 		}

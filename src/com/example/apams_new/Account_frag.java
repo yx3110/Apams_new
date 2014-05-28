@@ -11,6 +11,7 @@ import com.example.apams_newUtil.apams_network_package.packageType;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,7 +92,8 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 		String CID = accPack.getCID();
 		String priority = String.valueOf(accPack.getPriory());
 		String database = accPack.getBelongto();
-		Bitmap profile = accPack.getPic();
+		byte[] profile = accPack.getPic();
+		Bitmap bitprofile = new BitmapFactory().decodeByteArray(profile, 0, profile.length);
 		Log.e("pack", CID+" "+ database);
 
 		((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
@@ -107,7 +109,7 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 		}
 		if(profile!=null){
 		ImageButton ppbutton = (ImageButton)(rootView.findViewById(R.id.user_image));
-		ppbutton.setImageBitmap(profile);
+		ppbutton.setImageBitmap(bitprofile);
 	}}
 
 	@Override
