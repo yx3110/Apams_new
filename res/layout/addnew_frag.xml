@@ -19,6 +19,8 @@
             android:hint="@string/Item_name"
             android:singleLine="true" />
 
+        <requestFocus />
+
         <EditText
             android:id="@+id/addCID"
             android:layout_width="341dp"
@@ -28,6 +30,15 @@
             android:hint="@string/addCID"
             android:inputType="number"
             android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/addBuilding"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/addBuilding" >
+        </EditText>
 
         <EditText
             android:id="@+id/addRoom"
@@ -67,9 +78,8 @@
             android:id="@+id/add_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_confirm"
-            android:onClick="confirmAddItem" />
-
+            android:onClick="confirmAddItem"
+            android:text="@string/add_confirm" />
     </LinearLayout>
 
 </ScrollView>

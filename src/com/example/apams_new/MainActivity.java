@@ -1,13 +1,9 @@
 package com.example.apams_new;
 
 import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
@@ -40,6 +36,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -176,7 +174,6 @@ public class MainActivity extends Activity implements
 
 	public void createInvite(View view) {
 
-		String belongto;
 		if (this.datalist.size() == 0) {
 			popMsg("You need to create a database first");
 			return;
@@ -193,10 +190,32 @@ public class MainActivity extends Activity implements
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, dataarray);
 		spinner.setAdapter(adapter);
+		this.addListenerToInviteSpinner(lvllist);
 		new AlertDialog.Builder(this).setTitle("Create new APAMS Invite code")
 				.setView(layout).show();
+	}
 
-		// TODO:create invite;
+	private void addListenerToInviteSpinner(ArrayList<String> lvllist) {
+		Spinner spinner = (Spinner) this.inviteLayout
+				.findViewById(R.id.invite_dataspinner);
+
+		final ArrayList<String> flvllist = lvllist;
+
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int pos, long id) {
+				((TextView) findViewById(R.id.invite_maxlvl))
+						.setText("Max priority level = " + flvllist.get(pos));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+
+			}
+
+		});
 	}
 
 	public void generateCode(View view) {
@@ -209,6 +228,7 @@ public class MainActivity extends Activity implements
 
 	public void confirmInvite(View view) {
 		View layout = this.inviteLayout;
+
 		// TODO:layout.findViewById(R.id.invite_dataspinner).
 	}
 
@@ -217,7 +237,6 @@ public class MainActivity extends Activity implements
 	}
 
 	public void confirmAddItem(View view) {
-	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		// TODO confirm add query;
 	}
 
@@ -312,7 +331,7 @@ public class MainActivity extends Activity implements
 			options.inPurgeable = true;
 			Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
 			imageButton.setImageBitmap(bitmap);
-			
+
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
