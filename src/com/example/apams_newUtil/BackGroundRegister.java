@@ -60,6 +60,40 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					
+					case INVITECREATE:
+						System.out.println("Package type = " + pack.getType());
+						apams_inviteCreate_package ICpack = (apams_inviteCreate_package) pack;
+						String ICquery = "INSERT INTO invitelevel(code,level,belongto,time,activated,creator)"
+								+"VALUES(?,?,?,?,?,?)";
+						String code = ICpack.getCode();
+						int level =ICpack.getLevel();
+						String belongto = ICpack.getBelongto();
+						
+						try{
+							PreparedStatement ICpst = conn.prepareStatement(ICquery);
+							ICpst.setString(1, code);
+							ICpst.setInt(2, level);
+							ICpst.setString(3, belongto);
+							ICpst.setString(4, time);
+							ICpst.setBoolean(5, false);
+							ICpst.setString(6, username);
+							int result = ICpst.executeUpdate();
+							if(result!= 0){
+								replyStr = "INVITED";
+							}else{
+								replyStr = "invite error";
+							}
+							StrOut.write(replyStr);
+							StrOut.flush();
+							StrOut.close();
+							ICpst.close();
+						}catch(SQLException e){
+							System.out.println(e);
+						}
+						System.out.println("return String sent");
+
+						break;
 					case PROFILE:
 						System.out.println("Package type = " + pack.getType());
 
@@ -82,6 +116,7 @@ public class BackGroundRegister extends Thread {
 							StrOut.flush();
 							System.out.println("return String sent");
 							StrOut.close();
+							profilepst.close();
 							run();
 						} catch (SQLException e) {
 							System.out.println(e);
@@ -110,6 +145,7 @@ public class BackGroundRegister extends Thread {
 									username, resultAL, resultLVL);
 							oOutputs.writeObject(resultPack);
 							oOutputs.close();
+							datalistpst.close();
 							System.out.println("return package sent");
 							run();
 						} catch (SQLException e) {
@@ -142,6 +178,7 @@ public class BackGroundRegister extends Thread {
 									profilepic);
 							oOutputs.writeObject(accResult);
 							oOutputs.close();
+							accpst.close();
 							System.out.println("return package sent");
 							run();
 						} catch (SQLException e) {

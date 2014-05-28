@@ -4,10 +4,12 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_datalist_package;
+import com.example.apams_newUtil.apams_inviteCreate_package;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package_create;
@@ -44,6 +46,8 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.EditText;
+
 
 public class MainActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, OnTaskCompleted {
@@ -230,8 +234,12 @@ public class MainActivity extends Activity implements
 
 	public void confirmInvite(View view) {
 		View layout = this.inviteLayout;
-
-		// TODO:layout.findViewById(R.id.invite_dataspinner).
+		String code = ((Button) layout.findViewById(R.id.invite_generate)).getText().toString();
+		String belongto =(String)((Spinner) layout.findViewById(R.id.invite_dataspinner)).getSelectedItem();
+		int level = Integer.parseInt(((EditText) layout.findViewById(R.id.invite_lvl)).getText().toString());
+		apams_network_package pack = new apams_inviteCreate_package(mUsername,code,belongto,level);
+		apamsTCPclient task = new apamsTCPclient(this);
+		task.execute(pack);
 	}
 
 	public void manageInvite(View view) {
