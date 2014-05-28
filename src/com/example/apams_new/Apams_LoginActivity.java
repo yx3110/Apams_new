@@ -60,7 +60,6 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 		// Set up the login form.
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.addNewName);
-		mEmailView.setText(mEmail);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView

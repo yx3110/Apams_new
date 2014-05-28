@@ -190,23 +190,25 @@ public class MainActivity extends Activity implements
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, dataarray);
 		spinner.setAdapter(adapter);
-		this.addListenerToInviteSpinner(lvllist);
 		new AlertDialog.Builder(this).setTitle("Create new APAMS Invite code")
 				.setView(layout).show();
+		this.addListenerToInviteSpinner(lvllist,layout);
+
 	}
 
-	private void addListenerToInviteSpinner(ArrayList<String> lvllist) {
+	private void addListenerToInviteSpinner(ArrayList<String> lvllist,final View layout) {
 		Spinner spinner = (Spinner) this.inviteLayout
 				.findViewById(R.id.invite_dataspinner);
 
 		final ArrayList<String> flvllist = lvllist;
+		final View flayout = layout;
 
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int pos, long id) {
-				((TextView) findViewById(R.id.invite_maxlvl))
+				((TextView) flayout.findViewById(R.id.invite_maxlvl))
 						.setText("Max priority level = " + flvllist.get(pos));
 			}
 
