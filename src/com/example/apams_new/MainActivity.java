@@ -10,6 +10,7 @@ import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_inviteCreate_package;
+import com.example.apams_newUtil.apams_inviteManage_package;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package_create;
@@ -66,6 +67,7 @@ public class MainActivity extends Activity implements
 	private boolean isAdmin;
 	private ArrayList<String> datalist;
 	private ArrayList<String> lvllist;
+	private apams_inviteManage_package IMpack;
 
 	private View createLayout;
 	private View inviteLayout;
@@ -255,7 +257,6 @@ public class MainActivity extends Activity implements
 	}
 	
 	public void shareInvite(View view){
-		//TODO share invite;
 		String invite = ((Button) this.inviteLayout.findViewById(R.id.invite_generate)).getText().toString();
 		Intent share = new Intent(Intent.ACTION_SEND);
 		share.setType("text/plain");
@@ -264,7 +265,9 @@ public class MainActivity extends Activity implements
 	}
 
 	public void manageInvite(View view) {
-		// TODO show invite list;
+		apams_network_package pack = new apams_network_package(mUsername,packageType.INVITEMANAGE);
+		apamsTCPclient_package task = new apamsTCPclient_package(this);
+		task.execute(pack);
 	}
 
 	public void confirmAddItem(View view) {
