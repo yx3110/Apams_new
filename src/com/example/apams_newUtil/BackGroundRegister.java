@@ -88,6 +88,7 @@ public class BackGroundRegister extends Thread {
 							StrOut.flush();
 							StrOut.close();
 							ICpst.close();
+							run();
 						}catch(SQLException e){
 							System.out.println(e);
 						}
