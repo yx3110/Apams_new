@@ -10,12 +10,14 @@ import com.example.apams_newUtil.apams_network_package.packageType;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class Account_frag extends Fragment implements OnTaskCompleted {
@@ -89,6 +91,7 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 		String CID = accPack.getCID();
 		String priority = String.valueOf(accPack.getPriory());
 		String database = accPack.getBelongto();
+		Bitmap profile = accPack.getPic();
 		Log.e("pack", CID+" "+ database);
 
 		((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
@@ -102,7 +105,10 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 			((TextView) rootView.findViewById(R.id.textView_priority))
 					.setText(priority);
 		}
-	}
+		if(profile!=null){
+		ImageButton ppbutton = (ImageButton)(rootView.findViewById(R.id.user_image));
+		ppbutton.setImageBitmap(profile);
+	}}
 
 	@Override
 	public void popMsg(String string) {

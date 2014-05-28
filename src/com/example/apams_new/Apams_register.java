@@ -1,5 +1,8 @@
 package com.example.apams_new;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apams_network_package;
@@ -60,14 +63,15 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 		String usernameStr = username.getText().toString();
 		String password1Str = password1.getText().toString();
 		String password2Str = password2.getText().toString();
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		apams_network_package pack = null;
 		if (manager.isChecked()) {
 			pack = new apams_network_package_regisAD(usernameStr, password1Str,
-					CIDStr);
+					CIDStr,timeStamp);
 		} else {
 			String inviteStr = this.invite.getText().toString();
 			pack = new apams_network_package_regisN(usernameStr, password1Str,
-					CIDStr, inviteStr);
+					CIDStr, inviteStr,timeStamp);
 		}
 		if (password1Str.length() == 0 || usernameStr.length() == 0
 				|| CIDStr.length() == 0) {

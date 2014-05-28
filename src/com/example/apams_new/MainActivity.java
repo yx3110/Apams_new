@@ -3,12 +3,13 @@ package com.example.apams_new;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
-import com.example.apams_newUtil.apams_acc_package;
 import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
@@ -23,15 +24,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -53,7 +51,7 @@ public class MainActivity extends Activity implements
 		Serializable {
 
 	/**
-	 * Fragment managing the behaviors, interactions and presentation of the
+	 * Fragment managing the behaviours, interactions and presentation of the
 	 * navigation drawer.
 	 */
 	private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -178,7 +176,6 @@ public class MainActivity extends Activity implements
 
 	public void createInvite(View view) {
 
-		
 		String belongto;
 		if (this.datalist.size() == 0) {
 			popMsg("You need to create a database first");
@@ -187,50 +184,46 @@ public class MainActivity extends Activity implements
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.acc_invitecreate,
 				(ViewGroup) findViewById(R.id.dialog));
-		
+
 		this.inviteLayout = layout;
 		Spinner spinner = (Spinner) layout
 				.findViewById(R.id.invite_dataspinner);
 		String[] dataarray = new String[datalist.size()];
 		dataarray = datalist.toArray(dataarray);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item,dataarray);
+				android.R.layout.simple_spinner_item, dataarray);
 		spinner.setAdapter(adapter);
 		new AlertDialog.Builder(this).setTitle("Create new APAMS Invite code")
 				.setView(layout).show();
 
 		// TODO:create invite;
 	}
-	
-	public void generateCode(View view){
+
+	public void generateCode(View view) {
 		SecureRandom random = new SecureRandom();
-		String answer = new BigInteger(200, random).toString(32).substring(0, 14);
+		String answer = new BigInteger(200, random).toString(32).substring(0,
+				14);
 		((Button) view).setText(answer);
 		this.popMsg("Code generated but not activiated,press the same button to generate again");
 	}
-	
-	public void confirmInvite(View view){
-		View layout = (View) view.getParent();
-		//TODO:layout.findViewById(R.id.invite_dataspinner).
+
+	public void confirmInvite(View view) {
+		View layout = this.inviteLayout;
+		// TODO:layout.findViewById(R.id.invite_dataspinner).
 	}
 
 	public void manageInvite(View view) {
 		// TODO show invite list;
 	}
 
-	public void newPic(View view) {
-		Intent intent = new Intent();
-		intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-		intent.addCategory(Intent.CATEGORY_DEFAULT);
+	public void confirmAddItem(View view) {
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		// TODO confirm add query;
 	}
 
-	public void apams_scan_barcode(View view) {
-		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-		startActivityForResult(intent, 0);
+	public void generateQR(View view) {
+		// TODO generate QR code;
 	}
-	
-	
 
 	public void getDatabase(View view) {
 		String databases = "Name of databases under management: \n";
@@ -256,17 +249,43 @@ public class MainActivity extends Activity implements
 	}
 
 	private final int RESULT_LOAD_IMAGE = 1;
+	private final int RESULT_TAKE_PIC = 2;
+	private final int RESULT_QR = 3;
+
+	public void apams_scan_barcode(View view) {
+		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+		startActivityForResult(intent, RESULT_QR);
+	}
+
+	public void newPic(View view) {
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+			startActivityForResult(takePictureIntent, RESULT_TAKE_PIC);
+		}
+	}
 
 	public void changeUserPic(View view) {
-		Intent i = new Intent(Intent.ACTION_PICK,
+		Intent intent = new Intent(Intent.ACTION_PICK,
 				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		startActivityForResult(i, RESULT_LOAD_IMAGE);
+		startActivityForResult(intent, RESULT_LOAD_IMAGE);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
+		if (requestCode == RESULT_QR && resultCode == RESULT_OK) {
+			// TODO: QR code handle;
+
+		}
+
+		if (requestCode == RESULT_TAKE_PIC && resultCode == RESULT_OK) {
+			Bundle extras = data.getExtras();
+			Bitmap imageBitmap = (Bitmap) extras.get("data");
+			// TODO item image handle
+
+		}
 		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
 				&& null != data) {
 			Uri selectedImage = data.getData();
@@ -279,21 +298,23 @@ public class MainActivity extends Activity implements
 			cursor.close();
 
 			ImageButton imageButton = (ImageButton) findViewById(R.id.user_image);
+			int targetW = imageButton.getWidth();
+			int targetH = imageButton.getHeight();
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inJustDecodeBounds = true;
-			Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
-			float realWidth = options.outWidth;
-			float realHeight = options.outHeight;
-			int scale = (int) ((realHeight > realWidth ? realHeight : realWidth) / 100);
-			if (scale <= 0) {
-				scale = 1;
-			}
-			
+			BitmapFactory.decodeFile(picturePath, options);
+			int photoW = options.outWidth;
+			int photoH = options.outHeight;
+			int scale = Math.min(photoW / targetW, photoH / targetH);
+
 			options.inSampleSize = scale;
 			options.inJustDecodeBounds = false;
-			bitmap = BitmapFactory.decodeFile(picturePath, options);
+			options.inPurgeable = true;
+			Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
 			imageButton.setImageBitmap(bitmap);
-			apams_network_package pack=new apams_profile_package(mUsername,bitmap);
+
+			apams_network_package pack = new apams_profile_package(mUsername,
+					bitmap);
 			apamsTCPclient task = new apamsTCPclient(this);
 			task.execute(pack);
 		}
@@ -393,7 +414,10 @@ public class MainActivity extends Activity implements
 					packageType.DATALIST);
 			apamsTCPclient_package task = new apamsTCPclient_package(this);
 			task.execute(pack);
+		} else if (answer.contains("UPDATED")) {
+			popMsg("Profile pic updated in database");
 		} else {
+
 			popMsg("Error");
 		}
 	}

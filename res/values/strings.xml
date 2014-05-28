@@ -41,5 +41,6 @@
     <string name="invite_choose">Choose the database of invitation code</string>
     <string name="invite_generate">Generate an invitation code</string>
     <string name="scan_activate">Scan Barcode</string>
+    <string name="add_generateQR">Generate unique QR code for item</string>
 
 </resources>

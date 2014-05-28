@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.example.apams_newUtil.apams_network_package;
 
@@ -59,11 +60,32 @@ public class BackGroundRegister extends Thread {
 
 					switch (pack.getType()) {
 					case PROFILE:
+						System.out.println("Package type = " + pack.getType());
+
 						apams_profile_package proPack = (apams_profile_package) pack;
 						Bitmap pic = proPack.getPic();
 						ByteArrayOutputStream stream = new ByteArrayOutputStream();
 						pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
-						byte[] byteArray = stream.toByteArray();						
+						byte[] byteArray = stream.toByteArray();
+						String profileQuery = "UPDATE user_information SET profilepic = ? WHERE username = ?";
+						try{
+							PreparedStatement profilepst = conn.prepareStatement(profileQuery);
+							profilepst.setBytes(1, byteArray);
+							profilepst.setString(1, username);
+							int result = profilepst.executeUpdate();
+							if(result != 0){
+								replyStr = "UPDATED";
+							}else{
+								replyStr = "Not updated";
+							}
+							StrOut.write(replyStr);
+							StrOut.flush();
+							System.out.println("return String sent");
+							StrOut.close();
+							run();
+						}catch(SQLException e){
+							System.out.println(e);
+						}
 						
 						break;
 					case DATALIST:
@@ -97,7 +119,7 @@ public class BackGroundRegister extends Thread {
 					case ACC:
 						System.out.println("Package type = " + pack.getType());
 
-						String Accquery = "SELECT cid,priority,belongto FROM user_information where username =? ";
+						String Accquery = "SELECT cid,priority,belongto,profilepic FROM user_information where username =? ";
 						try {
 							PreparedStatement accpst = conn
 									.prepareStatement(Accquery);
@@ -106,14 +128,18 @@ public class BackGroundRegister extends Thread {
 							String rscid = null;
 							String rsBelong = null;
 							int rsPriority = 0;
+							byte[] profilepic = new byte[0];
 							while (rs.next()) {
 								rsBelong = rs.getString("belongto");
 								rscid = rs.getString("cid");
 								rsPriority = rs.getInt("priority");
+								profilepic = rs.getBytes("profilepic");
 							}
+							
+							Bitmap bitpic = BitmapFactory.decodeByteArray(profilepic , 0, profilepic .length);
 
 							apams_network_package accResult = new apams_acc_package(
-									username, rscid, rsPriority, rsBelong);
+									username, rscid, rsPriority, rsBelong,bitpic);
 							oOutputs.writeObject(accResult);
 							oOutputs.close();
 							System.out.println("return package sent");
@@ -174,7 +200,7 @@ public class BackGroundRegister extends Thread {
 					case REGISTER_AD:
 						System.out.println("Package type = " + pack.getType());
 
-						String ADquery = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto)"
+						String ADquery = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto,time)"
 								+ "VALUES(?,?,?,?,?,?)";
 
 						try {
@@ -186,6 +212,7 @@ public class BackGroundRegister extends Thread {
 							insertpst.setBytes(4, emptypic);
 							insertpst.setInt(5, 1000);
 							insertpst.setString(6, "Admin");
+							insertpst.setString(7, ((apams_network_package_regisAD)pack).getTime());
 
 							try {
 								int result = insertpst.executeUpdate();
@@ -247,8 +274,8 @@ public class BackGroundRegister extends Thread {
 							e.printStackTrace();
 						}
 
-						String NIquery = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto)"
-								+ "VALUES(?,?,?,?,?,?)";
+						String NIquery = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto,time)"
+								+ "VALUES(?,?,?,?,?,?,time)";
 
 						try {
 							insertpst = conn.prepareStatement(NIquery);
@@ -258,6 +285,7 @@ public class BackGroundRegister extends Thread {
 							insertpst.setByte(4, (byte) 0);
 							insertpst.setInt(5, priority);
 							insertpst.setString(6, belongTo);
+							insertpst.setString(7, regisNpack.getTime());
 
 							try {
 								int result = insertpst.executeUpdate();
