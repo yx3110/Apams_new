@@ -172,7 +172,7 @@ public class BackGroundRegister extends Thread {
 						}
 
 						String insertQuery = "INSERT INTO databases(name,owner,maxlvl,time)"
-								+ "VALUES(?,?,?)";
+								+ "VALUES(?,?,?,?)";
 						try {
 							insertpst = conn.prepareStatement(insertQuery);
 							insertpst.setString(1, databaseName);
@@ -188,7 +188,6 @@ public class BackGroundRegister extends Thread {
 							insertpst.close();
 						} catch (Exception e) {
 							System.out.println(e);
-
 							replyStr = "Insert into databases wrong";
 						}
 						StrOut.write(replyStr);
@@ -202,7 +201,7 @@ public class BackGroundRegister extends Thread {
 						System.out.println("Package type = " + pack.getType());
 
 						String ADquery = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto,time)"
-								+ "VALUES(?,?,?,?,?,?)";
+								+ "VALUES(?,?,?,?,?,?,?)";
 
 						try {
 							byte[] emptypic = new byte[100];
@@ -278,7 +277,7 @@ public class BackGroundRegister extends Thread {
 						}
 
 						String NIquery = "INSERT INTO user_information (username, password,CID,profilepic,priority,belongto,time)"
-								+ "VALUES(?,?,?,?,?,?,time)";
+								+ "VALUES(?,?,?,?,?,?,?)";
 
 						try {
 							insertpst = conn.prepareStatement(NIquery);
