@@ -75,7 +75,7 @@ public class BackGroundRegister extends Thread {
 								StrOut.close();
 								IMpst.close();
 							}else{
-								LinkedList<InviteInfo> resultList = new LinkedList<InviteInfo>();
+								ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
 								while(rs.next()){
 									InviteInfo info = new InviteInfo();
 									info.setCode(rs.getString("code"));
@@ -447,7 +447,6 @@ public class BackGroundRegister extends Thread {
 			e1.printStackTrace();
 			run();
 		}
-
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.example.apams_newUtil;
 
-public class InviteInfo {
+import java.io.Serializable;
+
+public class InviteInfo implements Serializable{
 	private String code;
 	private int level;
 	private String belongto;

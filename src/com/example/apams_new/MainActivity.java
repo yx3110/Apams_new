@@ -69,7 +69,7 @@ public class MainActivity extends Activity implements
 	private boolean isAdmin;
 	private ArrayList<String> datalist;
 	private ArrayList<String> lvllist;
-	private LinkedList<InviteInfo> inviteInfos;
+	private ArrayList<InviteInfo> inviteInfos;
 
 	private View createLayout;
 	private View inviteLayout;
@@ -273,9 +273,8 @@ public class MainActivity extends Activity implements
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
 		Intent intent = new Intent(this,InvitationcodeListActivity.class);
-		this.startActivity(intent);
-		
-		
+		intent.putExtra("inviteinfos", inviteInfos);
+		this.startActivity(intent);		
 	}
 
 	public void confirmAddItem(View view) {

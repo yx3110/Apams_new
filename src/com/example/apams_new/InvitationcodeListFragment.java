@@ -1,6 +1,9 @@
 package com.example.apams_new;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.apams_new.dummy.DummyContent;
+import com.example.apams_newUtil.InviteInfo;
 
 /**
  * A list fragment representing a list of Invitation codes. This fragment also
@@ -69,11 +73,14 @@ public class InvitationcodeListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Intent intent = this.getActivity().getIntent();
+		ArrayList<InviteInfo> inviteInfos = (ArrayList<InviteInfo>) intent.getSerializableExtra("inviteinfos");
 
 		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+		setListAdapter(new ArrayAdapter<InviteInfo>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+				android.R.id.text1, inviteInfos));
 	}
 
 	@Override
