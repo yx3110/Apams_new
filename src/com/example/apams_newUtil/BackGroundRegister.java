@@ -74,6 +74,7 @@ public class BackGroundRegister extends Thread {
 								StrOut.flush();
 								StrOut.close();
 								IMpst.close();
+								run();
 							}else{
 								ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
 								while(rs.next()){
@@ -88,6 +89,7 @@ public class BackGroundRegister extends Thread {
 									}
 									resultList.add(info);
 								}
+								System.out.println(resultList.size());
 								apams_network_package returnPack = new apams_inviteManage_package(username,resultList);
 								oOutputs.writeObject(returnPack);
 								System.out.println("return package sent");

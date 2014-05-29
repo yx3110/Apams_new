@@ -272,9 +272,7 @@ public class MainActivity extends Activity implements
 				packageType.INVITEMANAGE);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
-		Intent intent = new Intent(this,InvitationcodeListActivity.class);
-		intent.putExtra("inviteinfos", inviteInfos);
-		this.startActivity(intent);		
+
 	}
 
 	public void confirmAddItem(View view) {
@@ -510,7 +508,10 @@ public class MainActivity extends Activity implements
 				this.lvllist = dataPack.getLvllist();
 				break;
 			case INVITEMANAGE:
-				this.inviteInfos = ((apams_inviteManage_package) pack).getInfo();
+				ArrayList<InviteInfo> inviteInfos = ((apams_inviteManage_package) pack).getInfo();
+				Intent intent = new Intent(this,InvitationcodeListActivity.class);
+				intent.putExtra("inviteinfos", inviteInfos);
+				this.startActivity(intent);		
 		default:
 			break;
 		}
