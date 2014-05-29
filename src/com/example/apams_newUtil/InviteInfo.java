@@ -47,5 +47,10 @@ public class InviteInfo implements Serializable{
 	public String getActivatedBy(){
 		return this.activated_by;
 	}
+	
+	@Override
+	public String toString() {
+		return this.code;
+	}
 		
 }
