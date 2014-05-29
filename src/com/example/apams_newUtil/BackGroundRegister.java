@@ -63,7 +63,7 @@ public class BackGroundRegister extends Thread {
 					switch (pack.getType()) {
 					case INVITEMANAGE:
 						System.out.println("Package type = " + pack.getType());
-						String IMquery = "SELECT code,level,belongto,time,acitvated,activated_by FROM invitelevel where creator =?";
+						String IMquery = "SELECT code,level,belongto,time,activated,activated_by FROM invitelevel where creator =?";
 						try{
 							PreparedStatement IMpst = conn.prepareStatement(IMquery);
 							IMpst.setString(1, username);
