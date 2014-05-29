@@ -363,7 +363,7 @@ public class BackGroundRegister extends Thread {
 							insertpst.setString(1, username);
 							insertpst.setString(2, password);
 							insertpst.setString(3, CID);
-							insertpst.setByte(4, (byte) 0);
+							insertpst.setBytes(4, new byte[0]);
 							insertpst.setInt(5, priority);
 							insertpst.setString(6, belongTo);
 							insertpst.setString(7, regisNpack.getTime());
@@ -379,6 +379,7 @@ public class BackGroundRegister extends Thread {
 								}
 							} catch (SQLException e) {
 								replyStr = "Username already exist";
+								System.out.println(e);
 							}
 							insertpst.close();
 						} catch (SQLException e) {
