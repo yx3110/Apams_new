@@ -45,6 +45,7 @@
     <string name="addBuilding">BuildingName</string>
     <string name="invite_maxlvl">Max priority level of this database.</string>
     <string name="invite_shareinvite">Share this invite code.</string>
-    
+    <string name="title_invitationcode_list">Invitation codes</string>
+    <string name="title_invitationcode_detail">Invitation code Detail</string>
 
 </resources>

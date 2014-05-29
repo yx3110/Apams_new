@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -60,7 +61,45 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
-					
+					case INVITEMANAGE:
+						System.out.println("Package type = " + pack.getType());
+						String IMquery = "SELECT code,level,belongto,time,acitvated,activated_by FROM invitelevel where creator =?";
+						try{
+							PreparedStatement IMpst = conn.prepareStatement(IMquery);
+							IMpst.setString(1, username);
+							ResultSet rs = IMpst.executeQuery();
+							if (!rs.isBeforeFirst()) {
+								replyStr = "NOINVITE";
+								StrOut.write(replyStr);
+								StrOut.flush();
+								StrOut.close();
+								IMpst.close();
+							}else{
+								LinkedList<InviteInfo> resultList = new LinkedList<InviteInfo>();
+								while(rs.next()){
+									InviteInfo info = new InviteInfo();
+									info.setCode(rs.getString("code"));
+									info.setBelongto(rs.getString("belongto"));
+									info.setLevel(rs.getInt("level"));
+									info.setTime(rs.getString("time"));
+									info.setActivated(rs.getBoolean("activated"));
+									if(rs.getString("activated_by")!=null){
+										info.setActivatedBy(rs.getString("activated_by"));
+									}
+									resultList.add(info);
+								}
+								apams_network_package returnPack = new apams_inviteManage_package(username,resultList);
+								oOutputs.writeObject(returnPack);
+								System.out.println("return package sent");
+								oOutputs.close();
+								IMpst.close();
+								run();
+							}
+							
+						}catch(SQLException e){
+							System.out.println(e);
+						}
+						break;
 					case INVITECREATE:
 						System.out.println("Package type = " + pack.getType());
 						apams_inviteCreate_package ICpack = (apams_inviteCreate_package) pack;

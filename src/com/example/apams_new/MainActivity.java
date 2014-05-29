@@ -4,7 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
+import com.example.apams_newUtil.InviteInfo;
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
@@ -67,7 +69,7 @@ public class MainActivity extends Activity implements
 	private boolean isAdmin;
 	private ArrayList<String> datalist;
 	private ArrayList<String> lvllist;
-	private apams_inviteManage_package IMpack;
+	private LinkedList<InviteInfo> inviteInfos;
 
 	private View createLayout;
 	private View inviteLayout;
@@ -245,19 +247,20 @@ public class MainActivity extends Activity implements
 				.getSelectedItemPosition()));
 		int level = Integer.parseInt(((EditText) layout
 				.findViewById(R.id.invite_lvl)).getText().toString());
-		if(level>maxLvl){
+		if (level > maxLvl) {
 			popMsg("Current priority level is higher than max priority level");
 			layout.findViewById(R.id.invite_lvl).requestFocus();
-		}else{
-		apams_network_package pack = new apams_inviteCreate_package(mUsername,
-				code, belongto, level);
-		apamsTCPclient task = new apamsTCPclient(this);
-		task.execute(pack);
+		} else {
+			apams_network_package pack = new apams_inviteCreate_package(
+					mUsername, code, belongto, level);
+			apamsTCPclient task = new apamsTCPclient(this);
+			task.execute(pack);
 		}
 	}
-	
-	public void shareInvite(View view){
-		String invite = ((Button) this.inviteLayout.findViewById(R.id.invite_generate)).getText().toString();
+
+	public void shareInvite(View view) {
+		String invite = ((Button) this.inviteLayout
+				.findViewById(R.id.invite_generate)).getText().toString();
 		Intent share = new Intent(Intent.ACTION_SEND);
 		share.setType("text/plain");
 		share.putExtra(Intent.EXTRA_TEXT, invite);
@@ -265,9 +268,14 @@ public class MainActivity extends Activity implements
 	}
 
 	public void manageInvite(View view) {
-		apams_network_package pack = new apams_network_package(mUsername,packageType.INVITEMANAGE);
+		apams_network_package pack = new apams_network_package(mUsername,
+				packageType.INVITEMANAGE);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
+		Intent intent = new Intent(this,InvitationcodeListActivity.class);
+		this.startActivity(intent);
+		
+		
 	}
 
 	public void confirmAddItem(View view) {
@@ -473,12 +481,13 @@ public class MainActivity extends Activity implements
 			task.execute(pack);
 		} else if (answer.contains("UPDATED")) {
 			popMsg("Profile pic updated in database");
-		}else if(answer.contains("INVITED")){ 
-			Button share = (Button)this.inviteLayout.findViewById(R.id.invite_share);
+		} else if (answer.contains("INVITED")) {
+			Button share = (Button) this.inviteLayout
+					.findViewById(R.id.invite_share);
 			share.setVisibility(View.VISIBLE);
 			share.setEnabled(true);
 			popMsg("Invite code created.Stay in this dialog to create more or click quit if you are finished.");
-		}else {
+		} else {
 			popMsg("Error");
 		}
 	}
@@ -496,11 +505,13 @@ public class MainActivity extends Activity implements
 	public void onPackReceived(apams_network_package pack) {
 		packageType type = pack.getType();
 		switch (type) {
-		case DATALIST:
-			apams_datalist_package dataPack = (apams_datalist_package) pack;
-			this.datalist = dataPack.getDatalist();
-			this.lvllist = dataPack.getLvllist();
-			break;
+			case DATALIST:
+				apams_datalist_package dataPack = (apams_datalist_package) pack;
+				this.datalist = dataPack.getDatalist();
+				this.lvllist = dataPack.getLvllist();
+				break;
+			case INVITEMANAGE:
+				this.inviteInfos = ((apams_inviteManage_package) pack).getInfo();
 		default:
 			break;
 		}

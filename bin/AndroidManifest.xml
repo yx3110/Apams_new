@@ -39,6 +39,18 @@
             android:name="com.example.apams_new.Apams_register"
             android:label="@string/title_activity_apams_register" >
         </activity>
+        <activity
+            android:name="com.example.apams_new.InvitationcodeListActivity"
+            android:label="@string/title_invitationcode_list" >
+        </activity>
+        <activity
+            android:name="com.example.apams_new.InvitationcodeDetailActivity"
+            android:label="@string/title_invitationcode_detail"
+            android:parentActivityName="com.example.apams_new.InvitationcodeListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.apams_new.InvitationcodeListActivity" />
+        </activity>
     </application>
 
 </manifest>
