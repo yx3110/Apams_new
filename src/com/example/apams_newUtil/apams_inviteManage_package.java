@@ -8,9 +8,9 @@ public class apams_inviteManage_package extends apams_network_package {
 	
 	private ArrayList<InviteInfo> inviteList;
 
-	public apams_inviteManage_package(String username,ArrayList<InviteInfo>invitelist) {
+	public apams_inviteManage_package(String username,ArrayList<InviteInfo> invitelist) {
 		super(username, packageType.INVITEMANAGE);
-		this.inviteList = inviteList;
+		this.inviteList = invitelist;
 	}
 	public ArrayList<InviteInfo> getInfo(){
 		return this.inviteList;

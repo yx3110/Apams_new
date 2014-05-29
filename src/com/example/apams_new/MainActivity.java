@@ -509,6 +509,7 @@ public class MainActivity extends Activity implements
 				break;
 			case INVITEMANAGE:
 				ArrayList<InviteInfo> inviteInfos = ((apams_inviteManage_package) pack).getInfo();
+				Log.e("listSize", inviteInfos.size()+"");
 				Intent intent = new Intent(this,InvitationcodeListActivity.class);
 				intent.putExtra("inviteinfos", inviteInfos);
 				this.startActivity(intent);		

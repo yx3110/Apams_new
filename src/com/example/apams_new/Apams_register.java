@@ -1,8 +1,5 @@
 package com.example.apams_new;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apams_network_package;
