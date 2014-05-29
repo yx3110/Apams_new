@@ -53,11 +53,18 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 		
 		Button createData = (Button) rootView.findViewById(R.id.acc_addData);
 		Button checkData = (Button) rootView.findViewById(R.id.acc_checkData);
+		Button createInvite = (Button) rootView.findViewById(R.id.acc_invite);
+		Button manageInvite = (Button) rootView.findViewById(R.id.acc_manageInvite);
 		if (!isAdmin) {
 			checkData.setEnabled(false);
 			checkData.setVisibility(View.INVISIBLE);
 			createData.setEnabled(false);
 			createData.setVisibility(View.INVISIBLE);
+			createInvite.setEnabled(false);
+			createInvite.setVisibility(View.INVISIBLE);
+			manageInvite.setEnabled(false);
+			manageInvite.setVisibility(View.INVISIBLE);
+			
 		}else{
 			rootView.findViewById(R.id.textView_database).setVisibility(View.INVISIBLE);
 			rootView.findViewById(R.id.textView_database).setEnabled(false);
@@ -102,9 +109,9 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 			((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
 		} else {
 			((TextView) rootView.findViewById(R.id.textView_CID)).setText(CID);
-			((TextView) rootView.findViewById(R.id.textView_database)).setText(database);
+			((TextView) rootView.findViewById(R.id.textView_database)).setText("Database under management: "+ database);
 			((TextView) rootView.findViewById(R.id.textView_priority))
-					.setText(priority);
+					.setText("Management priority: " + priority);
 		}
 		if(profile!=null){
 		ImageButton ppbutton = (ImageButton)(rootView.findViewById(R.id.user_image));

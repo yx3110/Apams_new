@@ -66,7 +66,7 @@
         android:text="@string/acc_addData" />
 
     <Button
-        android:id="@+id/manageInvite"
+        android:id="@+id/acc_manageInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/acc_addData"
@@ -87,7 +87,7 @@
         android:id="@+id/acc_checkData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/manageInvite"
+        android:layout_below="@+id/acc_manageInvite"
         android:layout_centerHorizontal="true"
         android:onClick="getDatabase"
         android:text="@string/acc_getData" />

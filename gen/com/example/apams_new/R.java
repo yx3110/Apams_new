@@ -38,6 +38,7 @@ public final class R {
         public static final int acc_addData=0x7f080011;
         public static final int acc_checkData=0x7f080014;
         public static final int acc_invite=0x7f080012;
+        public static final int acc_manageInvite=0x7f080013;
         public static final int action_example=0x7f080039;
         public static final int action_forgot_password=0x7f080038;
         public static final int action_settings=0x7f080037;
@@ -73,7 +74,6 @@ public final class R {
         public static final int login_form=0x7f08001a;
         public static final int login_status=0x7f080018;
         public static final int login_status_message=0x7f080019;
-        public static final int manageInvite=0x7f080013;
         public static final int navigation_drawer=0x7f080022;
         public static final int password=0x7f08001c;
         public static final int regis_invite=0x7f080033;

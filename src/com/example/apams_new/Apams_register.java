@@ -101,9 +101,9 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 			intent.putExtra("username",
 					((EditText) findViewById(R.id.editText_username)).getText()
 							.toString());
-			boolean isChecked = ((CheckBox)findViewById(R.id.checkBox_owner)).isChecked();
-			intent.putExtra("isAdmin",
-					isChecked);
+			boolean isChecked = ((CheckBox) findViewById(R.id.checkBox_owner))
+					.isChecked();
+			intent.putExtra("isAdmin", isChecked);
 			startActivity(intent);
 			finish();
 		} else if (answer.contains("Username already exist")) {
@@ -112,6 +112,8 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 			username.requestFocus();
 		} else if (answer.contains("Error occurred during connection")) {
 			popMsg("Connection failed. Server not online");
+		} else if (answer.contains("CODEUSED")) {
+			popMsg("The invite code you are using have already been used!");
 		} else {
 			popMsg("Please try again!" + " " + answer);
 		}
@@ -129,6 +131,6 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 	@Override
 	public void onPackReceived(apams_network_package pack) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

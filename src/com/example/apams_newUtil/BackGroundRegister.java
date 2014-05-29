@@ -64,8 +64,9 @@ public class BackGroundRegister extends Thread {
 					case INVITEMANAGE:
 						System.out.println("Package type = " + pack.getType());
 						String IMquery = "SELECT code,level,belongto,time,activated,activated_by FROM invitelevel where creator =?";
-						try{
-							PreparedStatement IMpst = conn.prepareStatement(IMquery);
+						try {
+							PreparedStatement IMpst = conn
+									.prepareStatement(IMquery);
 							IMpst.setString(1, username);
 							ResultSet rs = IMpst.executeQuery();
 							if (!rs.isBeforeFirst()) {
@@ -75,30 +76,33 @@ public class BackGroundRegister extends Thread {
 								StrOut.close();
 								IMpst.close();
 								run();
-							}else{
+							} else {
 								ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
-								while(rs.next()){
+								while (rs.next()) {
 									InviteInfo info = new InviteInfo();
 									info.setCode(rs.getString("code"));
 									info.setBelongto(rs.getString("belongto"));
 									info.setLevel(rs.getInt("level"));
 									info.setTime(rs.getString("time"));
-									info.setActivated(rs.getBoolean("activated"));
-									if(rs.getString("activated_by")!=null){
-										info.setActivatedBy(rs.getString("activated_by"));
+									info.setActivated(rs
+											.getBoolean("activated"));
+									if (rs.getString("activated_by") != null) {
+										info.setActivatedBy(rs
+												.getString("activated_by"));
 									}
 									resultList.add(info);
 								}
 								System.out.println(resultList.size());
-								apams_network_package returnPack = new apams_inviteManage_package(username,resultList);
+								apams_network_package returnPack = new apams_inviteManage_package(
+										username, resultList);
 								oOutputs.writeObject(returnPack);
 								System.out.println("return package sent");
 								oOutputs.close();
 								IMpst.close();
 								run();
 							}
-							
-						}catch(SQLException e){
+
+						} catch (SQLException e) {
 							System.out.println(e);
 						}
 						break;
@@ -106,13 +110,14 @@ public class BackGroundRegister extends Thread {
 						System.out.println("Package type = " + pack.getType());
 						apams_inviteCreate_package ICpack = (apams_inviteCreate_package) pack;
 						String ICquery = "INSERT INTO invitelevel(code,level,belongto,time,activated,creator)"
-								+"VALUES(?,?,?,?,?,?)";
+								+ "VALUES(?,?,?,?,?,?)";
 						String code = ICpack.getCode();
-						int level =ICpack.getLevel();
+						int level = ICpack.getLevel();
 						String belongto = ICpack.getBelongto();
-						
-						try{
-							PreparedStatement ICpst = conn.prepareStatement(ICquery);
+
+						try {
+							PreparedStatement ICpst = conn
+									.prepareStatement(ICquery);
 							ICpst.setString(1, code);
 							ICpst.setInt(2, level);
 							ICpst.setString(3, belongto);
@@ -120,9 +125,9 @@ public class BackGroundRegister extends Thread {
 							ICpst.setBoolean(5, false);
 							ICpst.setString(6, username);
 							int result = ICpst.executeUpdate();
-							if(result!= 0){
+							if (result != 0) {
 								replyStr = "INVITED";
-							}else{
+							} else {
 								replyStr = "invite error";
 							}
 							StrOut.write(replyStr);
@@ -130,7 +135,7 @@ public class BackGroundRegister extends Thread {
 							StrOut.close();
 							ICpst.close();
 							run();
-						}catch(SQLException e){
+						} catch (SQLException e) {
 							System.out.println(e);
 						}
 						System.out.println("return String sent");
@@ -328,28 +333,34 @@ public class BackGroundRegister extends Thread {
 
 						int priority = 0;
 						String belongTo = null;
-
+						boolean activated = true;
 						try {
-							String Nquery = "SELECT level,belongto FROM invitelevel WHERE code = ? ";
+							String Nquery = "SELECT level,belongto,activated FROM invitelevel WHERE code = ? ";
 							PreparedStatement querypst = conn
 									.prepareStatement(Nquery);
 							querypst.setString(1, invite);
-							try {
-								ResultSet rs = querypst.executeQuery();
-								if (!rs.isBeforeFirst()) {
-									replyStr = "Invite code not found";
-								}
-								while (rs.next()) {
-									priority = rs.getInt("level");
-									belongTo = rs.getString("belongto");
-								}
 
+							ResultSet rs = querypst.executeQuery();
+							if (!rs.isBeforeFirst()) {
+								replyStr = "Invite code not found";
+							}
+							while (rs.next()) {
+								priority = rs.getInt("level");
+								belongTo = rs.getString("belongto");
+								activated = rs.getBoolean("activated");
+							}
+							if(activated){
+								replyStr = "CODEUSED";
+								StrOut.write(replyStr);
+								StrOut.flush();
+								System.out.println("Reply String sent" + replyStr);
+								StrOut.close();
 								querypst.close();
+								run();
+								break;
+							}else{
 
-							} catch (SQLException e) {
-								System.out.println(e);
-
-								replyStr = "Error during finding invite code";
+							querypst.close();
 							}
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -384,6 +395,19 @@ public class BackGroundRegister extends Thread {
 							insertpst.close();
 						} catch (SQLException e) {
 							e.printStackTrace();
+						}
+
+						String modInviteQuery = "UPDATE invitelevel SET activated = ?, activated_by = ? WHERE code = ?";
+						try {
+							PreparedStatement MIpst = conn
+									.prepareStatement(modInviteQuery);
+							MIpst.setBoolean(1, true);
+							MIpst.setString(2, username);
+							MIpst.setString(3, invite);
+							MIpst.executeUpdate();
+						} catch (SQLException e) {
+							System.out.println();
+							replyStr = "Error";
 						}
 						StrOut.write(replyStr);
 						StrOut.flush();
