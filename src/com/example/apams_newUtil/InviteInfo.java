@@ -9,6 +9,7 @@ public class InviteInfo implements Serializable{
 	private String time;
 	private boolean activated;
 	private String activated_by;
+	
 	public InviteInfo(){		
 	}
 	public void setCode(String code){
@@ -50,7 +51,7 @@ public class InviteInfo implements Serializable{
 	
 	@Override
 	public String toString() {
-		return this.code;
+		return "Code: "+this.code+",Belongs to database: "+this.belongto;
 	}
 		
 }

@@ -17,6 +17,10 @@ import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package_create;
 import com.example.apams_newUtil.apams_profile_package;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -281,6 +285,9 @@ public class MainActivity extends Activity implements
 
 	public void generateQR(View view) {
 		// TODO generate QR code;
+		SecureRandom random = new SecureRandom();
+		String codeString = new BigInteger(200, random).toString(32).substring(
+				0, 14);
 	}
 
 	public void getDatabase(View view) {
@@ -502,17 +509,18 @@ public class MainActivity extends Activity implements
 	public void onPackReceived(apams_network_package pack) {
 		packageType type = pack.getType();
 		switch (type) {
-			case DATALIST:
-				apams_datalist_package dataPack = (apams_datalist_package) pack;
-				this.datalist = dataPack.getDatalist();
-				this.lvllist = dataPack.getLvllist();
-				break;
-			case INVITEMANAGE:
-				ArrayList<InviteInfo> inviteInfos = ((apams_inviteManage_package) pack).getInfo();
-				Log.e("listSize", inviteInfos.size()+"");
-				Intent intent = new Intent(this,InvitationcodeListActivity.class);
-				intent.putExtra("inviteinfos", inviteInfos);
-				this.startActivity(intent);		
+		case DATALIST:
+			apams_datalist_package dataPack = (apams_datalist_package) pack;
+			this.datalist = dataPack.getDatalist();
+			this.lvllist = dataPack.getLvllist();
+			break;
+		case INVITEMANAGE:
+			ArrayList<InviteInfo> inviteInfos = ((apams_inviteManage_package) pack)
+					.getInfo();
+			Log.e("listSize", inviteInfos.size() + "");
+			Intent intent = new Intent(this, InvitationcodeListActivity.class);
+			intent.putExtra("inviteinfos", inviteInfos);
+			this.startActivity(intent);
 		default:
 			break;
 		}

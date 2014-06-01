@@ -71,8 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/acc_addData"
         android:layout_centerHorizontal="true"
-        android:text="@string/acc_manageInvite"
-        android:onClick="manageInvite" />
+        android:onClick="manageInvite"
+        android:text="@string/acc_manageInvite" />
 
     <Button
         android:id="@+id/acc_invite"
