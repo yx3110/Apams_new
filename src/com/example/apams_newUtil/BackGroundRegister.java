@@ -307,7 +307,7 @@ public class BackGroundRegister extends Thread {
 						int maxLvl = Cpack.getMaxlvl();
 						String databaseName = Cpack.getDataName();
 
-						String createquery = "CREATE TABLE IF NOT EXISTS ?("
+						String createquery = "CREATE TABLE IF NOT EXISTS "+databaseName+"("
 								+ "name text NOT NULL," + "building text,"
 								+ "room text," + "type text," + "img bytea,"
 								+ "assetlvl int," + "time text"
