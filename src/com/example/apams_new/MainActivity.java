@@ -319,17 +319,37 @@ public class MainActivity extends Activity implements
 			this.popMsg("Please take a picture of the asset.");
 		}
 		if(curItem.getItemType()==null){
-			this.popMsg("Please choose a type of the asset");
+			this.popMsg("Please choose a type of the asset.");
 		}
 		if(curItem.getQRString() == null){
-			this.popMsg("Please generate a QR code for the asset");
+			this.popMsg("Please generate a QR code for the asset.");
+		}
+		if(this.isAdmin&&curItem.getDatabase() == null){
+			this.popMsg("Please select a target database for the item.");
 		}
 		
 		apams_network_package pack = new apams_asset_package(mUsername,curItem);
 		apamsTCPclient client = new apamsTCPclient(this);
 		client.execute(pack);
 		
+	}
+	public void chooseTargetData(View view){
+		String[] choices = new String[this.datalist.size()];
+		choices = this.datalist.toArray(choices);
+		final String[] fchoices = choices;
+		
+		new AlertDialog.Builder(this).setTitle("Choose Item type")
+		.setIcon(android.R.drawable.ic_dialog_info)
+		.setItems(fchoices, new DialogInterface.OnClickListener() {
 
+			public void onClick(DialogInterface dialog, int which) {
+				String itemType = fchoices[which];
+				Button chooseButton = (Button) findViewById(R.id.addChooseType);
+				chooseButton.setHint(itemType);
+				curItem.setDatabase(itemType);
+			}
+
+		}).setNegativeButton("Cancel", null).show();
 	}
 
 	private boolean isEmpty(EditText ET) {
@@ -342,7 +362,6 @@ public class MainActivity extends Activity implements
 	}
 
 	public void generateQR(View view) {
-		// TODO generate QR code;
 		SecureRandom random = new SecureRandom();
 		String codeString = new BigInteger(200, random).toString(32).substring(
 				0, 14);
@@ -400,8 +419,8 @@ public class MainActivity extends Activity implements
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == RESULT_QR && resultCode == RESULT_OK) {
-			// TODO: QR code handle;
-
+			// TODO: QR code reading handle;
+			
 		}
 
 		if (requestCode == RESULT_TAKE_PIC && resultCode == RESULT_OK) {
@@ -539,6 +558,11 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public void onTaskCompleted(String answer) {
+		
+		if(answer.contains("ASSETADDED")){
+			popMsg("New Item added into database");
+			this.curItem = new assetItem();
+		}
 		if (answer.contains("GOOD")) {
 			popMsg("Database created!Stay in this dialog to create more or click quit if you are finished.");
 			apams_network_package pack = new apams_network_package(mUsername,

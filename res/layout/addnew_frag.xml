@@ -89,7 +89,8 @@
             android:layout_width="292dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/add_chooseData" />
+            android:hint="@string/add_chooseData"
+            android:onClick="chooseTargetData" />
 
         <Button
             android:id="@+id/add_confirm"
