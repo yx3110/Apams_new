@@ -10,6 +10,7 @@ import com.example.apams_newUtil.InviteInfo;
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
+import com.example.apams_newUtil.apams_asset_package;
 import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_inviteCreate_package;
 import com.example.apams_newUtil.apams_inviteManage_package;
@@ -17,6 +18,7 @@ import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package_create;
 import com.example.apams_newUtil.apams_profile_package;
+import com.example.apams_newUtil.assetItem;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -78,6 +80,8 @@ public class MainActivity extends Activity implements
 	private View createLayout;
 	private View inviteLayout;
 
+	private assetItem curItem;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -92,6 +96,7 @@ public class MainActivity extends Activity implements
 		mTitle = getTitle();
 		datalist = new ArrayList<String>();
 		lvllist = new ArrayList<String>();
+		this.curItem = new assetItem();
 
 		apams_network_package pack = new apams_network_package(mUsername,
 				packageType.DATALIST);
@@ -115,7 +120,7 @@ public class MainActivity extends Activity implements
 					.commit();
 			break;
 		case 1:
-			Addnew_frag addFrag = Addnew_frag.newAddInstance(position + 1);
+			Addnew_frag addFrag = Addnew_frag.newAddInstance(position + 1,isAdmin);
 			fragmentManager.beginTransaction().replace(R.id.container, addFrag)
 					.commit();
 			break;
@@ -280,7 +285,60 @@ public class MainActivity extends Activity implements
 	}
 
 	public void confirmAddItem(View view) {
-		// TODO confirm add query;
+		assetItem curItem = this.curItem;
+		if (!isEmpty((EditText) this.findViewById(R.id.addBuilding))) {
+			curItem.setBuilding(((EditText) this.findViewById(R.id.addBuilding))
+					.getText().toString());
+		} else {
+			this.popMsg("Please enter the building containing the asset.");
+			return;
+		}
+		if (!isEmpty((EditText) this.findViewById(R.id.add_itemlvl))) {
+			curItem.setItemlvl(Integer.parseInt(((EditText) this
+					.findViewById(R.id.add_itemlvl)).getText().toString()));
+		} else {
+			this.popMsg("Please enter the Apams priority level the asset.");
+			return;
+		}
+
+		if (!isEmpty((EditText) this.findViewById(R.id.addRoom))) {
+			curItem.setRoom(((EditText) this.findViewById(R.id.addRoom))
+					.getText().toString());
+		} else {
+			this.popMsg("Please enter the room containing the asset.");
+			return;
+		}
+		if (!isEmpty((EditText) this.findViewById(R.id.addCID))) {
+			curItem.setBuilding(((EditText) this.findViewById(R.id.addCID))
+					.getText().toString());
+		} else {
+			this.popMsg("Please enter your CID number.");
+			return;
+		}
+		if(curItem.getPic() == null){
+			this.popMsg("Please take a picture of the asset.");
+		}
+		if(curItem.getItemType()==null){
+			this.popMsg("Please choose a type of the asset");
+		}
+		if(curItem.getQRString() == null){
+			this.popMsg("Please generate a QR code for the asset");
+		}
+		
+		apams_network_package pack = new apams_asset_package(mUsername,curItem);
+		apamsTCPclient client = new apamsTCPclient(this);
+		client.execute(pack);
+		
+
+	}
+
+	private boolean isEmpty(EditText ET) {
+		String test = ET.getText().toString().trim();
+		if (test.isEmpty() || test.length() == 0 || test.equals("")
+				|| test == null) {
+			return true;
+		} else
+			return false;
 	}
 
 	public void generateQR(View view) {
@@ -288,6 +346,7 @@ public class MainActivity extends Activity implements
 		SecureRandom random = new SecureRandom();
 		String codeString = new BigInteger(200, random).toString(32).substring(
 				0, 14);
+		curItem.setQRString(codeString);
 	}
 
 	public void getDatabase(View view) {
@@ -348,8 +407,10 @@ public class MainActivity extends Activity implements
 		if (requestCode == RESULT_TAKE_PIC && resultCode == RESULT_OK) {
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
-			// TODO item image handle
-
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			byte[] byteArray = stream.toByteArray();
+			this.curItem.setPic(byteArray);
 		}
 		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
 				&& null != data) {
@@ -402,6 +463,7 @@ public class MainActivity extends Activity implements
 						String itemType = choices[which];
 						Button chooseButton = (Button) findViewById(R.id.addChooseType);
 						chooseButton.setHint(itemType);
+						curItem.setItemType(itemType);
 					}
 
 				}).setNegativeButton("Cancel", null).show();

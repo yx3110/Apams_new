@@ -8,6 +8,7 @@ public class assetItem {
 	private byte[] pic;
 	private String QRString;
 	private int itemlvl;
+	private String database;
 	public assetItem(){
 		
 	}
@@ -58,6 +59,13 @@ public class assetItem {
 	}
 	public void setQRString(String QRString){
 		this.QRString = QRString;
+	}
+
+	public String getDatabase() {
+		return this.database;
+	}
+	public void setDatabase(String database){
+		this.database = database;
 	}
 	
 	

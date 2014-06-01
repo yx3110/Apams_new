@@ -49,6 +49,15 @@
             android:hint="@string/addRoom"
             android:singleLine="true" />
 
+        <EditText
+            android:id="@+id/add_itemlvl"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="@string/add_itemlvl"
+            android:inputType="number" />
+
         <Button
             android:id="@+id/addChooseType"
             android:layout_width="292dp"
@@ -69,10 +78,18 @@
 
         <Button
             android:id="@+id/add_generateQR"
-            android:layout_width="wrap_content"
+            android:layout_width="292dp"
             android:layout_height="wrap_content"
+            android:ems="10"
             android:hint="@string/add_generateQR"
             android:onClick="generateQR" />
+
+        <Button
+            android:id="@+id/add_chooseData"
+            android:layout_width="292dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/add_chooseData" />
 
         <Button
             android:id="@+id/add_confirm"

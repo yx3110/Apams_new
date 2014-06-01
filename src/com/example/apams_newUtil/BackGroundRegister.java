@@ -61,6 +61,72 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					case ADDASSET:
+						System.out.println("Package type = " + pack.getType());
+						String dataBase = null;
+						int userPriority = 0;
+						String infoQuery = "SELECT belongto,priority from user_information where username = ?";
+						try {
+							PreparedStatement infopst = conn
+									.prepareStatement(infoQuery);
+							infopst.setString(1, username);
+							ResultSet rs = infopst.executeQuery();
+							while (rs.next()) {
+								userPriority = rs.getInt("priority");
+								dataBase = rs.getString("belongto");
+								infopst.close();
+								System.out.println("User found in database");
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						assetItem curItem = ((apams_asset_package) pack)
+								.getItem();
+						if (userPriority == 1000) {
+							dataBase = curItem.getDatabase();
+						}
+						if (userPriority < curItem.getItemlvl()) {
+							replyStr = "PriorityTooLow";
+							StrOut.write(replyStr);
+							StrOut.flush();
+							StrOut.close();
+							run();
+						} else {
+							String addQuery = "INSERT INTO ?(name,"
+									+ "building," + "room," + "type," + "img,"
+									+ "assetlvl," + "time"
+									+ "VALUES(?,?,?,?,?,?,?)";
+							try {
+								PreparedStatement addpst = conn
+										.prepareStatement(addQuery);
+								addpst.setString(1, dataBase);
+								addpst.setString(2, curItem.getItemName());
+								addpst.setString(3, curItem.getBuilding());
+								addpst.setString(4, curItem.getRoom());
+								addpst.setString(5, curItem.getItemType());
+								addpst.setBytes(6, curItem.getPic());
+								addpst.setInt(7, curItem.getItemlvl());
+								addpst.setString(8, pack.getTime());
+
+								int result = addpst.executeUpdate();
+
+								if (result != 0) {
+									replyStr = "ASSETADDED";
+								} else {
+									replyStr = "ERROR";
+								}
+
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+
+							StrOut.write(replyStr);
+							StrOut.flush();
+							StrOut.close();
+							run();
+						}
+
+						break;
 					case INVITEMANAGE:
 						System.out.println("Package type = " + pack.getType());
 						String IMquery = "SELECT code,level,belongto,time,activated,activated_by FROM invitelevel where creator =?";
@@ -240,10 +306,11 @@ public class BackGroundRegister extends Thread {
 						int maxLvl = Cpack.getMaxlvl();
 						String databaseName = Cpack.getDataName();
 
-						String createquery = "CREATE TABLE IF NOT EXISTS ? (" + "name text NOT NULL,"
-								+ "building text," + "room text,"
-								+ "type text," + "img bytea," + "assetlvl int,"
-								+ "time text" + "PRIMARY KEY(name))";
+						String createquery = "CREATE TABLE IF NOT EXISTS ?("
+								+ "name text NOT NULL," + "building text,"
+								+ "room text," + "type text," + "img bytea,"
+								+ "assetlvl int," + "time text"
+								+ "PRIMARY KEY(name))";
 						try {
 							PreparedStatement createpst = conn
 									.prepareStatement(createquery);
@@ -349,18 +416,19 @@ public class BackGroundRegister extends Thread {
 								belongTo = rs.getString("belongto");
 								activated = rs.getBoolean("activated");
 							}
-							if(activated){
+							if (activated) {
 								replyStr = "CODEUSED";
 								StrOut.write(replyStr);
 								StrOut.flush();
-								System.out.println("Reply String sent" + replyStr);
+								System.out.println("Reply String sent"
+										+ replyStr);
 								StrOut.close();
 								querypst.close();
 								run();
 								break;
-							}else{
+							} else {
 
-							querypst.close();
+								querypst.close();
 							}
 						} catch (SQLException e) {
 							e.printStackTrace();
