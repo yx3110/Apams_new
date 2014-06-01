@@ -307,13 +307,14 @@ public class BackGroundRegister extends Thread {
 						int maxLvl = Cpack.getMaxlvl();
 						String databaseName = Cpack.getDataName();
 
-						String createquery = "CREATE TABLE IF NOT EXISTS"+ databaseName+"("
+						String createquery = "CREATE TABLE IF NOT EXISTS ?("
 								+ "name text NOT NULL," + "building text,"
 								+ "room text," + "type text," + "img bytea,"
 								+ "assetlvl int," + "time text"
 								+ "PRIMARY KEY(name))";
 						try {
-							Statement createpst = conn.createStatement();
+							PreparedStatement createpst = conn.prepareStatement(createquery);
+							createpst.setString(1, databaseName);
 							createpst.execute(createquery);
 							createpst.close();
 						} catch (SQLException e) {
