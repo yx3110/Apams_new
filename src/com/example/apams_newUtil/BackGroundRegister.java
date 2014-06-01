@@ -95,8 +95,8 @@ public class BackGroundRegister extends Thread {
 						} else {
 							String addQuery = "INSERT INTO ?(name,"
 									+ "building," + "room," + "type," + "img,"
-									+ "assetlvl," + "time"
-									+ "VALUES(?,?,?,?,?,?,?)";
+									+ "assetlvl," + "qrstring"+"time"
+									+ "VALUES(?,?,?,?,?,?,?,?)";
 							try {
 								PreparedStatement addpst = conn
 										.prepareStatement(addQuery);
@@ -107,7 +107,8 @@ public class BackGroundRegister extends Thread {
 								addpst.setString(5, curItem.getItemType());
 								addpst.setBytes(6, curItem.getPic());
 								addpst.setInt(7, curItem.getItemlvl());
-								addpst.setString(8, pack.getTime());
+								addpst.setString(8, curItem.getQRString());
+								addpst.setString(9, pack.getTime());
 
 								int result = addpst.executeUpdate();
 
@@ -308,10 +309,9 @@ public class BackGroundRegister extends Thread {
 						String databaseName = Cpack.getDataName();
 
 						String createquery = "CREATE TABLE IF NOT EXISTS "+databaseName+"("
-								+ "name text NOT NULL," + "building text,"
+								+ "name text NOT NULL PRIMARY KEY," + "building text,"
 								+ "room text," + "type text," + "img bytea,"
-								+ "assetlvl int," + "time text"
-								+ "PRIMARY KEY(name))";
+								+ "assetlvl int," + "qrstring text UNIQUE,"+"time text)";
 						try {
 							PreparedStatement createpst = conn.prepareStatement(createquery);
 							createpst.executeUpdate();
