@@ -315,7 +315,7 @@ public class BackGroundRegister extends Thread {
 						try {
 							PreparedStatement createpst = conn.prepareStatement(createquery);
 							createpst.setString(1, databaseName);
-							createpst.execute(createquery);
+							createpst.executeUpdate();
 							createpst.close();
 						} catch (SQLException e) {
 							System.out.println(e);
