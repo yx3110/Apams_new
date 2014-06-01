@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -306,16 +307,14 @@ public class BackGroundRegister extends Thread {
 						int maxLvl = Cpack.getMaxlvl();
 						String databaseName = Cpack.getDataName();
 
-						String createquery = "CREATE TABLE IF NOT EXISTS ?("
+						String createquery = "CREATE TABLE IF NOT EXISTS"+ databaseName+"("
 								+ "name text NOT NULL," + "building text,"
 								+ "room text," + "type text," + "img bytea,"
 								+ "assetlvl int," + "time text"
 								+ "PRIMARY KEY(name))";
 						try {
-							PreparedStatement createpst = conn
-									.prepareStatement(createquery);
-							createpst.setString(1, databaseName);
-							createpst.executeUpdate();
+							Statement createpst = conn.createStatement();
+							createpst.execute(createquery);
 							createpst.close();
 						} catch (SQLException e) {
 							System.out.println(e);
