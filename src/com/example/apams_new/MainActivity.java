@@ -337,9 +337,11 @@ public class MainActivity extends Activity implements
 
 			public void onClick(DialogInterface dialog, int which) {
 				String itemType = fchoices[which];
-				Button chooseButton = (Button) findViewById(R.id.addChooseType);
+				Button chooseButton = (Button) findViewById(R.id.add_chooseData);
+				Log.e("Button", "Button selected");
 				chooseButton.setHint(itemType);
 				curItem.setDatabase(itemType);
+				
 			}
 
 		}).setNegativeButton("Cancel", null).show();
@@ -359,6 +361,7 @@ public class MainActivity extends Activity implements
 		String codeString = new BigInteger(200, random).toString(32).substring(
 				0, 14);
 		curItem.setQRString(codeString);
+		((Button) this.findViewById(R.id.add_generateQR)).setHint("QR generated");
 	}
 
 	public void getDatabase(View view) {
@@ -374,7 +377,8 @@ public class MainActivity extends Activity implements
 		AlertDialog.Builder builder = new Builder(this);
 
 		if (this.datalist.isEmpty()) {
-			databases = "No database is found under you management.";
+			this.popMsg( "No database is found under you management.");
+			return;
 		}
 		builder.setMessage(databases);
 		builder.setTitle("Databases under you management");
@@ -422,6 +426,7 @@ public class MainActivity extends Activity implements
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
+			((Button)this.findViewById(R.id.addTakePicture)).setHint("Picture taken,touch here to take again");;
 			this.curItem.setPic(byteArray);
 		}
 		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
@@ -598,6 +603,7 @@ public class MainActivity extends Activity implements
 					.getInfo();
 			if(inviteInfos.size()==1&&inviteInfos.get(0).getCode().contains("NOINVITE")){
 				this.popMsg("No invite is found");
+				return;
 			}
 			Log.e("listSize", inviteInfos.size() + "");
 			Intent intent = new Intent(this, InvitationcodeListActivity.class);
