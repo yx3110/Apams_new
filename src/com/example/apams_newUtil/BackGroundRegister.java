@@ -141,8 +141,8 @@ public class BackGroundRegister extends Thread {
 							if (!rs.isBeforeFirst()) {
 								InviteInfo info = new InviteInfo();
 								info.setCode("NOINVITE");
+								System.out.print("No invite found");
 								resultList.add(info);
-								run();
 							} else {
 								while (rs.next()) {
 									InviteInfo info = new InviteInfo();
@@ -162,6 +162,7 @@ public class BackGroundRegister extends Thread {
 							System.out.println(resultList.size());
 							apams_network_package returnPack = new apams_inviteManage_package(
 									username, resultList);
+							
 							oOutputs.writeObject(returnPack);
 							System.out.println("return package sent");
 							oOutputs.close();
