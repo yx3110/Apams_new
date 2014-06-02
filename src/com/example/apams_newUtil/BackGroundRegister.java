@@ -93,22 +93,21 @@ public class BackGroundRegister extends Thread {
 							StrOut.close();
 							run();
 						} else {
-							String addQuery = "INSERT INTO ?(name,"
+							String addQuery = "INSERT INTO "+dataBase+"(name,"
 									+ "building," + "room," + "type," + "img,"
 									+ "assetlvl," + "qrstring" + "time"
 									+ "VALUES(?,?,?,?,?,?,?,?)";
 							try {
 								PreparedStatement addpst = conn
 										.prepareStatement(addQuery);
-								addpst.setString(1, dataBase);
-								addpst.setString(2, curItem.getItemName());
-								addpst.setString(3, curItem.getBuilding());
-								addpst.setString(4, curItem.getRoom());
-								addpst.setString(5, curItem.getItemType());
-								addpst.setBytes(6, curItem.getPic());
-								addpst.setInt(7, curItem.getItemlvl());
-								addpst.setString(8, curItem.getQRString());
-								addpst.setString(9, pack.getTime());
+								addpst.setString(1, curItem.getItemName());
+								addpst.setString(2, curItem.getBuilding());
+								addpst.setString(3, curItem.getRoom());
+								addpst.setString(4, curItem.getItemType());
+								addpst.setBytes(5, curItem.getPic());
+								addpst.setInt(6, curItem.getItemlvl());
+								addpst.setString(7, curItem.getQRString());
+								addpst.setString(8, pack.getTime());
 
 								int result = addpst.executeUpdate();
 
