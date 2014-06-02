@@ -603,6 +603,9 @@ public class MainActivity extends Activity implements
 		case INVITEMANAGE:
 			ArrayList<InviteInfo> inviteInfos = ((apams_inviteManage_package) pack)
 					.getInfo();
+			if(inviteInfos.size()==1&&inviteInfos.get(0).getCode().contains("NOINVITE")){
+				this.popMsg("No invite is found");
+			}
 			Log.e("listSize", inviteInfos.size() + "");
 			Intent intent = new Intent(this, InvitationcodeListActivity.class);
 			intent.putExtra("inviteinfos", inviteInfos);

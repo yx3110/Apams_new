@@ -47,6 +47,7 @@ public class apamsTCPclient_package extends
 				Log.e("TCP", "answer package got");
 			} catch (Exception e) {
 				Log.e("TCP", "S:Error", e);
+				
 			} finally {
 				socket.close();
 				Oout.close();

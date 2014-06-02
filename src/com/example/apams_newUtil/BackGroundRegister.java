@@ -95,7 +95,7 @@ public class BackGroundRegister extends Thread {
 						} else {
 							String addQuery = "INSERT INTO ?(name,"
 									+ "building," + "room," + "type," + "img,"
-									+ "assetlvl," + "qrstring"+"time"
+									+ "assetlvl," + "qrstring" + "time"
 									+ "VALUES(?,?,?,?,?,?,?,?)";
 							try {
 								PreparedStatement addpst = conn
@@ -137,15 +137,13 @@ public class BackGroundRegister extends Thread {
 									.prepareStatement(IMquery);
 							IMpst.setString(1, username);
 							ResultSet rs = IMpst.executeQuery();
+							ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
 							if (!rs.isBeforeFirst()) {
-								replyStr = "NOINVITE";
-								StrOut.write(replyStr);
-								StrOut.flush();
-								StrOut.close();
-								IMpst.close();
+								InviteInfo info = new InviteInfo();
+								info.setCode("NOINVITE");
+								resultList.add(info);
 								run();
 							} else {
-								ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
 								while (rs.next()) {
 									InviteInfo info = new InviteInfo();
 									info.setCode(rs.getString("code"));
@@ -160,15 +158,15 @@ public class BackGroundRegister extends Thread {
 									}
 									resultList.add(info);
 								}
-								System.out.println(resultList.size());
-								apams_network_package returnPack = new apams_inviteManage_package(
-										username, resultList);
-								oOutputs.writeObject(returnPack);
-								System.out.println("return package sent");
-								oOutputs.close();
-								IMpst.close();
-								run();
 							}
+							System.out.println(resultList.size());
+							apams_network_package returnPack = new apams_inviteManage_package(
+									username, resultList);
+							oOutputs.writeObject(returnPack);
+							System.out.println("return package sent");
+							oOutputs.close();
+							IMpst.close();
+							run();
 
 						} catch (SQLException e) {
 							System.out.println(e);
@@ -308,12 +306,15 @@ public class BackGroundRegister extends Thread {
 						int maxLvl = Cpack.getMaxlvl();
 						String databaseName = Cpack.getDataName();
 
-						String createquery = "CREATE TABLE IF NOT EXISTS "+databaseName+"("
-								+ "name text NOT NULL PRIMARY KEY," + "building text,"
-								+ "room text," + "type text," + "img bytea,"
-								+ "assetlvl int," + "qrstring text UNIQUE,"+"time text)";
+						String createquery = "CREATE TABLE IF NOT EXISTS "
+								+ databaseName + "("
+								+ "name text NOT NULL PRIMARY KEY,"
+								+ "building text," + "room text,"
+								+ "type text," + "img bytea," + "assetlvl int,"
+								+ "qrstring text UNIQUE," + "time text)";
 						try {
-							PreparedStatement createpst = conn.prepareStatement(createquery);
+							PreparedStatement createpst = conn
+									.prepareStatement(createquery);
 							createpst.executeUpdate();
 							createpst.close();
 						} catch (SQLException e) {
