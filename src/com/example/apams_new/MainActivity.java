@@ -308,6 +308,13 @@ public class MainActivity extends Activity implements
 			this.popMsg("Please enter your CID number.");
 			return;
 		}
+		if (!isEmpty((EditText) this.findViewById(R.id.addNewName))) {
+			curItem.setBuilding(((EditText) this.findViewById(R.id.addNewName))
+					.getText().toString());
+		} else {
+			this.popMsg("Please enter your Item name.");
+			return;
+		}
 		if(curItem.getPic() == null){
 			this.popMsg("Please take a picture of the asset.");
 		}
