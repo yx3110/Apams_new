@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 
 public class InviteInfo implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4702782612699173127L;
 	private String code;
 	private int level;
 	private String belongto;

@@ -1,6 +1,12 @@
 package com.example.apams_newUtil;
 
-public class assetItem {
+import java.io.Serializable;
+
+public class assetItem implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6941727429564381212L;
 	private String itemName;
 	private String type;
 	private String building;
