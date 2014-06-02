@@ -75,9 +75,9 @@ public class BackGroundRegister extends Thread {
 							while (rs.next()) {
 								userPriority = rs.getInt("priority");
 								dataBase = rs.getString("belongto");
-								infopst.close();
 								System.out.println("User found in database");
 							}
+							infopst.close();
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
