@@ -95,7 +95,7 @@ public class BackGroundRegister extends Thread {
 						} else {
 							String addQuery = "INSERT INTO "+dataBase+"(name,"
 									+ "building," + "room," + "type," + "img,"
-									+ "assetlvl," + "qrstring" + "time)"
+									+ "assetlvl," + "qrstring," + "time)"
 									+ "VALUES(?,?,?,?,?,?,?,?)";
 							try {
 								PreparedStatement addpst = conn
