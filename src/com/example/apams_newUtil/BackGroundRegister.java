@@ -152,7 +152,7 @@ public class BackGroundRegister extends Thread {
 										info.setActivatedBy(rs
 												.getString("activated_by"));
 									}
-									resultMap.put(info.getCode(),info);
+									resultMap.put(info.getId(),info);
 									resultList.add(info);
 									id++;
 								}
