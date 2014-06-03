@@ -1,9 +1,11 @@
 package com.example.apams_newUtil;
 
-import android.graphics.Bitmap;
-
 public class apams_acc_package extends apams_network_package {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1062947990779226301L;
 	private int priority;
 	private String belongto;
 	private String CID;

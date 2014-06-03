@@ -1,7 +1,6 @@
 package com.example.apams_newUtil;
 
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,13 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
+import java.util.HashMap;
 import com.example.apams_newUtil.apams_network_package;
 
 public class BackGroundRegister extends Thread {
@@ -137,6 +131,8 @@ public class BackGroundRegister extends Thread {
 							IMpst.setString(1, username);
 							ResultSet rs = IMpst.executeQuery();
 							ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
+							HashMap<String,InviteInfo> resultMap = new HashMap<String,InviteInfo>();
+							int id = 1;
 							if (!rs.isBeforeFirst()) {
 								InviteInfo info = new InviteInfo();
 								info.setCode("NOINVITE");
@@ -145,6 +141,7 @@ public class BackGroundRegister extends Thread {
 							} else {
 								while (rs.next()) {
 									InviteInfo info = new InviteInfo();
+									info.setId(String.valueOf(id));
 									info.setCode(rs.getString("code"));
 									info.setBelongto(rs.getString("belongto"));
 									info.setLevel(rs.getInt("level"));
@@ -155,12 +152,14 @@ public class BackGroundRegister extends Thread {
 										info.setActivatedBy(rs
 												.getString("activated_by"));
 									}
+									resultMap.put(info.getCode(),info);
 									resultList.add(info);
+									id++;
 								}
 							}
 							System.out.println(resultList.size());
 							apams_network_package returnPack = new apams_inviteManage_package(
-									username, resultList);
+									username, resultList,resultMap);
 							
 							oOutputs.writeObject(returnPack);
 							System.out.println("return package sent");

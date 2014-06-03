@@ -1,7 +1,5 @@
 package com.example.apams_new;
 
-import java.io.Serializable;
-
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_acc_package;

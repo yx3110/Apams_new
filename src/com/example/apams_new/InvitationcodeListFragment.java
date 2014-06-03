@@ -1,6 +1,7 @@
 package com.example.apams_new;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -69,18 +70,23 @@ public class InvitationcodeListFragment extends ListFragment {
 	 */
 	public InvitationcodeListFragment() {
 	}
+	
+	private ArrayList<InviteInfo> inviteList;
+	private HashMap<String,InviteInfo> inviteMap;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		Intent intent = this.getActivity().getIntent();
-		ArrayList<InviteInfo> inviteInfos = (ArrayList<InviteInfo>) intent.getSerializableExtra("inviteinfos");
+		this.inviteList = (ArrayList<InviteInfo>) intent.getSerializableExtra("inviteList");
+		this.inviteMap = (HashMap<String,InviteInfo>) intent.getSerializableExtra("inviteMap");
 
 		// TODO: replace with a real list adapter.
 		setListAdapter(new ArrayAdapter<InviteInfo>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, inviteInfos));
+				android.R.id.text1, inviteList));
 	}
 
 	@Override
@@ -123,7 +129,7 @@ public class InvitationcodeListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(inviteMap.get(position).getId());
 	}
 
 	@Override

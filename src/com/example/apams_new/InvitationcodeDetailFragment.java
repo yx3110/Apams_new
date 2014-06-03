@@ -1,5 +1,9 @@
 package com.example.apams_new;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.apams_new.dummy.DummyContent;
+import com.example.apams_newUtil.InviteInfo;
 
 /**
  * A fragment representing a single Invitation code detail screen. This fragment
@@ -24,7 +28,7 @@ public class InvitationcodeDetailFragment extends Fragment {
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
-	private DummyContent.DummyItem mItem;
+	private InviteInfo mItem;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -32,16 +36,21 @@ public class InvitationcodeDetailFragment extends Fragment {
 	 */
 	public InvitationcodeDetailFragment() {
 	}
-
+	private ArrayList<InviteInfo> inviteList;
+	private HashMap<String,InviteInfo> inviteMap;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Intent intent = this.getActivity().getIntent();
+		this.inviteList = (ArrayList<InviteInfo>) intent.getSerializableExtra("inviteList");
+		this.inviteMap = (HashMap<String,InviteInfo>) intent.getSerializableExtra("inviteMap");
 
 		if (getArguments().containsKey(ARG_ITEM_ID)) {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
+			mItem = inviteMap.get(getArguments().getString(
 					ARG_ITEM_ID));
 		}
 	}
@@ -55,7 +64,7 @@ public class InvitationcodeDetailFragment extends Fragment {
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
 			((TextView) rootView.findViewById(R.id.invitationcode_detail))
-					.setText(mItem.content);
+					.setText(mItem.toString());
 		}
 
 		return rootView;

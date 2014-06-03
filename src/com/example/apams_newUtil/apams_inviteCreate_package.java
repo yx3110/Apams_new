@@ -3,6 +3,10 @@ package com.example.apams_newUtil;
 
 public class apams_inviteCreate_package extends apams_network_package {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4456660882540513101L;
 	private String code;
 	private String belongto;
 	private int level;

@@ -4,8 +4,6 @@ import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package_Login;
-import com.example.apams_newUtil.apams_network_package.packageType;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;

@@ -2,8 +2,6 @@ package com.example.apams_newUtil;
 import java.io.*;
 import java.net.*;
 
-import com.example.apams_new.R;
-
 import android.os.AsyncTask;
 import android.util.*;
 
@@ -17,13 +15,18 @@ public class apamsTCPclient extends
 	public apamsTCPclient() {
 	}
 
-	public static final String SERVERIP = "146.169.53.14";
+	public static String SERVERIP = "146.169.53.14";
 	public static final int SERVERPORT = 8888;
 	private String answer;
 	private Socket socket;
 
 	private ObjectOutputStream Oout;
 	private BufferedReader in;
+	
+	public void changeIp(String ip){
+		this.SERVERIP = ip;
+	}
+	
 
 	@Override
 	protected String doInBackground(apams_network_package... pack) {

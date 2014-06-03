@@ -1,5 +1,10 @@
 package com.example.apams_new;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.example.apams_newUtil.InviteInfo;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -74,7 +79,12 @@ public class InvitationcodeListActivity extends FragmentActivity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this,
 					InvitationcodeDetailActivity.class);
+			Intent curIntent = this.getIntent();
+			ArrayList<InviteInfo> inviteList = (ArrayList<InviteInfo>) curIntent.getSerializableExtra("inviteList");
+			HashMap<String,InviteInfo> inviteMap = (HashMap<String,InviteInfo>) curIntent.getSerializableExtra("inviteMap");
 			detailIntent.putExtra(InvitationcodeDetailFragment.ARG_ITEM_ID, id);
+			detailIntent.putExtra("inviteList", inviteList);
+			detailIntent.putExtra("InviteMap", inviteMap);
 			startActivity(detailIntent);
 		}
 	}

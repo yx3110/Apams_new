@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.example.apams_newUtil.InviteInfo;
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
@@ -17,6 +19,7 @@ import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package_create;
 import com.example.apams_newUtil.apams_profile_package;
 import com.example.apams_newUtil.assetItem;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -68,7 +71,8 @@ public class MainActivity extends Activity implements
 	private boolean isAdmin;
 	private ArrayList<String> datalist;
 	private ArrayList<String> lvllist;
-	private ArrayList<InviteInfo> inviteInfos;
+	private ArrayList<InviteInfo> inviteInfoList;
+	private HashMap<String,InviteInfo> inviteInfoMap;
 
 	private View createLayout;
 	private View inviteLayout;
@@ -113,7 +117,8 @@ public class MainActivity extends Activity implements
 					.commit();
 			break;
 		case 1:
-			Addnew_frag addFrag = Addnew_frag.newAddInstance(position + 1,isAdmin);
+			Addnew_frag addFrag = Addnew_frag.newAddInstance(position + 1,
+					isAdmin);
 			fragmentManager.beginTransaction().replace(R.id.container, addFrag)
 					.commit();
 			break;
@@ -309,49 +314,50 @@ public class MainActivity extends Activity implements
 			return;
 		}
 		if (!isEmpty((EditText) this.findViewById(R.id.addNewName))) {
-			curItem.setBuilding(((EditText) this.findViewById(R.id.addNewName))
+			curItem.setItemName(((EditText) this.findViewById(R.id.addNewName))
 					.getText().toString());
 		} else {
 			this.popMsg("Please enter your Item name.");
 			return;
 		}
-		if(curItem.getPic() == null){
+		if (curItem.getPic() == null) {
 			this.popMsg("Please take a picture of the asset.");
 		}
-		if(curItem.getItemType()==null){
+		if (curItem.getItemType() == null) {
 			this.popMsg("Please choose a type of the asset.");
 		}
-		if(curItem.getQRString() == null){
+		if (curItem.getQRString() == null) {
 			this.popMsg("Please generate a QR code for the asset.");
 		}
-		if(this.isAdmin&&curItem.getDatabase() == null){
+		if (this.isAdmin && curItem.getDatabase() == null) {
 			this.popMsg("Please select a target database for the item.");
 		}
-		
-		apams_network_package pack = new apams_asset_package(mUsername,curItem);
+
+		apams_network_package pack = new apams_asset_package(mUsername, curItem);
 		apamsTCPclient client = new apamsTCPclient(this);
 		client.execute(pack);
-		
+
 	}
-	public void chooseTargetData(View view){
+
+	public void chooseTargetData(View view) {
 		String[] choices = new String[this.datalist.size()];
 		choices = this.datalist.toArray(choices);
 		final String[] fchoices = choices;
-		
+
 		new AlertDialog.Builder(this).setTitle("Choose Item type")
-		.setIcon(android.R.drawable.ic_dialog_info)
-		.setItems(fchoices, new DialogInterface.OnClickListener() {
+				.setIcon(android.R.drawable.ic_dialog_info)
+				.setItems(fchoices, new DialogInterface.OnClickListener() {
 
-			public void onClick(DialogInterface dialog, int which) {
-				String itemType = fchoices[which];
-				Button chooseButton = (Button) findViewById(R.id.add_chooseData);
-				Log.e("Button", "Button selected");
-				chooseButton.setHint(itemType);
-				curItem.setDatabase(itemType);
-				
-			}
+					public void onClick(DialogInterface dialog, int which) {
+						String itemType = fchoices[which];
+						Button chooseButton = (Button) findViewById(R.id.add_chooseData);
+						Log.e("Button", "Button selected");
+						chooseButton.setHint(itemType);
+						curItem.setDatabase(itemType);
 
-		}).setNegativeButton("Cancel", null).show();
+					}
+
+				}).setNegativeButton("Cancel", null).show();
 	}
 
 	private boolean isEmpty(EditText ET) {
@@ -368,7 +374,9 @@ public class MainActivity extends Activity implements
 		String codeString = new BigInteger(200, random).toString(32).substring(
 				0, 14);
 		curItem.setQRString(codeString);
-		((Button) this.findViewById(R.id.add_generateQR)).setHint("QR generated");
+		((Button) this.findViewById(R.id.add_generateQR))
+				.setHint("QR generated,touch to generate again");
+		this.popMsg("New QR code have been generated");
 	}
 
 	public void getDatabase(View view) {
@@ -384,7 +392,7 @@ public class MainActivity extends Activity implements
 		AlertDialog.Builder builder = new Builder(this);
 
 		if (this.datalist.isEmpty()) {
-			this.popMsg( "No database is found under you management.");
+			this.popMsg("No database is found under you management.");
 			return;
 		}
 		builder.setMessage(databases);
@@ -400,9 +408,16 @@ public class MainActivity extends Activity implements
 	private final int RESULT_QR = 3;
 
 	public void apams_scan_barcode(View view) {
-		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-		startActivityForResult(intent, RESULT_QR);
+		try {
+			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+			intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE",
+					"QR_CODE_MODE");
+			startActivityForResult(intent, RESULT_QR);
+		} catch (Exception e) {
+			this.popMsg("You need to install the Zxing barcode scanner first");
+			Intent goToMarket = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://play.google.com/store/apps/details?id=com.google.zxing.client.android"));
+			startActivity(goToMarket);
+		}
 	}
 
 	public void newPic(View view) {
@@ -425,6 +440,7 @@ public class MainActivity extends Activity implements
 		if (requestCode == RESULT_QR && resultCode == RESULT_OK) {
 			// TODO: QR code reading handle;
 			
+
 		}
 
 		if (requestCode == RESULT_TAKE_PIC && resultCode == RESULT_OK) {
@@ -433,7 +449,9 @@ public class MainActivity extends Activity implements
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
-			((Button)this.findViewById(R.id.addTakePicture)).setHint("Picture taken,touch here to take again");;
+			((Button) this.findViewById(R.id.addTakePicture))
+					.setHint("Picture taken,touch here to take again");
+			;
 			this.curItem.setPic(byteArray);
 		}
 		if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK
@@ -563,12 +581,11 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public void onTaskCompleted(String answer) {
-		
-		if(answer.contains("ASSETADDED")){
+
+		if (answer.contains("ASSETADDED")) {
 			popMsg("New Item added into database");
 			this.curItem = new assetItem();
-		}
-		if (answer.contains("GOOD")) {
+		} else if (answer.contains("GOOD")) {
 			popMsg("Database created!Stay in this dialog to create more or click quit if you are finished.");
 			apams_network_package pack = new apams_network_package(mUsername,
 					packageType.DATALIST);
@@ -606,15 +623,18 @@ public class MainActivity extends Activity implements
 			this.lvllist = dataPack.getLvllist();
 			break;
 		case INVITEMANAGE:
-			ArrayList<InviteInfo> inviteInfos = ((apams_inviteManage_package) pack)
+			ArrayList<InviteInfo> inviteInfoList = ((apams_inviteManage_package) pack)
 					.getInfo();
-			if(inviteInfos.size()==1&&inviteInfos.get(0).getCode().contains("NOINVITE")){
+			HashMap<String,InviteInfo> inviteInfoMap = ((apams_inviteManage_package) pack).getMap();
+			if (inviteInfoList.size() == 1
+					&& inviteInfoList.get(0).getCode().contains("NOINVITE")) {
 				this.popMsg("No invite is found");
 				return;
 			}
-			Log.e("listSize", inviteInfos.size() + "");
+			Log.e("listSize", inviteInfoList.size() + "");
 			Intent intent = new Intent(this, InvitationcodeListActivity.class);
-			intent.putExtra("inviteinfos", inviteInfos);
+			intent.putExtra("inviteList", inviteInfoList);
+			intent.putExtra("inviteMap", inviteInfoMap);
 			this.startActivity(intent);
 		default:
 			break;

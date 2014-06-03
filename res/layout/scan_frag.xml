@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
-        android:text="@string/scan_activate"
-        android:onClick="apams_scan_barcode" />
+        android:layout_marginTop="36dp"
+        android:onClick="apams_scan_barcode"
+        android:text="@string/scan_activate" />
 
 </RelativeLayout>

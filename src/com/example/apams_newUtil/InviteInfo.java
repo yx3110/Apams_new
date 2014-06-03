@@ -15,11 +15,15 @@ public class InviteInfo implements Serializable{
 	private String time;
 	private boolean activated;
 	private String activated_by;
+	private String id;
 	
 	public InviteInfo(){		
 	}
 	public void setCode(String code){
 		this.code = code;
+	}
+	public void setId(String id){
+		this.id = id;
 	}
 	public String getCode(){
 		return this.code;
@@ -54,7 +58,9 @@ public class InviteInfo implements Serializable{
 	public String getActivatedBy(){
 		return this.activated_by;
 	}
-	
+	public String getId(){
+		return this.id;
+	}
 	@Override
 	public String toString() {
 		return "Code: "+this.code+",Belongs to database: "+this.belongto;

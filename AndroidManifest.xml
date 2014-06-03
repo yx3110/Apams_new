@@ -51,6 +51,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.apams_new.InvitationcodeListActivity" />
         </activity>
+
     </application>
 
 </manifest>

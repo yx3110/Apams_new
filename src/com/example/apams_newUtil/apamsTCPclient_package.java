@@ -1,7 +1,5 @@
 package com.example.apams_newUtil;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -22,7 +20,7 @@ public class apamsTCPclient_package extends
 	public apamsTCPclient_package() {
 	}
 
-	public static final String SERVERIP = "146.169.53.14";
+	public static String SERVERIP = "146.169.53.14";
 	public static final int SERVERPORT = 8888;
 	private apams_network_package answer;
 	private Socket socket;
@@ -30,6 +28,9 @@ public class apamsTCPclient_package extends
 	private ObjectOutputStream Oout;
 	private ObjectInputStream Oin;
 
+	public void changeIp(String ip){
+		this.SERVERIP = ip;
+	}
 	@Override
 	protected apams_network_package doInBackground(
 			apams_network_package... pack) {

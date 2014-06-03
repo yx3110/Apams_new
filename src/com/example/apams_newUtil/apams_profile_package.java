@@ -1,8 +1,10 @@
 package com.example.apams_newUtil;
 
-import android.graphics.Bitmap;
-
 public class apams_profile_package extends apams_network_package {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -542051879816188306L;
 	private byte[] pic;
 
 	public apams_profile_package(String username,byte[] pic) {
