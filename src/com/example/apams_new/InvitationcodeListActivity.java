@@ -8,6 +8,7 @@ import com.example.apams_newUtil.InviteInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 /**
  * An activity representing a list of Invitation codes. This activity has
@@ -80,11 +81,12 @@ public class InvitationcodeListActivity extends FragmentActivity implements
 			Intent detailIntent = new Intent(this,
 					InvitationcodeDetailActivity.class);
 			Intent curIntent = this.getIntent();
+			Log.e("id",id);
 			ArrayList<InviteInfo> inviteList = (ArrayList<InviteInfo>) curIntent.getSerializableExtra("inviteList");
 			HashMap<String,InviteInfo> inviteMap = (HashMap<String,InviteInfo>) curIntent.getSerializableExtra("inviteMap");
 			detailIntent.putExtra(InvitationcodeDetailFragment.ARG_ITEM_ID, id);
 			detailIntent.putExtra("inviteList", inviteList);
-			detailIntent.putExtra("InviteMap", inviteMap);
+			detailIntent.putExtra("inviteMap", inviteMap);
 			startActivity(detailIntent);
 		}
 	}
