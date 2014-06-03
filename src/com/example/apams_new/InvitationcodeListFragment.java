@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -126,10 +127,11 @@ public class InvitationcodeListFragment extends ListFragment {
 	public void onListItemClick(ListView listView, View view, int position,
 			long id) {
 		super.onListItemClick(listView, view, position, id);
+		Log.e("position", position+";"+ inviteList.get(position)+";"+String.valueOf(position)+inviteMap.get(String.valueOf(position)));
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(inviteMap.get(position-1).getId());
+		mCallbacks.onItemSelected(inviteMap.get(String.valueOf(position)).getId());
 	}
 
 	@Override

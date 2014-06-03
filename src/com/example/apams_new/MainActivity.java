@@ -631,7 +631,7 @@ public class MainActivity extends Activity implements
 				this.popMsg("No invite is found");
 				return;
 			}
-			Log.e("listSize", inviteInfoList.size() + "");
+			Log.e("mapSize", inviteInfoMap.size() + ""+"code"+inviteInfoMap.get("1"));
 			Intent intent = new Intent(this, InvitationcodeListActivity.class);
 			intent.putExtra("inviteList", inviteInfoList);
 			intent.putExtra("inviteMap", inviteInfoMap);
