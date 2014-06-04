@@ -1,7 +1,53 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/invitationcode_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.apams_new.InvitationcodeDetailActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="510dp"
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/invite_detail_qr"
+            android:layout_width="360dp"
+            android:layout_height="360dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/invite_belongandlvl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/invite_detail_qr"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/invite_detail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/invite_belongandlvl"
+            android:layout_below="@+id/invite_belongandlvl"
+            android:layout_marginTop="7dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/invite_activation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/invite_detail_date"
+            android:layout_below="@+id/invite_detail_date"
+            android:layout_marginTop="7dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
+
+</ScrollView>
