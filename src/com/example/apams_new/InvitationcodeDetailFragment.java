@@ -93,8 +93,6 @@ public class InvitationcodeDetailFragment extends Fragment {
 			String yes = mItem.getActivated()?"Yes":"No";
 			String activatedBy = mItem.getActivated()?mItem.getActivatedBy():"N/A";
 			activation.setText("Activated: "+ yes+" Activated by: "+activatedBy);
-
-
 		}
 
 		return rootView;
