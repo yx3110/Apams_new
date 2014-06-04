@@ -11,6 +11,7 @@ import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_assetAdd_package;
+import com.example.apams_newUtil.apams_assetQuery_package;
 import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_inviteCreate_package;
 import com.example.apams_newUtil.apams_inviteManage_package;
@@ -72,7 +73,7 @@ public class MainActivity extends Activity implements
 	private ArrayList<String> datalist;
 	private ArrayList<String> lvllist;
 	private ArrayList<InviteInfo> inviteInfoList;
-	private HashMap<String,InviteInfo> inviteInfoMap;
+	private HashMap<String, InviteInfo> inviteInfoMap;
 
 	private View createLayout;
 	private View inviteLayout;
@@ -124,8 +125,8 @@ public class MainActivity extends Activity implements
 			break;
 		case 2:
 			view_frag viewFrag = view_frag.newViewInstance(position + 1);
-			fragmentManager.beginTransaction().replace(R.id.container, viewFrag)
-					.commit();
+			fragmentManager.beginTransaction()
+					.replace(R.id.container, viewFrag).commit();
 			break;
 
 		case 3:
@@ -133,11 +134,11 @@ public class MainActivity extends Activity implements
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, scanFrag).commit();
 			break;
-		case 4:
-			map_frag mapFrag = map_frag.newMapInstance(position + 1);
-			fragmentManager.beginTransaction().replace(R.id.container, mapFrag)
-					.commit();
-			break;
+		/*
+		 * case 4: map_frag mapFrag = map_frag.newMapInstance(position + 1);
+		 * fragmentManager.beginTransaction().replace(R.id.container, mapFrag)
+		 * .commit(); break;
+		 */
 		}
 
 	}
@@ -339,7 +340,8 @@ public class MainActivity extends Activity implements
 			this.popMsg("Please select a target database for the item.");
 		}
 
-		apams_network_package pack = new apams_assetAdd_package(mUsername, curItem);
+		apams_network_package pack = new apams_assetAdd_package(mUsername,
+				curItem);
 		apamsTCPclient client = new apamsTCPclient(this);
 		client.execute(pack);
 
@@ -411,17 +413,19 @@ public class MainActivity extends Activity implements
 
 	private final int RESULT_LOAD_IMAGE = 1;
 	private final int RESULT_TAKE_PIC = 2;
-	private final int RESULT_QR = 3;
+	private final int RESULT_QR_SCAN = 3;
 
 	public void apams_scan_barcode(View view) {
 		try {
 			Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 			intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE",
 					"QR_CODE_MODE");
-			startActivityForResult(intent, RESULT_QR);
+			startActivityForResult(intent, RESULT_QR_SCAN);
 		} catch (Exception e) {
 			this.popMsg("You need to install the Zxing barcode scanner first");
-			Intent goToMarket = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://play.google.com/store/apps/details?id=com.google.zxing.client.android"));
+			Intent goToMarket = new Intent(Intent.ACTION_VIEW)
+					.setData(Uri
+							.parse("https://play.google.com/store/apps/details?id=com.google.zxing.client.android"));
 			startActivity(goToMarket);
 		}
 	}
@@ -443,10 +447,11 @@ public class MainActivity extends Activity implements
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		if (requestCode == RESULT_QR && resultCode == RESULT_OK) {
-			// TODO: QR code reading handle;
-			
-
+		if (requestCode == RESULT_QR_SCAN && resultCode == RESULT_OK) {
+            String contents = data.getStringExtra("SCAN_RESULT");
+            apams_network_package pack = new apams_assetQuery_package(mUsername,contents,isAdmin);
+            apamsTCPclient_package task = new apamsTCPclient_package(this);
+            task.execute(pack);
 		}
 
 		if (requestCode == RESULT_TAKE_PIC && resultCode == RESULT_OK) {
@@ -631,13 +636,15 @@ public class MainActivity extends Activity implements
 		case INVITEMANAGE:
 			ArrayList<InviteInfo> inviteInfoList = ((apams_inviteManage_package) pack)
 					.getInfo();
-			HashMap<String,InviteInfo> inviteInfoMap = ((apams_inviteManage_package) pack).getMap();
+			HashMap<String, InviteInfo> inviteInfoMap = ((apams_inviteManage_package) pack)
+					.getMap();
 			if (inviteInfoList.size() == 1
 					&& inviteInfoList.get(0).getCode().contains("NOINVITE")) {
 				this.popMsg("No invite is found");
 				return;
 			}
-			Log.e("mapSize", inviteInfoMap.size() + ""+"code"+inviteInfoMap.get("1"));
+			Log.e("mapSize",
+					inviteInfoMap.size() + "" + "code" + inviteInfoMap.get("1"));
 			Intent intent = new Intent(this, InvitationcodeListActivity.class);
 			intent.putExtra("inviteList", inviteInfoList);
 			intent.putExtra("inviteMap", inviteInfoMap);

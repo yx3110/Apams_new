@@ -131,6 +131,7 @@ public final class R {
         public static final int fragment_navigation_drawer=0x7f03000d;
         public static final int map_frag=0x7f03000e;
         public static final int scan_frag=0x7f03000f;
+        public static final int view_frag=0x7f030010;
     }
     public static final class menu {
         public static final int apams_register=0x7f070000;

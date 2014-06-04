@@ -56,6 +56,40 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					case QRQUERY:
+						System.out.println("Package type = " + pack.getType());
+						apams_assetQuery_package AQpack = (apams_assetQuery_package) pack;
+						String QRcode = AQpack.getQR();
+						String getdataQuery;
+						ArrayList<String> databases = new ArrayList<String>();
+						if (AQpack.isAdmin()) {
+							getdataQuery = "SELECT name FROM databases WHERE owner = ?";
+							try {
+								PreparedStatement gdpst = conn
+										.prepareStatement(getdataQuery);
+								gdpst.setString(1, username);
+								ResultSet rs = gdpst.executeQuery();
+								while (rs.next()) {
+									databases.add(rs.getString("name"));
+								}
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						} else {
+							getdataQuery = "SELECT belongto FROM user_information WHERE username = ?";
+							try {
+								PreparedStatement gdpst = conn
+										.prepareStatement(getdataQuery);
+								gdpst.setString(1, username);
+								ResultSet rs = gdpst.executeQuery();
+								while (rs.next()) {
+									databases.add(rs.getString("belongto"));
+								}
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
+						break;
 					case ADDASSET:
 						System.out.println("Package type = " + pack.getType());
 						String dataBase = null;
@@ -87,9 +121,10 @@ public class BackGroundRegister extends Thread {
 							StrOut.close();
 							run();
 						} else {
-							String addQuery = "INSERT INTO "+dataBase+"(name,"
-									+ "building," + "room," + "type," + "img,"
-									+ "assetlvl," + "qrstring," + "time)"
+							String addQuery = "INSERT INTO " + dataBase
+									+ "(name," + "building," + "room,"
+									+ "type," + "img," + "assetlvl,"
+									+ "qrstring," + "time)"
 									+ "VALUES(?,?,?,?,?,?,?,?)";
 							try {
 								PreparedStatement addpst = conn
@@ -131,7 +166,7 @@ public class BackGroundRegister extends Thread {
 							IMpst.setString(1, username);
 							ResultSet rs = IMpst.executeQuery();
 							ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
-							HashMap<String,InviteInfo> resultMap = new HashMap<String,InviteInfo>();
+							HashMap<String, InviteInfo> resultMap = new HashMap<String, InviteInfo>();
 							int id = 0;
 							if (!rs.isBeforeFirst()) {
 								InviteInfo info = new InviteInfo();
@@ -152,15 +187,15 @@ public class BackGroundRegister extends Thread {
 										info.setActivatedBy(rs
 												.getString("activated_by"));
 									}
-									resultMap.put(info.getId(),info);
+									resultMap.put(info.getId(), info);
 									resultList.add(info);
 									id++;
 								}
 							}
 							System.out.println(resultList.size());
 							apams_network_package returnPack = new apams_inviteManage_package(
-									username, resultList,resultMap);
-							
+									username, resultList, resultMap);
+
 							oOutputs.writeObject(returnPack);
 							System.out.println("return package sent");
 							oOutputs.close();
