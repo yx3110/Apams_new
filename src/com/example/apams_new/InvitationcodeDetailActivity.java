@@ -1,10 +1,16 @@
 package com.example.apams_new;
 
+import java.util.HashMap;
+
+import com.example.apams_newUtil.InviteInfo;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 /**
  * An activity representing a single Invitation code detail screen. This
@@ -48,6 +54,18 @@ public class InvitationcodeDetailActivity extends FragmentActivity {
 					.add(R.id.invitationcode_detail_container, fragment)
 					.commit();
 		}
+	}
+
+	public void shareQR(View view) {
+		@SuppressWarnings("unchecked")
+		String invite = ((HashMap<String, InviteInfo>) (this.getIntent()
+				.getSerializableExtra("inviteMap"))).get(
+				getIntent().getStringExtra(
+						InvitationcodeDetailFragment.ARG_ITEM_ID)).getCode();
+		Intent share = new Intent(Intent.ACTION_SEND);
+		share.setType("text/plain");
+		share.putExtra(Intent.EXTRA_TEXT, invite);
+		startActivity(Intent.createChooser(share, "Share invite code"));
 	}
 
 	@Override

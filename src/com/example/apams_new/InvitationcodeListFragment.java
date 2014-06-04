@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.apams_new.dummy.DummyContent;
 import com.example.apams_newUtil.InviteInfo;
 
 /**
@@ -84,7 +83,6 @@ public class InvitationcodeListFragment extends ListFragment {
 		this.inviteList = (ArrayList<InviteInfo>) intent.getSerializableExtra("inviteList");
 		this.inviteMap = (HashMap<String,InviteInfo>) intent.getSerializableExtra("inviteMap");
 
-		// TODO: replace with a real list adapter.
 		setListAdapter(new ArrayAdapter<InviteInfo>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, inviteList));

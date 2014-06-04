@@ -10,7 +10,7 @@ import com.example.apams_newUtil.InviteInfo;
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
-import com.example.apams_newUtil.apams_asset_package;
+import com.example.apams_newUtil.apams_assetAdd_package;
 import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_inviteCreate_package;
 import com.example.apams_newUtil.apams_inviteManage_package;
@@ -123,14 +123,20 @@ public class MainActivity extends Activity implements
 					.commit();
 			break;
 		case 2:
-			map_frag mapFrag = map_frag.newMapInstance(position + 1);
-			fragmentManager.beginTransaction().replace(R.id.container, mapFrag)
+			view_frag viewFrag = view_frag.newViewInstance(position + 1);
+			fragmentManager.beginTransaction().replace(R.id.container, viewFrag)
 					.commit();
 			break;
+
 		case 3:
 			scan_frag scanFrag = scan_frag.newScanInstance(position + 1);
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, scanFrag).commit();
+			break;
+		case 4:
+			map_frag mapFrag = map_frag.newMapInstance(position + 1);
+			fragmentManager.beginTransaction().replace(R.id.container, mapFrag)
+					.commit();
 			break;
 		}
 
@@ -333,7 +339,7 @@ public class MainActivity extends Activity implements
 			this.popMsg("Please select a target database for the item.");
 		}
 
-		apams_network_package pack = new apams_asset_package(mUsername, curItem);
+		apams_network_package pack = new apams_assetAdd_package(mUsername, curItem);
 		apamsTCPclient client = new apamsTCPclient(this);
 		client.execute(pack);
 

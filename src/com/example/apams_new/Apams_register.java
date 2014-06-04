@@ -130,7 +130,5 @@ public class Apams_register extends Activity implements OnTaskCompleted {
 
 	@Override
 	public void onPackReceived(apams_network_package pack) {
-		// TODO Auto-generated method stub
-
 	}
 }

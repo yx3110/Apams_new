@@ -75,7 +75,7 @@ public class BackGroundRegister extends Thread {
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
-						assetItem curItem = ((apams_asset_package) pack)
+						assetItem curItem = ((apams_assetAdd_package) pack)
 								.getItem();
 						if (userPriority == 1000) {
 							dataBase = curItem.getDatabase();

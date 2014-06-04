@@ -1,4 +1,4 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/invitationcode_detail"
     style="?android:attr/textAppearanceLarge"
@@ -6,4 +6,46 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:textIsSelectable="true"
-    tools:context="com.example.apams_new.InvitationcodeDetailFragment" />
+    tools:context="com.example.apams_new.InvitationcodeDetailFragment" >
+
+    <ImageButton
+        android:id="@+id/invite_detail_qr"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:contentDescription="QR code"
+        android:src="@drawable/ic_launcher"
+        android:onClick="shareQR" />
+
+    <TextView
+        android:id="@+id/invite_belongandlvl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/invite_detail_qr"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/invite_activation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/invite_belongandlvl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/invite_detail_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/invite_activation"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>

@@ -54,7 +54,6 @@ public class InvitationcodeListActivity extends FragmentActivity implements
 					.setActivateOnItemClick(true);
 		}
 
-		// TODO: If exposing deep links into your app, handle intents here.
 	}
 
 	/**
@@ -82,7 +81,9 @@ public class InvitationcodeListActivity extends FragmentActivity implements
 					InvitationcodeDetailActivity.class);
 			Intent curIntent = this.getIntent();
 			Log.e("id",id);
+			@SuppressWarnings("unchecked")
 			ArrayList<InviteInfo> inviteList = (ArrayList<InviteInfo>) curIntent.getSerializableExtra("inviteList");
+			@SuppressWarnings("unchecked")
 			HashMap<String,InviteInfo> inviteMap = (HashMap<String,InviteInfo>) curIntent.getSerializableExtra("inviteMap");
 			detailIntent.putExtra(InvitationcodeDetailFragment.ARG_ITEM_ID, id);
 			detailIntent.putExtra("inviteList", inviteList);
