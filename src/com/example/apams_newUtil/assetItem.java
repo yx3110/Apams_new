@@ -15,69 +15,88 @@ public class assetItem implements Serializable {
 	private String QRString;
 	private int itemlvl;
 	private String database;
-	public assetItem(){
-		
+	private String time;
+	private int id;
+
+	public assetItem() {
+
 	}
-	
-	public String getItemName(){
+
+	public String getItemName() {
 		return this.itemName;
 	}
+	public String getTime(){
+		return this.time;
+	}
 	
-	public String getItemType(){
+	public String getItemType() {
 		return this.type;
 	}
-	
-	public String getBuilding(){
+
+	public String getBuilding() {
 		return this.building;
 	}
-	
-	public String getRoom(){
+
+	public String getRoom() {
 		return this.room;
 	}
-	
-	public int getItemlvl(){
+
+	public int getItemlvl() {
 		return this.itemlvl;
 	}
-	public byte[] getPic(){
+
+	public byte[] getPic() {
 		return this.pic;
 	}
-	public String getQRString(){
+
+	public String getQRString() {
 		return this.QRString;
 	}
-	
-	public void setItemName(String name){
+
+	public void setItemName(String name) {
 		this.itemName = name;
 	}
-	public void setItemType(String type){
+
+	public void setItemType(String type) {
 		this.type = type;
 	}
-	public void setBuilding(String building){
+
+	public void setBuilding(String building) {
 		this.building = building;
 	}
-	public void setRoom(String room){
+
+	public void setRoom(String room) {
 		this.room = room;
 	}
-	public void setItemlvl(int itemlvl){
+
+	public void setItemlvl(int itemlvl) {
 		this.itemlvl = itemlvl;
 	}
-	public void setPic(byte[] pic){
+
+	public void setPic(byte[] pic) {
 		this.pic = pic;
 	}
-	public void setQRString(String QRString){
+
+	public void setQRString(String QRString) {
 		this.QRString = QRString;
 	}
 
 	public String getDatabase() {
 		return this.database;
 	}
-	public void setDatabase(String database){
+
+	public void setDatabase(String database) {
 		this.database = database;
 	}
-	
-	
-	
-	
-	
-	
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+	public void setTime(String time){
+		this.time = time;
+	}
 }

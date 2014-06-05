@@ -72,6 +72,7 @@ public class BackGroundRegister extends Thread {
 								while (rs.next()) {
 									databases.add(rs.getString("name"));
 								}
+								gdpst.close();
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
@@ -85,10 +86,46 @@ public class BackGroundRegister extends Thread {
 								while (rs.next()) {
 									databases.add(rs.getString("belongto"));
 								}
+								gdpst.close();
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
 						}
+						for (int i = 0;i<databases.size();i++){
+							String curdata = databases.get(i);
+							String curQuery = "SELECT * FROM ? WHERE qrstring = ?";
+							try{
+								PreparedStatement qrpst = conn.prepareStatement(curQuery);
+								qrpst.setString(1, curdata);
+								qrpst.setString(2, QRcode);
+								ResultSet rs = qrpst.executeQuery();
+								assetItem asset = new assetItem();
+								if (!rs.isBeforeFirst()) {
+									continue;
+								}else{
+									while(rs.next()){
+										asset.setBuilding(rs.getString("building"));
+										asset.setDatabase(curdata);
+										asset.setItemlvl(rs.getInt("assetlvl"));
+										asset.setItemName(rs.getString("name"));
+										asset.setItemType(rs.getString("type"));
+										asset.setPic(rs.getBytes("img"));
+										asset.setQRString(rs.getString("qrstring"));
+										asset.setRoom(rs.getString("room"));
+										asset.setTime(rs.getString("time"));
+									}
+									apams_network_package resultpack = new apams_assetQuery_package(username,asset);
+									oOutputs.writeObject(resultpack);
+								}
+								oOutputs.close();
+								outputs.close();
+								run();
+								
+							}catch(SQLException e){
+								e.printStackTrace();
+							}
+						}
+						
 						break;
 					case ADDASSET:
 						System.out.println("Package type = " + pack.getType());

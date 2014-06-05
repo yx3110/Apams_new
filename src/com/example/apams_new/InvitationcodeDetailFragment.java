@@ -1,6 +1,5 @@
 package com.example.apams_new;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Intent;

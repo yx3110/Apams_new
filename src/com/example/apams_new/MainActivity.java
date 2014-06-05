@@ -49,6 +49,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -649,6 +650,32 @@ public class MainActivity extends Activity implements
 			intent.putExtra("inviteList", inviteInfoList);
 			intent.putExtra("inviteMap", inviteInfoMap);
 			this.startActivity(intent);
+			break;
+		case QRRESULT:
+			assetItem item = ((apams_assetQuery_package) pack).getItem();
+			
+			LayoutInflater inflater = getLayoutInflater();
+			View layout = inflater.inflate(R.layout.asset_detail,
+					(ViewGroup) findViewById(R.id.dialog));
+			ImageView img = (ImageView) layout.findViewById(R.id.qrquery_pic);
+			byte[] byteapic = item.getPic();
+			Bitmap bitpic = new BitmapFactory().decodeByteArray(byteapic, 0, byteapic.length);
+			img.setImageBitmap(bitpic);
+			
+			TextView assettype = (TextView) layout.findViewById(R.id.qrquery_type);
+			TextView database = (TextView) layout.findViewById(R.id.qrquery_database);
+			TextView location = (TextView) layout.findViewById(R.id.qrquery_location);
+			TextView itemlvl = (TextView) layout.findViewById(R.id.qrquery_itemlvl);
+			TextView time = (TextView) layout.findViewById(R.id.qrquery_time);
+			assettype.setText("Type:" + item.getItemType());
+			database.setText("Database:"+item.getDatabase());
+			location.setText("Located in building:"+item.getBuilding()+" Room:"+item.getRoom());
+			itemlvl.setText("Priority level:" + item.getItemlvl());
+			time.setText("Last time updated:" +item.getTime());
+			new AlertDialog.Builder(this).setTitle(item.getItemName())
+					.setView(layout).setNegativeButton("OK", null)
+					.show();
+			
 		default:
 			break;
 		}

@@ -24,7 +24,7 @@
         android:text="@string/button_register_confirm" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/qrquery_database"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@string/register"
@@ -35,9 +35,9 @@
         android:id="@+id/editText_CID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignLeft="@+id/qrquery_itemlvl"
         android:layout_alignRight="@+id/editText_passwordSecond"
-        android:layout_below="@+id/textView4"
+        android:layout_below="@+id/qrquery_itemlvl"
         android:ems="10"
         android:inputType="number" />
 
@@ -59,12 +59,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView_CID"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/qrquery_location"
         android:ems="10"
         android:inputType="textWebEmailAddress" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/qrquery_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText_username"
@@ -76,7 +76,7 @@
         android:id="@+id/textView_CID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/qrquery_database"
         android:layout_below="@+id/editText_username"
         android:text="Password" />
 
@@ -84,14 +84,14 @@
         android:id="@+id/editText_passwordSecond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/qrquery_database"
         android:layout_alignRight="@+id/editText_passwordFirst"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/qrquery_database"
         android:ems="10"
         android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/qrquery_itemlvl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText_passwordSecond"
