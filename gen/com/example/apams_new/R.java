@@ -39,9 +39,9 @@ public final class R {
         public static final int acc_checkData=0x7f080013;
         public static final int acc_invite=0x7f080011;
         public static final int acc_manageInvite=0x7f080012;
-        public static final int action_forgot_password=0x7f080043;
-        public static final int action_search=0x7f080042;
-        public static final int action_settings=0x7f080041;
+        public static final int action_forgot_password=0x7f080044;
+        public static final int action_search=0x7f080043;
+        public static final int action_settings=0x7f080042;
         public static final int addBuilding=0x7f080025;
         public static final int addCID=0x7f080024;
         public static final int addChooseType=0x7f080028;
@@ -95,6 +95,7 @@ public final class R {
         public static final int scrollView1=0x7f08000b;
         public static final int section_label=0x7f08003f;
         public static final int sign_in_button=0x7f080021;
+        public static final int singleqr=0x7f080041;
         public static final int status_text=0x7f08000c;
         public static final int textView_CID=0x7f08000f;
         public static final int textView_database=0x7f08000d;
@@ -135,7 +136,8 @@ public final class R {
         public static final int fragment_navigation_drawer=0x7f03000e;
         public static final int map_frag=0x7f03000f;
         public static final int scan_frag=0x7f030010;
-        public static final int view_frag=0x7f030011;
+        public static final int singleqr=0x7f030011;
+        public static final int view_frag=0x7f030012;
     }
     public static final class menu {
         public static final int apams_register=0x7f070000;

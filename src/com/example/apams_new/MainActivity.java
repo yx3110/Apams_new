@@ -6,8 +6,10 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.example.apams_newUtil.Contents;
 import com.example.apams_newUtil.InviteInfo;
 import com.example.apams_newUtil.OnTaskCompleted;
+import com.example.apams_newUtil.QRCodeEncoder;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_assetAdd_package;
@@ -20,6 +22,8 @@ import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package_create;
 import com.example.apams_newUtil.apams_profile_package;
 import com.example.apams_newUtil.assetItem;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -42,7 +46,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.support.v4.print.PrintHelper;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -449,10 +455,11 @@ public class MainActivity extends Activity implements
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == RESULT_QR_SCAN && resultCode == RESULT_OK) {
-            String contents = data.getStringExtra("SCAN_RESULT");
-            apams_network_package pack = new apams_assetQuery_package(mUsername,contents,isAdmin);
-            apamsTCPclient_package task = new apamsTCPclient_package(this);
-            task.execute(pack);
+			String contents = data.getStringExtra("SCAN_RESULT");
+			apams_network_package pack = new apams_assetQuery_package(
+					mUsername, contents, isAdmin);
+			apamsTCPclient_package task = new apamsTCPclient_package(this);
+			task.execute(pack);
 		}
 
 		if (requestCode == RESULT_TAKE_PIC && resultCode == RESULT_OK) {
@@ -591,11 +598,41 @@ public class MainActivity extends Activity implements
 		}
 	}
 
+	protected void printDialog(final Bitmap bitmap) {
+		AlertDialog.Builder builder = new Builder(this);
+		final Activity main = this;
+		LayoutInflater inflater = getLayoutInflater();
+		View layout = inflater.inflate(R.layout.singleqr,
+				(ViewGroup) findViewById(R.id.dialog));
+		
+		builder.setMessage("Do you want to print your QR code now?");
+		builder.setTitle("Print");
+		builder.setView(layout);
+		builder.setNegativeButton("No", null);
+		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				PrintHelper photoPrinter = new PrintHelper(main);
+				photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+				photoPrinter.printBitmap("droids.jpg - test print", bitmap);
+
+			}
+
+		});
+		((ImageView)layout.findViewById(R.id.singleqr)).setImageBitmap(bitmap);
+		builder.create().show();
+		
+	}
+
 	@Override
 	public void onTaskCompleted(String answer) {
 
 		if (answer.contains("ASSETADDED")) {
 			popMsg("New Item added into database");
+			Bitmap bitmap = this.QRencode(curItem.getQRString(),
+					180,180 );
+			this.printDialog(bitmap);
 			this.curItem = new assetItem();
 		} else if (answer.contains("GOOD")) {
 			popMsg("Database created!Stay in this dialog to create more or click quit if you are finished.");
@@ -653,29 +690,34 @@ public class MainActivity extends Activity implements
 			break;
 		case QRRESULT:
 			assetItem item = ((apams_assetQuery_package) pack).getItem();
-			
+
 			LayoutInflater inflater = getLayoutInflater();
 			View layout = inflater.inflate(R.layout.asset_detail,
 					(ViewGroup) findViewById(R.id.dialog));
 			ImageView img = (ImageView) layout.findViewById(R.id.qrquery_pic);
 			byte[] byteapic = item.getPic();
-			Bitmap bitpic = new BitmapFactory().decodeByteArray(byteapic, 0, byteapic.length);
+			Bitmap bitpic = new BitmapFactory().decodeByteArray(byteapic, 0,
+					byteapic.length);
 			img.setImageBitmap(bitpic);
-			
-			TextView assettype = (TextView) layout.findViewById(R.id.qrquery_type);
-			TextView database = (TextView) layout.findViewById(R.id.qrquery_database);
-			TextView location = (TextView) layout.findViewById(R.id.qrquery_location);
-			TextView itemlvl = (TextView) layout.findViewById(R.id.qrquery_itemlvl);
+
+			TextView assettype = (TextView) layout
+					.findViewById(R.id.qrquery_type);
+			TextView database = (TextView) layout
+					.findViewById(R.id.qrquery_database);
+			TextView location = (TextView) layout
+					.findViewById(R.id.qrquery_location);
+			TextView itemlvl = (TextView) layout
+					.findViewById(R.id.qrquery_itemlvl);
 			TextView time = (TextView) layout.findViewById(R.id.qrquery_time);
 			assettype.setText("Type:" + item.getItemType());
-			database.setText("Database:"+item.getDatabase());
-			location.setText("Located in building:"+item.getBuilding()+" Room:"+item.getRoom());
+			database.setText("Database:" + item.getDatabase());
+			location.setText("Located in building:" + item.getBuilding()
+					+ " Room:" + item.getRoom());
 			itemlvl.setText("Priority level:" + item.getItemlvl());
-			time.setText("Last time updated:" +item.getTime());
+			time.setText("Last time updated:" + item.getTime());
 			new AlertDialog.Builder(this).setTitle(item.getItemName())
-					.setView(layout).setNegativeButton("OK", null)
-					.show();
-			
+					.setView(layout).setNegativeButton("OK", null).show();
+
 		default:
 			break;
 		}
@@ -708,6 +750,21 @@ public class MainActivity extends Activity implements
 		} else {
 			return super.onKeyDown(keyCode, event);
 		}
+
+	}
+	public Bitmap QRencode(String content, int width, int height) {
+		   int smallerDimension = width < height ? width : height;
+		   smallerDimension = smallerDimension * 3/4;
+		QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(content, null,
+				Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),
+				smallerDimension);
+		try {
+			Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
+			return bitmap;
+		} catch (WriterException e) {
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 }
