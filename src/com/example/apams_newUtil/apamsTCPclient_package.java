@@ -27,10 +27,11 @@ public class apamsTCPclient_package extends
 
 	private ObjectOutputStream Oout;
 	private ObjectInputStream Oin;
-
+/*
 	public void changeIp(String ip){
 		this.SERVERIP = ip;
 	}
+	*/
 	@Override
 	protected apams_network_package doInBackground(
 			apams_network_package... pack) {

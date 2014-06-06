@@ -22,12 +22,12 @@ public class apamsTCPclient extends
 
 	private ObjectOutputStream Oout;
 	private BufferedReader in;
-	
+/*	
 	public void changeIp(String ip){
 		this.SERVERIP = ip;
 	}
 	
-
+*/
 	@Override
 	protected String doInBackground(apams_network_package... pack) {
 		try {

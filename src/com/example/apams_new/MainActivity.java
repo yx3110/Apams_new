@@ -46,7 +46,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.support.v4.print.PrintHelper;
 import android.support.v4.widget.DrawerLayout;
@@ -131,7 +130,8 @@ public class MainActivity extends Activity implements
 					.commit();
 			break;
 		case 2:
-			view_frag viewFrag = view_frag.newViewInstance(position + 1);
+			view_frag viewFrag = view_frag.newViewInstance(mUsername,
+					position + 1, isAdmin);
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, viewFrag).commit();
 			break;
@@ -159,11 +159,13 @@ public class MainActivity extends Activity implements
 			mTitle = getString(R.string.title_addNew);
 			break;
 		case 3:
-			mTitle = getString(R.string.title_Map);
+			mTitle = getString(R.string.title_View);
 			break;
 		case 4:
 			mTitle = getString(R.string.title_scan);
 			break;
+		case 5:
+			mTitle = getString(R.string.title_Map);
 		}
 
 	}
@@ -293,7 +295,9 @@ public class MainActivity extends Activity implements
 				packageType.INVITEMANAGE);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
-
+	}
+	public void assetQuery(View view){
+		
 	}
 
 	public void confirmAddItem(View view) {

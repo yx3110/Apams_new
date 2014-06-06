@@ -51,5 +51,6 @@
     <string name="add_chooseData">Choose the database you want to add this item to</string>
     <string name="login_setip">Optional: Set server IP</string>
     <string name="login_findpw">Recover password</string>
+    <string name="title_View">Inspect current database</string>
 
 </resources>
