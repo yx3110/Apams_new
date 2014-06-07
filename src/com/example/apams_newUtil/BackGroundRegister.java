@@ -61,6 +61,7 @@ public class BackGroundRegister extends Thread {
 						System.out.println("Package type = " + pack.getType());
 						apams_assetQuery_package AQpack = (apams_assetQuery_package) pack;
 						String database = AQpack.getDatabase();
+						
 						String lvlQuery = "SELECT priority FROM user_information WHERE username = ?";
 						int prioritylvl = 0;
 						try {
@@ -92,7 +93,7 @@ public class BackGroundRegister extends Thread {
 								curItem.setItemlvl(rs.getInt("assetlvl"));
 								curItem.setItemName(rs.getString("name"));
 								curItem.setItemType(rs.getString("type"));
-								curItem.setPic(rs.getBytes("pic"));
+								curItem.setPic(rs.getBytes("img"));
 								curItem.setRoom(rs.getString("room"));
 								curItem.setTime(rs.getString("time"));
 								curItem.setUpdateTime(rs.getString("lastupdatetime"));

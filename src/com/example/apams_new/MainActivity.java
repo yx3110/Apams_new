@@ -303,8 +303,15 @@ public class MainActivity extends Activity implements
 	}
 
 	public void assetQuery(View view) {
+		String queryDatabase;
+		if(this.isAdmin){
+			Spinner dataSpinner = (Spinner) this.findViewById(R.id.inspect_spinner);
+			queryDatabase = (String) dataSpinner.getSelectedItem();
+		}else{
+			queryDatabase = this.database;
+		}
 		apams_network_package pack = new apams_assetQuery_package(
-				this.mUsername, this.database);
+				this.mUsername, queryDatabase);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
 	}
