@@ -86,7 +86,7 @@ public class MainActivity extends Activity implements
 	private View inviteLayout;
 
 	private assetItem curItem;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -281,7 +281,8 @@ public class MainActivity extends Activity implements
 			task.execute(pack);
 		}
 	}
-	public void setDatabase(String database){
+
+	public void setDatabase(String database) {
 		this.database = database;
 	}
 
@@ -302,16 +303,10 @@ public class MainActivity extends Activity implements
 	}
 
 	public void assetQuery(View view) {
-		Intent intent = new Intent(this, AssetListActivity.class);
-		if (isAdmin) {
-			Spinner dataSpinner = (Spinner) findViewById(R.id.inspect_spinner);
-			String database = (String) dataSpinner.getSelectedItem();
-			intent.putExtra("database", database);
-		}else{
-			intent.putExtra("database", this.database);
-		}
-		intent.putExtra("username", mUsername);
-		this.startActivity(intent);
+		apams_network_package pack = new apams_assetQuery_package(
+				this.mUsername, this.database);
+		apamsTCPclient_package task = new apamsTCPclient_package(this);
+		task.execute(pack);
 	}
 
 	public void confirmAddItem(View view) {
@@ -734,6 +729,14 @@ public class MainActivity extends Activity implements
 			time.setText("Last time updated:" + item.getTime());
 			new AlertDialog.Builder(this).setTitle(item.getItemName())
 					.setView(layout).setNegativeButton("OK", null).show();
+			break;
+		case ASSETRESULT:
+			Intent AssetIntent = new Intent(this, AssetListActivity.class);
+			apams_assetQuery_package RSpack = (apams_assetQuery_package) pack;
+			AssetIntent.putExtra("assetList", RSpack.getItemList());
+			AssetIntent.putExtra("assetMap", RSpack.getItemMap());
+			this.startActivity(AssetIntent);
+			break;
 
 		default:
 			break;

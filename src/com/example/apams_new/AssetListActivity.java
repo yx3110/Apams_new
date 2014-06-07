@@ -74,8 +74,8 @@ public class AssetListActivity extends FragmentActivity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, AssetDetailActivity.class);
 			detailIntent.putExtra(AssetDetailFragment.ARG_ITEM_ID, id);
-			detailIntent.putExtra("assetList", this.listFrag.getList());
-			detailIntent.putExtra("assetMap", this.listFrag.getMap());
+			detailIntent.putExtra("assetList", this.getIntent().getExtras().getSerializable("assetList"));
+			detailIntent.putExtra("assetMap", this.getIntent().getExtras().getSerializable("assetMap"));
 			startActivity(detailIntent);
 		}
 	}

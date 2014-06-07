@@ -73,15 +73,14 @@ public class BackGroundRegister extends Thread {
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
-						String assetQuery = "SELECT * FROM ? WHERE assetlvl <= ?";
+						String assetQuery = "SELECT * FROM "+database+" WHERE assetlvl <= ?";
 						ArrayList<assetItem> AQList = new ArrayList<assetItem>();
 						HashMap<String,assetItem> AQMap = new HashMap<String,assetItem>();
 						int AQid = 0;
 						try {
 							PreparedStatement AQpst = conn
 									.prepareStatement(assetQuery);
-							AQpst.setString(1, database);
-							AQpst.setInt(2, prioritylvl);
+							AQpst.setInt(1, prioritylvl);
 							ResultSet rs = AQpst.executeQuery();
 							while(rs.next()){
 								assetItem curItem = new assetItem();

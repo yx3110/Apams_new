@@ -28,7 +28,7 @@ import com.example.apams_newUtil.assetItem;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class AssetListFragment extends ListFragment implements OnTaskCompleted {
+public class AssetListFragment extends ListFragment {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -42,7 +42,6 @@ public class AssetListFragment extends ListFragment implements OnTaskCompleted {
 	 */
 	private Callbacks mCallbacks = sDummyCallbacks;
 	private ArrayList<assetItem> assetList;
-	private HashMap<String,assetItem> assetMap;
 
 	/**
 	 * The current activated item position. Only used on tablets.
@@ -77,26 +76,14 @@ public class AssetListFragment extends ListFragment implements OnTaskCompleted {
 	 */
 	public AssetListFragment() {
 	}
-	public ArrayList<assetItem> getList(){
-		return this.assetList;
-	}
-	public HashMap<String,assetItem> getMap(){
-		return this.assetMap;
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle bundle = this.getActivity().getIntent().getExtras();
-		String username = bundle.getString("username");
-		String database = bundle.getString("database");
-		
+		this.assetList = (ArrayList<assetItem>) bundle.getSerializable("assetList");
 
-		apams_network_package pack =new apams_assetQuery_package(username,database);
-		apamsTCPclient_package task = new apamsTCPclient_package(this);
-		task.execute(pack);
-		
-		//TODO:
+		// TODO:
 		setListAdapter(new ArrayAdapter<assetItem>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, this.assetList));
@@ -176,26 +163,4 @@ public class AssetListFragment extends ListFragment implements OnTaskCompleted {
 		mActivatedPosition = position;
 	}
 
-	@Override
-	public void onTaskCompleted(String answer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onPackReceived(apams_network_package pack) {
-		packageType type = pack.getType();
-		switch(type){
-			case ASSETRESULT:
-				apams_assetQuery_package RSpack =(apams_assetQuery_package) pack;
-				this.assetList = RSpack.getItemList();
-				this.assetMap = RSpack.getItemMap();
-		}
-		
-	}
-
-	@Override
-	public void popMsg(String string) {
-		
-	}
 }
