@@ -27,6 +27,7 @@ public class AssetListActivity extends FragmentActivity implements
 	 * device.
 	 */
 	private boolean mTwoPane;
+	private AssetListFragment listFrag;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,10 @@ public class AssetListActivity extends FragmentActivity implements
 
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
-			((AssetListFragment) getSupportFragmentManager().findFragmentById(
-					R.id.asset_list)).setActivateOnItemClick(true);
+			
+			this.listFrag =((AssetListFragment) getSupportFragmentManager().findFragmentById(
+					R.id.asset_list));
+			listFrag.setActivateOnItemClick(true);
 		}
 
 		// TODO: If exposing deep links into your app, handle intents here.
@@ -71,6 +74,8 @@ public class AssetListActivity extends FragmentActivity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, AssetDetailActivity.class);
 			detailIntent.putExtra(AssetDetailFragment.ARG_ITEM_ID, id);
+			detailIntent.putExtra("assetList", this.listFrag.getList());
+			detailIntent.putExtra("assetMap", this.listFrag.getMap());
 			startActivity(detailIntent);
 		}
 	}

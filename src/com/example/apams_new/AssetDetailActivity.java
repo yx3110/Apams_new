@@ -38,7 +38,7 @@ public class AssetDetailActivity extends FragmentActivity {
 			// using a fragment transaction.
 			Bundle arguments = new Bundle();
 			arguments.putString(AssetDetailFragment.ARG_ITEM_ID, getIntent()
-					.getStringExtra(AssetDetailFragment.ARG_ITEM_ID));
+					.getStringExtra(AssetDetailFragment.ARG_ITEM_ID));	
 			AssetDetailFragment fragment = new AssetDetailFragment();
 			fragment.setArguments(arguments);
 			getSupportFragmentManager().beginTransaction()

@@ -1,13 +1,19 @@
 package com.example.apams_new;
 
+import java.util.HashMap;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.apams_new.dummy.DummyContent;
+import com.example.apams_newUtil.assetItem;
 
 /**
  * A fragment representing a single Asset detail screen. This fragment is either
@@ -24,7 +30,7 @@ public class AssetDetailFragment extends Fragment {
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
-	private DummyContent.DummyItem mItem;
+	private assetItem mItem;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -33,6 +39,7 @@ public class AssetDetailFragment extends Fragment {
 	public AssetDetailFragment() {
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +48,7 @@ public class AssetDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
+			mItem = ((HashMap<String,assetItem>) this.getActivity().getIntent().getExtras().getSerializable("assetMap")).get(getArguments().getString(
 					ARG_ITEM_ID));
 		}
 	}
@@ -54,8 +61,10 @@ public class AssetDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.asset_detail))
-					.setText(mItem.content);
+			ImageView imgview = (ImageView) rootView.findViewById(R.id.asset_detail_image);
+			byte[] pic = mItem.getPic();
+			Bitmap bitpic= new BitmapFactory().decodeByteArray(pic, 0, pic.length);
+			imgview.setImageBitmap(bitpic);
 		}
 
 		return rootView;

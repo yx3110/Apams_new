@@ -77,6 +77,12 @@ public class AssetListFragment extends ListFragment implements OnTaskCompleted {
 	 */
 	public AssetListFragment() {
 	}
+	public ArrayList<assetItem> getList(){
+		return this.assetList;
+	}
+	public HashMap<String,assetItem> getMap(){
+		return this.assetMap;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
