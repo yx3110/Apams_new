@@ -15,14 +15,15 @@ public class apams_assetQuery_package extends apams_network_package {
 	private String QRcode;
 	private assetItem item;
 	private boolean isAdmin;
-	
+	private String database;
 	public apams_assetQuery_package(String username,String QRcode,Boolean isAdmin) {
 		super(username, packageType.QRQUERY);
 		this.isAdmin = isAdmin;
 		this.QRcode = QRcode;
 	}
-	public apams_assetQuery_package(String username){
+	public apams_assetQuery_package(String username,String database){
 		super(username,packageType.ASSETQUERY);
+		this.database = database;
 	}
 	public apams_assetQuery_package(String username,assetItem item){
 		super(username,packageType.QRRESULT);
@@ -47,6 +48,9 @@ public class apams_assetQuery_package extends apams_network_package {
 	}
 	public boolean isAdmin(){
 		return this.isAdmin;
+	}
+	public String getDatabase(){
+		return this.database;
 	}
 
 }

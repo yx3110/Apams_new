@@ -80,12 +80,13 @@ public class MainActivity extends Activity implements
 	private ArrayList<String> lvllist;
 	private ArrayList<InviteInfo> inviteInfoList;
 	private HashMap<String, InviteInfo> inviteInfoMap;
+	private String database;
 
 	private View createLayout;
 	private View inviteLayout;
 
 	private assetItem curItem;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -131,7 +132,7 @@ public class MainActivity extends Activity implements
 			break;
 		case 2:
 			view_frag viewFrag = view_frag.newViewInstance(mUsername,
-					position + 1, isAdmin);
+					position + 1, isAdmin, datalist);
 			fragmentManager.beginTransaction()
 					.replace(R.id.container, viewFrag).commit();
 			break;
@@ -280,6 +281,9 @@ public class MainActivity extends Activity implements
 			task.execute(pack);
 		}
 	}
+	public void setDatabase(String database){
+		this.database = database;
+	}
 
 	public void shareInvite(View view) {
 		String invite = ((Button) this.inviteLayout
@@ -296,8 +300,18 @@ public class MainActivity extends Activity implements
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
 	}
-	public void assetQuery(View view){
-		
+
+	public void assetQuery(View view) {
+		Intent intent = new Intent(this, AssetListActivity.class);
+		if (isAdmin) {
+			Spinner dataSpinner = (Spinner) findViewById(R.id.inspect_spinner);
+			String database = (String) dataSpinner.getSelectedItem();
+			intent.putExtra("database", database);
+		}else{
+			intent.putExtra("database", this.database);
+		}
+		intent.putExtra("username", mUsername);
+		this.startActivity(intent);
 	}
 
 	public void confirmAddItem(View view) {
@@ -608,7 +622,7 @@ public class MainActivity extends Activity implements
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.singleqr,
 				(ViewGroup) findViewById(R.id.dialog));
-		
+
 		builder.setMessage("Do you want to print your QR code now?");
 		builder.setTitle("Print");
 		builder.setView(layout);
@@ -624,9 +638,9 @@ public class MainActivity extends Activity implements
 			}
 
 		});
-		((ImageView)layout.findViewById(R.id.singleqr)).setImageBitmap(bitmap);
+		((ImageView) layout.findViewById(R.id.singleqr)).setImageBitmap(bitmap);
 		builder.create().show();
-		
+
 	}
 
 	@Override
@@ -634,8 +648,7 @@ public class MainActivity extends Activity implements
 
 		if (answer.contains("ASSETADDED")) {
 			popMsg("New Item added into database");
-			Bitmap bitmap = this.QRencode(curItem.getQRString(),
-					180,180 );
+			Bitmap bitmap = this.QRencode(curItem.getQRString(), 180, 180);
 			this.printDialog(bitmap);
 			this.curItem = new assetItem();
 		} else if (answer.contains("GOOD")) {
@@ -756,9 +769,10 @@ public class MainActivity extends Activity implements
 		}
 
 	}
+
 	public Bitmap QRencode(String content, int width, int height) {
-		   int smallerDimension = width < height ? width : height;
-		   smallerDimension = smallerDimension * 3/4;
+		int smallerDimension = width < height ? width : height;
+		smallerDimension = smallerDimension * 3 / 4;
 		QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(content, null,
 				Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),
 				smallerDimension);

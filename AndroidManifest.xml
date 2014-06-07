@@ -51,7 +51,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.apams_new.InvitationcodeListActivity" />
         </activity>
-
+        <activity
+            android:name="com.example.apams_new.AssetListActivity"
+            android:label="@string/title_asset_list" >
+        </activity>
+        <activity
+            android:name="com.example.apams_new.AssetDetailActivity"
+            android:label="@string/title_asset_detail"
+            android:parentActivityName="com.example.apams_new.AssetListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.apams_new.AssetListActivity" />
+        </activity>
     </application>
 
 </manifest>

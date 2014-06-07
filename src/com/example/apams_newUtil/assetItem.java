@@ -17,18 +17,29 @@ public class assetItem implements Serializable {
 	private String database;
 	private String time;
 	private int id;
+	private String updateTime;
+	private String updater;
 
 	public assetItem() {
 
 	}
 
+	public String getUpdater() {
+		return this.updater;
+	}
+
+	public void setUpdater(String updater) {
+		this.updater = updater;
+	}
+
 	public String getItemName() {
 		return this.itemName;
 	}
-	public String getTime(){
+
+	public String getTime() {
 		return this.time;
 	}
-	
+
 	public String getItemType() {
 		return this.type;
 	}
@@ -96,7 +107,19 @@ public class assetItem implements Serializable {
 	public int getId() {
 		return this.id;
 	}
-	public void setTime(String time){
+
+	public void setTime(String time) {
 		this.time = time;
+	}
+
+	public void setUpdateTime(String string) {
+		this.updateTime = string;
+	}
+	public String getUpdateTime(){
+		return this.updateTime;
+	}
+	@Override
+	public String toString() {
+		return "Name: "+this.getItemName()+",Belongs to database: "+this.database;
 	}
 }

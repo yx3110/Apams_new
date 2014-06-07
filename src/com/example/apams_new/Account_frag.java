@@ -110,6 +110,7 @@ public class Account_frag extends Fragment implements OnTaskCompleted {
 			((TextView) rootView.findViewById(R.id.textView_database)).setText("Database under management: "+ database);
 			((TextView) rootView.findViewById(R.id.textView_priority))
 					.setText("Management priority: " + priority);
+			((MainActivity) this.getActivity()).setDatabase(database);
 		}
 		if(profile!=null){
 		ImageButton ppbutton = (ImageButton)(rootView.findViewById(R.id.user_image));
