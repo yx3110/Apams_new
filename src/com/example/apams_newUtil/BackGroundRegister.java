@@ -79,7 +79,7 @@ public class BackGroundRegister extends Thread {
 						String assetQuery = "SELECT * FROM "+database+" WHERE assetlvl <= ?";
 						ArrayList<assetItem> AQList = new ArrayList<assetItem>();
 						HashMap<String,assetItem> AQMap = new HashMap<String,assetItem>();
-						int AQid = 0;
+						int AQid = 1;
 						try {
 							PreparedStatement AQpst = conn
 									.prepareStatement(assetQuery);
@@ -266,7 +266,7 @@ public class BackGroundRegister extends Thread {
 							ResultSet rs = IMpst.executeQuery();
 							ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
 							HashMap<String, InviteInfo> resultMap = new HashMap<String, InviteInfo>();
-							int id = 0;
+							int id = 1;
 							if (!rs.isBeforeFirst()) {
 								InviteInfo info = new InviteInfo();
 								info.setCode("NOINVITE");

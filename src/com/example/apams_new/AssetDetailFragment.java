@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,11 @@ public class AssetDetailFragment extends Fragment {
 			// Load the dummy content specified by the fragment
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
-			mItem = ((HashMap<String,assetItem>) this.getActivity().getIntent().getExtras().getSerializable("assetMap")).get(getArguments().getString(
-					ARG_ITEM_ID));
+			Log.e("id", getArguments().getString(ARG_ITEM_ID));
+			
+			mItem = ((HashMap<String, assetItem>) this.getActivity()
+					.getIntent().getExtras().getSerializable("assetMap"))
+					.get(getArguments().getString(ARG_ITEM_ID));
 		}
 	}
 
@@ -61,12 +65,16 @@ public class AssetDetailFragment extends Fragment {
 
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
-			ImageView imgview = (ImageView) rootView.findViewById(R.id.asset_detail_image);
+			ImageView imgview = (ImageView) rootView
+					.findViewById(R.id.asset_detail_image);
 			byte[] pic = mItem.getPic();
-			Bitmap bitpic= new BitmapFactory().decodeByteArray(pic, 0, pic.length);
+			Log.e("pic", pic.toString());
+			Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0,
+					pic.length);
 			imgview.setImageBitmap(bitpic);
+		} else {
+			Log.e("mItem", "null");
 		}
-
 		return rootView;
 	}
 }
