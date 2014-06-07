@@ -266,7 +266,7 @@ public class BackGroundRegister extends Thread {
 							ResultSet rs = IMpst.executeQuery();
 							ArrayList<InviteInfo> resultList = new ArrayList<InviteInfo>();
 							HashMap<String, InviteInfo> resultMap = new HashMap<String, InviteInfo>();
-							int id = 1;
+							int id = 0;
 							if (!rs.isBeforeFirst()) {
 								InviteInfo info = new InviteInfo();
 								info.setCode("NOINVITE");
