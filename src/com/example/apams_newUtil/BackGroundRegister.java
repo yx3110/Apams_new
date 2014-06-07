@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import com.example.apams_newUtil.apams_network_package;
 
 public class BackGroundRegister extends Thread {
@@ -73,6 +74,7 @@ public class BackGroundRegister extends Thread {
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
+						System.out.println(database);
 						String assetQuery = "SELECT * FROM "+database+" WHERE assetlvl <= ?";
 						ArrayList<assetItem> AQList = new ArrayList<assetItem>();
 						HashMap<String,assetItem> AQMap = new HashMap<String,assetItem>();
