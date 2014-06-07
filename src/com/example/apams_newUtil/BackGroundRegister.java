@@ -80,7 +80,7 @@ public class BackGroundRegister extends Thread {
 						try {
 							PreparedStatement AQpst = conn
 									.prepareStatement(assetQuery);
-							AQpst.setString(1, "database");
+							AQpst.setString(1, database);
 							AQpst.setInt(2, prioritylvl);
 							ResultSet rs = AQpst.executeQuery();
 							while(rs.next()){
