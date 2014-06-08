@@ -339,8 +339,6 @@ public class MainActivity extends Activity implements
 			return;
 		}
 		if (!isEmpty((EditText) this.findViewById(R.id.addCID))) {
-			curItem.setBuilding(((EditText) this.findViewById(R.id.addCID))
-					.getText().toString());
 		} else {
 			this.popMsg("Please enter your CID number.");
 			return;

@@ -49,7 +49,7 @@ public class AssetDetailFragment extends Fragment {
 			// arguments. In a real-world scenario, use a Loader
 			// to load content from a content provider.
 			Log.e("id", getArguments().getString(ARG_ITEM_ID));
-			
+
 			mItem = ((HashMap<String, assetItem>) this.getActivity()
 					.getIntent().getExtras().getSerializable("assetMap"))
 					.get(getArguments().getString(ARG_ITEM_ID));
@@ -71,15 +71,20 @@ public class AssetDetailFragment extends Fragment {
 			Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0,
 					pic.length);
 			imgview.setImageBitmap(bitpic);
-			((TextView) rootView.findViewById(R.id.asset_detail_name)).setText(mItem.getItemName());
-			((TextView) rootView.findViewById(R.id.asset_detail_database)).setText(mItem.getDatabase());
-			((TextView) rootView.findViewById(R.id.asset_detail_priority)).setText("Asset level:" +mItem.getItemName());
-			((TextView) rootView.findViewById(R.id.asset_detail_location)).setText("Stored in:"+ mItem.getBuilding()+" at room:" + mItem.getRoom());
-			((TextView) rootView.findViewById(R.id.asset_detial_type)).setText("Item type:"+mItem.getItemType());
-			((TextView) rootView.findViewById(R.id.asset_detail_update)).setText("Last updated by: "+mItem.getUpdater()+" At time:"+mItem.getUpdateTime());
-			
-
-
+			((TextView) rootView.findViewById(R.id.asset_detail_name))
+					.setText(mItem.getItemName() + "\n");
+			((TextView) rootView.findViewById(R.id.asset_detail_database))
+					.setText("Database:"+mItem.getDatabase());
+			((TextView) rootView.findViewById(R.id.asset_detail_priority))
+					.setText("Asset level:" + mItem.getItemlvl() + "\n");
+			((TextView) rootView.findViewById(R.id.asset_detail_location))
+					.setText("Stored in:" + mItem.getBuilding() + " at room:"
+							+ mItem.getRoom());
+			((TextView) rootView.findViewById(R.id.asset_detial_type))
+					.setText("Item type:" + mItem.getItemType() + "\n");
+			((TextView) rootView.findViewById(R.id.asset_detail_update))
+					.setText("Last updated by: " + mItem.getUpdater()
+							+ " At time:" + mItem.getUpdateTime() + "\n");
 
 		} else {
 			Log.e("mItem", "null");
