@@ -16,7 +16,7 @@ public class apamsTCPclient extends
 	}
 
 	public static String SERVERIP = "146.169.53.12";
-	public static final int SERVERPORT = 8888;
+	public static final int SERVERPORT = 8889;
 	private String answer;
 	private Socket socket;
 

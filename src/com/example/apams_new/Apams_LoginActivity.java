@@ -56,6 +56,8 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
 
+	private View findPWlayout;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -172,9 +174,10 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 	}
 	public void findPassword(View view){
 		LayoutInflater inflater = getLayoutInflater();
-
+		
 		View layout = inflater.inflate(R.layout.find_pw,
 				(ViewGroup) findViewById(R.id.dialog));
+		this.findPWlayout = layout;
 		AlertDialog.Builder builder = new Builder(this);
 		builder.setTitle("Find password");
 		builder.setNegativeButton("Cancel", null);
@@ -183,8 +186,8 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 	}
 	
 	public void confirmFindPW(View view){
-		EditText emailET = (EditText) findViewById(R.id.findPw_email);
-		EditText CIDET = (EditText) findViewById(R.id.findPw_cid);
+		EditText emailET = (EditText) findPWlayout.findViewById(R.id.findPw_email);
+		EditText CIDET = (EditText) findPWlayout.findViewById(R.id.findPw_CID);
 		String email = emailET.getText().toString();
 		String cid = CIDET.getText().toString();
 		apams_network_package pack = new apams_network_package(email,cid,packageType.FINDPW);

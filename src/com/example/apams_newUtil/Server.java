@@ -24,7 +24,7 @@ public class Server {
 			System.out.println(e);
 		}
 		try {
-			ServerSocket serverSocket = new ServerSocket(8888);
+			ServerSocket serverSocket = new ServerSocket(8889);
 			System.out.println("Server socket created");
 			
 			while(true){

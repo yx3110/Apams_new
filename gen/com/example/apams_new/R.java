@@ -67,12 +67,12 @@ public final class R {
         public static final int create_confirm_button=0x7f080003;
         public static final int dialog=0x7f080000;
         public static final int drawer_layout=0x7f080024;
-        public static final int editText1=0x7f080037;
         public static final int editText_CID=0x7f08003b;
         public static final int editText_passwordFirst=0x7f08003a;
         public static final int editText_passwordSecond=0x7f08003c;
         public static final int editText_username=0x7f08003d;
         public static final int findPW_confirm=0x7f080038;
+        public static final int findPw_CID=0x7f080037;
         public static final int findPw_cid=0x7f080035;
         public static final int findPw_email=0x7f080036;
         public static final int inspect_confirm=0x7f080051;
