@@ -16,7 +16,7 @@ public class assetItem implements Serializable {
 	private int itemlvl;
 	private String database;
 	private String time;
-	private int id;
+	private String id;
 	private String updateTime;
 	private String updater;
 
@@ -100,11 +100,11 @@ public class assetItem implements Serializable {
 		this.database = database;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public int getId() {
+	public String getId() {
 		return this.id;
 	}
 

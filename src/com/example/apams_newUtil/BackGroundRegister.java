@@ -114,7 +114,7 @@ public class BackGroundRegister extends Thread {
 							while(rs.next()){
 								assetItem curItem = new assetItem();
 								curItem.setBuilding(rs.getString("building"));
-								curItem.setId(AQid);
+								curItem.setId(String.valueOf(AQid));
 								curItem.setDatabase(database);
 								curItem.setItemlvl(rs.getInt("assetlvl"));
 								curItem.setItemName(rs.getString("name"));

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.apams_new.dummy.DummyContent;
 import com.example.apams_newUtil.assetItem;
 
 /**
@@ -72,6 +71,16 @@ public class AssetDetailFragment extends Fragment {
 			Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0,
 					pic.length);
 			imgview.setImageBitmap(bitpic);
+			((TextView) rootView.findViewById(R.id.asset_detail_name)).setText(mItem.getItemName());
+			((TextView) rootView.findViewById(R.id.asset_detail_database)).setText(mItem.getDatabase());
+			((TextView) rootView.findViewById(R.id.asset_detail_priority)).setText("Asset level:" +mItem.getItemName());
+			((TextView) rootView.findViewById(R.id.asset_detail_location)).setText("Stored in:"+ mItem.getBuilding()+" at room:" + mItem.getRoom());
+			((TextView) rootView.findViewById(R.id.asset_detial_type)).setText("Item type:"+mItem.getItemType());
+			((TextView) rootView.findViewById(R.id.asset_detail_update)).setText("Last updated by: "+mItem.getUpdater()+" At time:"+mItem.getUpdateTime());
+			
+
+
+
 		} else {
 			Log.e("mItem", "null");
 		}

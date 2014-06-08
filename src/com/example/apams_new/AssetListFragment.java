@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.apams_new.dummy.DummyContent;
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_assetQuery_package;
@@ -129,7 +128,7 @@ public class AssetListFragment extends ListFragment {
 
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		mCallbacks.onItemSelected(assetList.get(position).getId());
 	}
 
 	@Override

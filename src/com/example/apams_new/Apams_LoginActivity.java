@@ -285,6 +285,7 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 			builder.setTitle("Password");
 			builder.setMessage(password);
 			builder.setNegativeButton("OK", null);
+			builder.show();
 		}
 	}
 }
