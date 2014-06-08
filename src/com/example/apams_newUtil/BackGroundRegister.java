@@ -70,8 +70,11 @@ public class BackGroundRegister extends Thread {
 							while(rs.next()){
 								result = rs.getString("password");
 							}
+							System.out.print(result);
 							apams_network_package resultpack = new apams_network_package(result,packageType.FINDPW);
 							oOutputs.writeObject(resultpack);
+							System.out.println("return package sent");
+
 							oOutputs.close();
 							outputs.close();
 							StrOut.close();
@@ -237,6 +240,8 @@ public class BackGroundRegister extends Thread {
 						if (userPriority < curItem.getItemlvl()) {
 							replyStr = "PriorityTooLow";
 							StrOut.write(replyStr);
+							System.out.println("return package sent");
+
 							StrOut.flush();
 							StrOut.close();
 							run();
