@@ -64,7 +64,7 @@ public class BackGroundRegister extends Thread {
 						try{
 							PreparedStatement pwpst = conn.prepareStatement(pwQuery);
 							pwpst.setString(1, username);
-							pwpst.setString(2, CID);
+							pwpst.setString(2, password);
 							ResultSet rs = pwpst.executeQuery();
 							String result = null;
 							while(rs.next()){
