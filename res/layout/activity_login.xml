@@ -86,7 +86,8 @@
                 android:layout_below="@+id/register_button"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="26dp"
-                android:text="@string/login_findpw" />
+                android:text="@string/login_findpw"
+                android:onClick="findPassword" />
 
             <Button
                 android:id="@+id/sign_in_button"

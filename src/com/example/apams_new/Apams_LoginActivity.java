@@ -2,20 +2,27 @@ package com.example.apams_new;
 
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
+import com.example.apams_newUtil.apamsTCPclient_package;
+import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package_Login;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -163,6 +170,28 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 			mAuthTask.execute(pack);
 		}
 	}
+	public void findPassword(View view){
+		LayoutInflater inflater = getLayoutInflater();
+
+		View layout = inflater.inflate(R.layout.find_pw,
+				(ViewGroup) findViewById(R.id.dialog));
+		AlertDialog.Builder builder = new Builder(this);
+		builder.setTitle("Find password");
+		builder.setNegativeButton("Cancel", null);
+		builder.setView(layout);
+		builder.show();
+	}
+	
+	public void confirmFindPW(View view){
+		EditText emailET = (EditText) findViewById(R.id.findPw_email);
+		EditText CIDET = (EditText) findViewById(R.id.findPw_cid);
+		String email = emailET.getText().toString();
+		String cid = CIDET.getText().toString();
+		apams_network_package pack = new apams_network_package(email,cid,packageType.FINDPW);
+		apamsTCPclient_package task = new apamsTCPclient_package(this);
+		task.execute(pack);
+	}
+	
 
 	/**
 	 * Shows the progress UI and hides the login form.
@@ -244,6 +273,14 @@ public class Apams_LoginActivity extends Activity implements OnTaskCompleted {
 
 	@Override
 	public void onPackReceived(apams_network_package pack) {
-		
+		String password = pack.getUsername();
+		if(password==null){
+			this.popMsg("User not find or CID does not match your Email");
+		}else{
+			AlertDialog.Builder builder = new Builder(this);
+			builder.setTitle("Password");
+			builder.setMessage(password);
+			builder.setNegativeButton("OK", null);
+		}
 	}
 }

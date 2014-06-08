@@ -78,8 +78,6 @@ public class MainActivity extends Activity implements
 	private boolean isAdmin;
 	private ArrayList<String> datalist;
 	private ArrayList<String> lvllist;
-	private ArrayList<InviteInfo> inviteInfoList;
-	private HashMap<String, InviteInfo> inviteInfoMap;
 	private String database;
 
 	private View createLayout;

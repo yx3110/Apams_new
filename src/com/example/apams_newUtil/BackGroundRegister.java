@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.example.apams_newUtil.apams_network_package;
+import com.example.apams_newUtil.apams_network_package.packageType;
 
 public class BackGroundRegister extends Thread {
 	private ServerSocket ssocket;
@@ -57,6 +58,28 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					case FINDPW:
+						System.out.println("Package type = " + pack.getType());
+						String pwQuery = "SELECT password FROM user_information WHERE username = ? AND cid = ?";
+						try{
+							PreparedStatement pwpst = conn.prepareStatement(pwQuery);
+							pwpst.setString(1, username);
+							pwpst.setString(2, CID);
+							ResultSet rs = pwpst.executeQuery();
+							String result = null;
+							while(rs.next()){
+								result = rs.getString("password");
+							}
+							apams_network_package resultpack = new apams_network_package(result,packageType.FINDPW);
+							oOutputs.writeObject(resultpack);
+							oOutputs.close();
+							outputs.close();
+							StrOut.close();
+						}catch(SQLException e){
+							e.printStackTrace();
+						}
+						run();
+						break;
 					case ASSETQUERY:
 						System.out.println("Package type = " + pack.getType());
 						apams_assetQuery_package AQpack = (apams_assetQuery_package) pack;
