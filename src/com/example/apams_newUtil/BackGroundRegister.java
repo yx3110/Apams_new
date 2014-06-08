@@ -61,24 +61,26 @@ public class BackGroundRegister extends Thread {
 					case FINDPW:
 						System.out.println("Package type = " + pack.getType());
 						String pwQuery = "SELECT password FROM user_information WHERE username = ? AND cid = ?";
-						try{
-							PreparedStatement pwpst = conn.prepareStatement(pwQuery);
+						try {
+							PreparedStatement pwpst = conn
+									.prepareStatement(pwQuery);
 							pwpst.setString(1, username);
 							pwpst.setString(2, password);
 							ResultSet rs = pwpst.executeQuery();
 							String result = null;
-							while(rs.next()){
+							while (rs.next()) {
 								result = rs.getString("password");
 							}
 							System.out.print(result);
-							apams_network_package resultpack = new apams_network_package(result,packageType.FINDPW);
+							apams_network_package resultpack = new apams_network_package(
+									result, packageType.FINDPW);
 							oOutputs.writeObject(resultpack);
 							System.out.println("return package sent");
 
 							oOutputs.close();
 							outputs.close();
 							StrOut.close();
-						}catch(SQLException e){
+						} catch (SQLException e) {
 							e.printStackTrace();
 						}
 						run();
@@ -87,7 +89,7 @@ public class BackGroundRegister extends Thread {
 						System.out.println("Package type = " + pack.getType());
 						apams_assetQuery_package AQpack = (apams_assetQuery_package) pack;
 						String database = AQpack.getDatabase();
-						
+
 						String lvlQuery = "SELECT priority FROM user_information WHERE username = ?";
 						int prioritylvl = 0;
 						try {
@@ -102,16 +104,17 @@ public class BackGroundRegister extends Thread {
 							e.printStackTrace();
 						}
 						System.out.println(database);
-						String assetQuery = "SELECT * FROM "+database+" WHERE assetlvl <= ?";
+						String assetQuery = "SELECT * FROM " + database
+								+ " WHERE assetlvl <= ?";
 						ArrayList<assetItem> AQList = new ArrayList<assetItem>();
-						HashMap<String,assetItem> AQMap = new HashMap<String,assetItem>();
+						HashMap<String, assetItem> AQMap = new HashMap<String, assetItem>();
 						int AQid = 1;
 						try {
 							PreparedStatement AQpst = conn
 									.prepareStatement(assetQuery);
 							AQpst.setInt(1, prioritylvl);
 							ResultSet rs = AQpst.executeQuery();
-							while(rs.next()){
+							while (rs.next()) {
 								assetItem curItem = new assetItem();
 								curItem.setBuilding(rs.getString("building"));
 								curItem.setId(String.valueOf(AQid));
@@ -122,13 +125,15 @@ public class BackGroundRegister extends Thread {
 								curItem.setPic(rs.getBytes("img"));
 								curItem.setRoom(rs.getString("room"));
 								curItem.setTime(rs.getString("time"));
-								curItem.setUpdateTime(rs.getString("lastupdatetime"));
+								curItem.setUpdateTime(rs
+										.getString("lastupdatetime"));
 								curItem.setUpdater(rs.getString("lastUpdater"));
 								AQList.add(curItem);
 								AQMap.put(String.valueOf(AQid), curItem);
 								AQid++;
 							}
-							apams_network_package resultpack = new apams_assetQuery_package(username,AQList,AQMap);
+							apams_network_package resultpack = new apams_assetQuery_package(
+									username, AQList, AQMap);
 							oOutputs.writeObject(resultpack);
 							oOutputs.close();
 							outputs.close();
@@ -143,6 +148,7 @@ public class BackGroundRegister extends Thread {
 						apams_assetQuery_package QRpack = (apams_assetQuery_package) pack;
 						String QRcode = QRpack.getQR();
 						String getdataQuery;
+						int QRpriority = 0;
 						ArrayList<String> databases = new ArrayList<String>();
 						if (QRpack.isAdmin()) {
 							getdataQuery = "SELECT name FROM databases WHERE owner = ?";
@@ -154,18 +160,20 @@ public class BackGroundRegister extends Thread {
 								while (rs.next()) {
 									databases.add(rs.getString("name"));
 								}
+								QRpriority = 1000;
 								gdpst.close();
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
 						} else {
-							getdataQuery = "SELECT belongto FROM user_information WHERE username = ?";
+							getdataQuery = "SELECT belongto,priority FROM user_information WHERE username = ?";
 							try {
 								PreparedStatement gdpst = conn
 										.prepareStatement(getdataQuery);
 								gdpst.setString(1, username);
 								ResultSet rs = gdpst.executeQuery();
 								while (rs.next()) {
+									QRpriority = rs.getInt("priority");
 									databases.add(rs.getString("belongto"));
 								}
 								gdpst.close();
@@ -175,14 +183,15 @@ public class BackGroundRegister extends Thread {
 						}
 						for (int i = 0; i < databases.size(); i++) {
 							String curdata = databases.get(i);
-							String curQuery = "SELECT * FROM ? WHERE qrstring = ?";
+							String curQuery = "SELECT * FROM " + curdata
+									+ " WHERE qrstring = ?";
 							try {
 								PreparedStatement qrpst = conn
 										.prepareStatement(curQuery);
-								qrpst.setString(1, curdata);
-								qrpst.setString(2, QRcode);
+								qrpst.setString(1, QRcode);
 								ResultSet rs = qrpst.executeQuery();
 								assetItem asset = new assetItem();
+								int curItemlvl = 0;
 								if (!rs.isBeforeFirst()) {
 									continue;
 								} else {
@@ -198,6 +207,24 @@ public class BackGroundRegister extends Thread {
 												.getString("qrstring"));
 										asset.setRoom(rs.getString("room"));
 										asset.setTime(rs.getString("time"));
+										curItemlvl = rs.getInt("assetlvl");
+									}
+
+									if (QRpriority > curItemlvl) {
+										String updateQuery = "UPDATE "
+												+ curdata
+												+ " SET lastupdatetime = ?, lastupdater = ? WHERE qrstring = ?";
+										try {
+											PreparedStatement updatepst = conn
+													.prepareStatement(updateQuery);
+											updatepst.setString(1, time);
+											updatepst.setString(2, username);
+											updatepst.setString(3, QRcode);
+											updatepst.executeUpdate();
+											updatepst.close();
+										} catch (SQLException e) {
+											e.printStackTrace();
+										}
 									}
 									apams_network_package resultpack = new apams_assetQuery_package(
 											username, asset);
@@ -249,7 +276,8 @@ public class BackGroundRegister extends Thread {
 							String addQuery = "INSERT INTO " + dataBase
 									+ "(name," + "building," + "room,"
 									+ "type," + "img," + "assetlvl,"
-									+ "qrstring," + "time,lastupdatetime,lastupdater)"
+									+ "qrstring,"
+									+ "time,lastupdatetime,lastupdater)"
 									+ "VALUES(?,?,?,?,?,?,?,?,?,?)";
 							try {
 								PreparedStatement addpst = conn
@@ -468,10 +496,14 @@ public class BackGroundRegister extends Thread {
 						String databaseName = Cpack.getDataName();
 
 						String createquery = "CREATE TABLE IF NOT EXISTS "
-								+ databaseName + "("
+								+ databaseName
+								+ "("
 								+ "name text NOT NULL PRIMARY KEY,"
-								+ "building text," + "room text,"
-								+ "type text," + "img bytea," + "assetlvl int,"
+								+ "building text,"
+								+ "room text,"
+								+ "type text,"
+								+ "img bytea,"
+								+ "assetlvl int,"
 								+ "qrstring text UNIQUE,"
 								+ "time text,lastupdatetime text,lastupdater text)";
 						try {

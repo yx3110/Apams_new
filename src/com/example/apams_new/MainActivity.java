@@ -302,10 +302,11 @@ public class MainActivity extends Activity implements
 
 	public void assetQuery(View view) {
 		String queryDatabase;
-		if(this.isAdmin){
-			Spinner dataSpinner = (Spinner) this.findViewById(R.id.inspect_spinner);
+		if (this.isAdmin) {
+			Spinner dataSpinner = (Spinner) this
+					.findViewById(R.id.inspect_spinner);
 			queryDatabase = (String) dataSpinner.getSelectedItem();
-		}else{
+		} else {
 			queryDatabase = this.database;
 		}
 		apams_network_package pack = new apams_assetQuery_package(
@@ -621,7 +622,7 @@ public class MainActivity extends Activity implements
 		View layout = inflater.inflate(R.layout.singleqr,
 				(ViewGroup) findViewById(R.id.dialog));
 
-		builder.setMessage("Do you want to print your QR code now?");
+		builder.setMessage("Do you want to print the QR code for this item now?");
 		builder.setTitle("Print");
 		builder.setView(layout);
 		builder.setNegativeButton("No", null);
@@ -632,7 +633,6 @@ public class MainActivity extends Activity implements
 				PrintHelper photoPrinter = new PrintHelper(main);
 				photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
 				photoPrinter.printBitmap("droids.jpg - test print", bitmap);
-
 			}
 
 		});
@@ -643,11 +643,20 @@ public class MainActivity extends Activity implements
 
 	@Override
 	public void onTaskCompleted(String answer) {
-
-		if (answer.contains("ASSETADDED")) {
+		if (answer.contains("PriorityTooLow")) {
+			this.popMsg("Priority too low, please lower the priority of this asset");
+			findViewById(R.id.add_itemlvl).requestFocus();
+		} else if (answer.contains("ASSETADDED")) {
 			popMsg("New Item added into database");
 			Bitmap bitmap = this.QRencode(curItem.getQRString(), 180, 180);
 			this.printDialog(bitmap);
+
+			Button typeButton = (Button) findViewById(R.id.addChooseType);
+			typeButton.setText(R.string.add_chooseData);
+			Button pictureItem = (Button) findViewById(R.id.addTakePicture);
+			pictureItem.setText(R.string.addPic);
+			Button QRButton = (Button) findViewById(R.id.add_generateQR);
+			QRButton.setText(R.string.add_generateQR);
 			this.curItem = new assetItem();
 		} else if (answer.contains("GOOD")) {
 			popMsg("Database created!Stay in this dialog to create more or click quit if you are finished.");
