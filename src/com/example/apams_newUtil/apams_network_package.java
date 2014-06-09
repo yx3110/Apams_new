@@ -12,7 +12,7 @@ public class apams_network_package implements Serializable {
 	private static final long serialVersionUID = -584169835216472545L;
 	public enum packageType{
 		REGISTER_AD, REGISTER_N, LOGIN, QUERY, CREATE, 
-		ACC, DATALIST, PROFILE, INVITECREATE, INVITEMANAGE, ADDASSET, ASSETQUERY, ASSETRESULT, QRQUERY, QRRESULT, FINDPW
+		ACC, DATALIST, PROFILE, INVITECREATE, INVITEMANAGE, ADDASSET, ASSETQUERY, ASSETRESULT, QRQUERY, QRRESULT, FINDPW, FRESHCHECK
 	}
 	private packageType type;
 	private String username;
