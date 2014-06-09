@@ -30,7 +30,7 @@
 
     <Button
         android:id="@+id/acc_addData"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/acc_invite"
         android:layout_centerHorizontal="true"
@@ -39,7 +39,7 @@
 
     <Button
         android:id="@+id/acc_manageInvite"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/acc_addData"
         android:layout_centerHorizontal="true"
@@ -48,7 +48,7 @@
 
     <Button
         android:id="@+id/acc_invite"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_priority"
         android:layout_centerHorizontal="true"
@@ -57,25 +57,12 @@
 
     <Button
         android:id="@+id/acc_checkData"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/acc_manageInvite"
         android:layout_centerHorizontal="true"
         android:onClick="getDatabase"
         android:text="@string/acc_getData" />
-
-    <ImageButton
-        android:id="@+id/user_image"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_alignLeft="@+id/acc_invite"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="57dp"
-        android:adjustViewBounds="true"
-        android:background="@android:drawable/dialog_holo_dark_frame"
-        android:contentDescription="@string/desc"
-        android:onClick="changeUserPic"
-        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/textView_username"
@@ -96,5 +83,18 @@
         android:layout_marginTop="12dp"
         android:text="@string/acc_CID"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageButton
+        android:id="@+id/user_image"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/status_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:adjustViewBounds="true"
+        android:background="@android:drawable/dialog_holo_dark_frame"
+        android:contentDescription="@string/desc"
+        android:onClick="changeUserPic"
+        android:scaleType="fitCenter" />
 
 </RelativeLayout>

@@ -20,7 +20,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="asset picture"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/ic_launcher"
+                android:onClick="qrImage" />
         </RelativeLayout>
 
         <Button
@@ -45,7 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:onClick="qrLocation" />
 
         <Button
             android:id="@+id/qrquery_itemlvl"
@@ -53,7 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:onClick="qrPriority" />
 
         <Button
             android:id="@+id/qrquery_time"
@@ -62,6 +65,21 @@
             android:layout_marginTop="20dp"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/qrquery_confirm_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="Confirm Update"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:onClick="qrConfirmUpdate" />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>

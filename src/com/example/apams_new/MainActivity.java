@@ -18,6 +18,7 @@ import com.example.apams_newUtil.apams_datalist_package;
 import com.example.apams_newUtil.apams_inviteCreate_package;
 import com.example.apams_newUtil.apams_inviteManage_package;
 import com.example.apams_newUtil.apams_network_package;
+import com.example.apams_newUtil.apams_update_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_network_package_create;
 import com.example.apams_newUtil.apams_profile_package;
@@ -82,6 +83,7 @@ public class MainActivity extends Activity implements
 
 	private View createLayout;
 	private View inviteLayout;
+	private View QRresultLayout;
 
 	private assetItem curItem;
 
@@ -100,6 +102,7 @@ public class MainActivity extends Activity implements
 		datalist = new ArrayList<String>();
 		lvllist = new ArrayList<String>();
 		this.curItem = new assetItem();
+		this.updatePack = new apams_update_package(mUsername);
 
 		apams_network_package pack = new apams_network_package(mUsername,
 				packageType.DATALIST);
@@ -632,7 +635,7 @@ public class MainActivity extends Activity implements
 			public void onClick(DialogInterface dialog, int which) {
 				PrintHelper photoPrinter = new PrintHelper(main);
 				photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
-				photoPrinter.printBitmap("droids.jpg - test print", bitmap);
+				photoPrinter.printBitmap(((EditText) findViewById(R.id.addNewName)).getText().toString(), bitmap);
 			}
 
 		});
@@ -648,7 +651,7 @@ public class MainActivity extends Activity implements
 			findViewById(R.id.add_itemlvl).requestFocus();
 		} else if (answer.contains("ASSETADDED")) {
 			popMsg("New Item added into database");
-			Bitmap bitmap = this.QRencode(curItem.getQRString(), 180, 180);
+			Bitmap bitmap = this.QRencode(curItem.getQRString(), 45, 45);
 			this.printDialog(bitmap);
 
 			Button typeButton = (Button) findViewById(R.id.addChooseType);
@@ -675,6 +678,87 @@ public class MainActivity extends Activity implements
 		} else {
 			popMsg("Error");
 		}
+	}
+
+	// QR SCAN RESULT BUTTON FUNCTIONS
+	private apams_update_package updatePack;
+	public void qrImage(View view) {
+
+	}
+
+	public void qrLocation(View view) {
+		final EditText building = new EditText(this);
+		final EditText room = new EditText(this);
+
+		building.setHint("New Building");
+		room.setHint("New Room");
+		AlertDialog.Builder builder = new Builder(this);
+		builder.setNegativeButton("Cancel", null);
+		builder.setView(building);
+		builder.setView(room);
+		builder.setPositiveButton("Confirm",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (!isEmpty(building)) {
+							updatePack.setNewBuilding(building.getText()
+									.toString());
+							QRresultLayout.findViewById(
+									R.id.qrquery_confirm_update).setVisibility(
+									View.VISIBLE);
+							QRresultLayout.findViewById(
+									R.id.qrquery_confirm_update).setEnabled(
+									true);
+
+						}
+						if (!isEmpty(room)) {
+							updatePack
+									.setNewBuilding(room.getText().toString());
+							QRresultLayout.findViewById(
+									R.id.qrquery_confirm_update).setVisibility(
+									View.VISIBLE);
+							QRresultLayout.findViewById(
+									R.id.qrquery_confirm_update).setEnabled(
+									true);
+						}
+					}
+
+				});
+		builder.show();
+	}
+
+	public void qrPriority(View view) {
+		AlertDialog.Builder builder = new Builder(this);
+		final EditText priority = new EditText(this);
+		priority.setHint("New Priority Level");
+
+		builder.setNegativeButton("Cancel", null);
+		builder.setView(priority);
+		builder.setPositiveButton("Confirm",
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (!isEmpty(priority)) {
+							updatePack.setNewLvl(Integer.parseInt(priority
+									.getText().toString()));
+							QRresultLayout.findViewById(
+									R.id.qrquery_confirm_update).setVisibility(
+									View.VISIBLE);
+							QRresultLayout.findViewById(
+									R.id.qrquery_confirm_update).setEnabled(
+									true);
+						}
+					}
+				});
+		builder.show();
+	}
+
+	public void qrConfirmUpdate(View view) {
+		apams_network_package pack = this.updatePack;
+		apamsTCPclient task = new apamsTCPclient(this);
+		task.execute(pack);
 	}
 
 	@Override
@@ -718,27 +802,32 @@ public class MainActivity extends Activity implements
 			LayoutInflater inflater = getLayoutInflater();
 			View layout = inflater.inflate(R.layout.asset_detail,
 					(ViewGroup) findViewById(R.id.dialog));
-			ImageView img = (ImageView) layout.findViewById(R.id.qrquery_pic);
+			this.QRresultLayout = layout;
+			ImageView img = (ImageView) layout
+					.findViewById(R.id.qrquery_pic);
 			byte[] byteapic = item.getPic();
 			Bitmap bitpic = new BitmapFactory().decodeByteArray(byteapic, 0,
 					byteapic.length);
 			img.setImageBitmap(bitpic);
 
-			Button assettype = (Button) layout
-					.findViewById(R.id.qrquery_type);
+			Button assettype = (Button) layout.findViewById(R.id.qrquery_type);
 			Button database = (Button) layout
 					.findViewById(R.id.qrquery_database);
 			Button location = (Button) layout
 					.findViewById(R.id.qrquery_location);
-			Button itemlvl = (Button) layout
-					.findViewById(R.id.qrquery_itemlvl);
+			Button itemlvl = (Button) layout.findViewById(R.id.qrquery_itemlvl);
 			Button time = (Button) layout.findViewById(R.id.qrquery_time);
+			Button confirm = (Button) layout
+					.findViewById(R.id.qrquery_confirm_update);
+			confirm.setVisibility(View.INVISIBLE);
+			confirm.setEnabled(false);
 			assettype.setText("Type:" + item.getItemType());
 			database.setText("Database:" + item.getDatabase());
 			location.setText("Located in building:" + item.getBuilding()
 					+ " Room:" + item.getRoom());
 			itemlvl.setText("Priority level:" + item.getItemlvl());
-			time.setText("Last time updated: " + item.getUpdateTime()+ "/nLast updater: " + item.getUpdater());
+			time.setText("Last time updated: " + item.getUpdateTime()
+					+ "\nLast Updater: " + item.getUpdater());
 			new AlertDialog.Builder(this).setTitle(item.getItemName())
 					.setView(layout).setNegativeButton("OK", null).show();
 			break;
