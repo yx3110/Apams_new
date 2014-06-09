@@ -207,6 +207,8 @@ public class BackGroundRegister extends Thread {
 												.getString("qrstring"));
 										asset.setRoom(rs.getString("room"));
 										asset.setTime(rs.getString("time"));
+										asset.setUpdater(rs.getString("lastupdater"));
+										asset.setUpdateTime(rs.getString("lastupdatetime"));
 										curItemlvl = rs.getInt("assetlvl");
 									}
 

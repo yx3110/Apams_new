@@ -724,21 +724,21 @@ public class MainActivity extends Activity implements
 					byteapic.length);
 			img.setImageBitmap(bitpic);
 
-			TextView assettype = (TextView) layout
+			Button assettype = (Button) layout
 					.findViewById(R.id.qrquery_type);
-			TextView database = (TextView) layout
+			Button database = (Button) layout
 					.findViewById(R.id.qrquery_database);
-			TextView location = (TextView) layout
+			Button location = (Button) layout
 					.findViewById(R.id.qrquery_location);
-			TextView itemlvl = (TextView) layout
+			Button itemlvl = (Button) layout
 					.findViewById(R.id.qrquery_itemlvl);
-			TextView time = (TextView) layout.findViewById(R.id.qrquery_time);
+			Button time = (Button) layout.findViewById(R.id.qrquery_time);
 			assettype.setText("Type:" + item.getItemType());
 			database.setText("Database:" + item.getDatabase());
 			location.setText("Located in building:" + item.getBuilding()
 					+ " Room:" + item.getRoom());
 			itemlvl.setText("Priority level:" + item.getItemlvl());
-			time.setText("Last time updated:" + item.getTime());
+			time.setText("Last time updated: " + item.getUpdateTime()+ "/nLast updater: " + item.getUpdater());
 			new AlertDialog.Builder(this).setTitle(item.getItemName())
 					.setView(layout).setNegativeButton("OK", null).show();
 			break;

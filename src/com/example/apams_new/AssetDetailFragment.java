@@ -3,6 +3,7 @@ package com.example.apams_new;
 import java.util.HashMap;
 
 import android.graphics.Bitmap;
+import android.widget.Button;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -71,18 +72,18 @@ public class AssetDetailFragment extends Fragment {
 			Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0,
 					pic.length);
 			imgview.setImageBitmap(bitpic);
-			((TextView) rootView.findViewById(R.id.asset_detail_name))
+			((Button) rootView.findViewById(R.id.asset_detail_name))
 					.setText(mItem.getItemName() + "\n");
-			((TextView) rootView.findViewById(R.id.asset_detail_database))
+			((Button) rootView.findViewById(R.id.asset_detail_database))
 					.setText("Database:"+mItem.getDatabase());
-			((TextView) rootView.findViewById(R.id.asset_detail_priority))
+			((Button) rootView.findViewById(R.id.asset_detail_priority))
 					.setText("Asset level:" + mItem.getItemlvl() + "\n");
-			((TextView) rootView.findViewById(R.id.asset_detail_location))
+			((Button) rootView.findViewById(R.id.asset_detail_location))
 					.setText("Stored in:" + mItem.getBuilding() + " at room:"
 							+ mItem.getRoom());
-			((TextView) rootView.findViewById(R.id.asset_detial_type))
+			((Button) rootView.findViewById(R.id.asset_detial_type))
 					.setText("Item type:" + mItem.getItemType() + "\n");
-			((TextView) rootView.findViewById(R.id.asset_detail_update))
+			((Button) rootView.findViewById(R.id.asset_detail_update))
 					.setText("Last updated by: " + mItem.getUpdater()
 							+ " At time:" + mItem.getUpdateTime() + "\n");
 

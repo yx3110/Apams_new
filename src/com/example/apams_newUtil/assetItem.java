@@ -120,6 +120,6 @@ public class assetItem implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "Name: "+this.getItemName()+",Belongs to database: "+this.database;
+		return "Name: "+this.getItemName()+",Type: "+this.getItemType()+ ",Level: " + this.getItemlvl();
 	}
 }
