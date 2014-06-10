@@ -399,6 +399,7 @@ public class MainActivity extends Activity implements
 				(ViewGroup) findViewById(R.id.dialog));
 		builder.setView(layout);
 		builder.setNegativeButton("Cancel", null);
+		builder.show();
 	}
 
 	// confirm extra setting;

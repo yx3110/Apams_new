@@ -364,7 +364,8 @@ public class BackGroundRegister extends Thread {
 									+ "type," + "img," + "assetlvl,"
 									+ "qrstring," + "time," + "lastupdatetime,"
 									+ "lastupdater," + "manufacturer,"
-									+ "model," + "broken," + "extras)"
+									+ "model," + "broken," + "extras,"
+									+ "missing)"
 									+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,"
 									+ stringExtras + "?)";
 							try {
