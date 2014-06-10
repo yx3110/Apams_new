@@ -1,4 +1,5 @@
 package com.example.apams_newUtil;
+
 import java.io.*;
 import java.net.*;
 
@@ -12,22 +13,21 @@ public class apamsTCPclient extends
 	public apamsTCPclient(OnTaskCompleted listener) {
 		this.listener = listener;
 	}
+
 	public apamsTCPclient() {
 	}
 
-	public static String SERVERIP = "146.169.53.14";
+	public static String SERVERIP = "146.169.53.104";
 	public static final int SERVERPORT = 8889;
 	private String answer;
 	private Socket socket;
 
 	private ObjectOutputStream Oout;
 	private BufferedReader in;
-/*	
-	public void changeIp(String ip){
-		this.SERVERIP = ip;
-	}
-	
-*/
+
+	/*
+	 * public void changeIp(String ip){ this.SERVERIP = ip; }
+	 */
 	@Override
 	protected String doInBackground(apams_network_package... pack) {
 		try {
@@ -42,17 +42,17 @@ public class apamsTCPclient extends
 						socket.getInputStream()));
 				Log.e("TCP", "" + in.ready());
 				answer = in.readLine();
-				Log.e("TCP", "answer got"+answer);
+				Log.e("TCP", "answer got" + answer);
 			} catch (Exception e) {
 				answer = "Error occurred during connections";
 				Log.e("TCP", "S:Error", e);
-			}finally{
+			} finally {
 				socket.close();
 				Oout.close();
 				in.close();
 			}
 		} catch (Exception e) {
-			answer = "Error occurred during connection"+e;
+			answer = "Error occurred during connection" + e;
 		}
 		return answer;
 	}
