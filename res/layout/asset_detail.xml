@@ -20,8 +20,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="asset picture"
-                android:src="@drawable/ic_launcher"
-                android:onClick="qrImage" />
+                android:onClick="qrImage"
+                android:src="@drawable/ic_launcher" />
         </RelativeLayout>
 
         <Button
@@ -41,22 +41,29 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
-            android:id="@+id/qrquery_location"
+            android:id="@+id/qrquery_building"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:onClick="qrLocation"
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:onClick="qrLocation" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/qrquery_room"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Room" />
 
         <Button
             android:id="@+id/qrquery_itemlvl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:onClick="qrPriority"
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:onClick="qrPriority" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
             android:id="@+id/qrquery_time"
@@ -65,7 +72,31 @@
             android:layout_marginTop="20dp"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-         <RelativeLayout
+
+        <Button
+            android:id="@+id/qrquery_missing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Missing" />
+
+        <Button
+            android:id="@+id/qrquery_broken"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Broken"
+            android:onClick="setBroken" />
+
+        <Button
+            android:id="@+id/qrquery_extras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="showExtras"
+            android:text="Show extra informations" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -75,10 +106,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:onClick="qrConfirmUpdate"
                 android:text="Confirm Update"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:onClick="qrConfirmUpdate" />
-
+                android:textAppearance="?android:attr/textAppearanceLarge" />
         </RelativeLayout>
     </LinearLayout>
 

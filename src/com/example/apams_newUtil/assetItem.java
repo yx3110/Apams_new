@@ -1,6 +1,7 @@
 package com.example.apams_newUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class assetItem implements Serializable {
 	/**
@@ -19,9 +20,50 @@ public class assetItem implements Serializable {
 	private String id;
 	private String updateTime;
 	private String updater;
+	private String manufacturer;
+	private String model;
+	private ArrayList<String> extras;
+	private boolean broken;
+	private boolean missing;
 
 	public assetItem() {
+		this.extras = new ArrayList<String>();
+	}
 
+	public void setBroken(boolean broken) {
+		this.broken = broken;
+	}
+
+	public boolean isBroken() {
+		return this.broken;
+	}
+
+	public void setExtras(ArrayList<String> extras) {
+		this.extras = extras;
+	}
+
+	public String getManufacturer() {
+		return this.manufacturer;
+	}
+
+	public String getModel() {
+		return this.model;
+	}
+
+	public ArrayList<String> getExtras() {
+		return this.extras;
+	}
+
+	public void setManufacturer(String string) {
+		this.manufacturer = string;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public void addExtra(String extra) {
+		this.extras.add(extra);
 	}
 
 	public String getUpdater() {
@@ -115,11 +157,23 @@ public class assetItem implements Serializable {
 	public void setUpdateTime(String string) {
 		this.updateTime = string;
 	}
-	public String getUpdateTime(){
+
+	public String getUpdateTime() {
 		return this.updateTime;
 	}
+
 	@Override
 	public String toString() {
-		return "Name: "+this.getItemName()+",Type: "+this.getItemType()+ ",Level: " + this.getItemlvl();
+		return "Name: " + this.getItemName() + ",Type: " + this.getItemType()
+				+ ",Level: " + this.getItemlvl();
+	}
+
+	public void setMissing(boolean boolean1) {
+		this.missing = boolean1;
+
+	}
+
+	public boolean getMissing() {
+		return this.missing;
 	}
 }

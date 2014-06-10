@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.example.apams.addNewActivity" >
 
     <LinearLayout
@@ -30,6 +30,22 @@
             android:hint="@string/addCID"
             android:inputType="number"
             android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/addManufacturer"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Manufacturer of Item" />
+
+        <EditText
+            android:id="@+id/addModel"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Item Model" />
 
         <EditText
             android:id="@+id/addBuilding"
@@ -60,7 +76,7 @@
 
         <Button
             android:id="@+id/addChooseType"
-            android:layout_width="292dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/addType"
@@ -69,7 +85,7 @@
 
         <Button
             android:id="@+id/addTakePicture"
-            android:layout_width="292dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/addPic"
@@ -78,7 +94,7 @@
 
         <Button
             android:id="@+id/add_generateQR"
-            android:layout_width="292dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/add_generateQR"
@@ -86,11 +102,18 @@
 
         <Button
             android:id="@+id/add_chooseData"
-            android:layout_width="292dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/add_chooseData"
             android:onClick="chooseTargetData" />
+
+        <Button
+            android:id="@+id/add_Extras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Extra Informations(Optional)" 
+            android:onClick="setExtras"/>
 
         <Button
             android:id="@+id/add_confirm"

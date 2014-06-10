@@ -42,7 +42,7 @@
     <string name="invite_generate">Generate an invitation code</string>
     <string name="scan_activate">Scan Barcode</string>
     <string name="add_generateQR">Generate unique QR code for item</string>
-    <string name="addBuilding">Building Name</string>
+    <string name="addBuilding">Item Building Name</string>
     <string name="invite_maxlvl">Max priority level of this database.</string>
     <string name="invite_shareinvite">Share this invite code.</string>
     <string name="title_invitationcode_list">Invitation codes</string>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
 
 /**
  * An activity representing a single Asset detail screen. This activity is only
@@ -44,6 +45,9 @@ public class AssetDetailActivity extends FragmentActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.asset_detail_container, fragment).commit();
 		}
+	}
+	public void reportMissing(View view){
+		
 	}
 
 	@Override

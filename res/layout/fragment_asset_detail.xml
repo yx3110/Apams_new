@@ -58,6 +58,19 @@
             android:text="Button" />
 
         <Button
+            android:id="@+id/asset_detail_missing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" 
+            android:onClick="reportMissing"/>
+
+        <Button
+            android:id="@+id/asset_detail_broken"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
             android:id="@+id/asset_detail_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

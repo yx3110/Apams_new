@@ -59,12 +59,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView_CID"
-        android:layout_below="@+id/qrquery_location"
+        android:layout_below="@+id/qrquery_building"
         android:ems="10"
         android:inputType="textWebEmailAddress" />
 
     <TextView
-        android:id="@+id/qrquery_location"
+        android:id="@+id/qrquery_building"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText_username"

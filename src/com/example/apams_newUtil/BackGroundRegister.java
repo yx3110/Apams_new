@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.example.apams_newUtil.apams_network_package;
@@ -58,6 +59,65 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					case QRUPDATE:
+						System.out.println("Package type = " + pack.getType());
+						apams_update_package uppack = (apams_update_package) pack;
+						String updateDatabase = uppack.getDatabase();
+						String itemName = uppack.getItemName();
+						if (uppack.getNewBuilding() != null) {
+							String QRupdateQuery = "UPDATE " + updateDatabase
+									+ " SET building = ? WHERE name = ?";
+							try {
+								PreparedStatement uppst = conn
+										.prepareStatement(QRupdateQuery);
+								uppst.setString(1, uppack.getNewBuilding());
+								uppst.setString(2, itemName);
+								uppst.close();
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
+						if (uppack.getNewRoom() != null) {
+							String QRupdateQuery = "UPDATE " + updateDatabase
+									+ " SET room = ? WHERE name = ?";
+							try {
+								PreparedStatement uppst = conn
+										.prepareStatement(QRupdateQuery);
+								uppst.setString(1, uppack.getNewRoom());
+								uppst.setString(2, itemName);
+								uppst.close();
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
+						if (uppack.getNewLvl() != 0) {
+							String QRupdateQuery = "UPDATE " + updateDatabase
+									+ " SET assetlvl = ? WHERE name = ?";
+							try {
+								PreparedStatement uppst = conn
+										.prepareStatement(QRupdateQuery);
+								uppst.setInt(1, uppack.getNewLvl());
+								uppst.setString(2, itemName);
+								uppst.close();
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+						}
+						String QRupdateQuery = "UPDATE " + updateDatabase
+								+ " SET broken = ? WHERE name = ?";
+						try {
+							PreparedStatement uppst = conn
+									.prepareStatement(QRupdateQuery);
+							uppst.setBoolean(1, uppack.isBroken());
+							uppst.setString(2, itemName);
+							uppst.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						StrOut.write("UPDATEDONE");
+						StrOut.flush();
+						StrOut.close();
+						break;
 					case FINDPW:
 						System.out.println("Package type = " + pack.getType());
 						String pwQuery = "SELECT password FROM user_information WHERE username = ? AND cid = ?";
@@ -128,6 +188,14 @@ public class BackGroundRegister extends Thread {
 								curItem.setUpdateTime(rs
 										.getString("lastupdatetime"));
 								curItem.setUpdater(rs.getString("lastUpdater"));
+								curItem.setManufacturer(rs
+										.getString("manufacturer"));
+								curItem.setModel(rs.getString("model"));
+								curItem.setBroken(rs.getBoolean("broken"));
+								curItem.setMissing(rs.getBoolean("missing"));
+								curItem.setExtras(new ArrayList<String>(Arrays
+										.asList((String[]) rs
+												.getArray("extras").getArray())));
 								AQList.add(curItem);
 								AQMap.put(String.valueOf(AQid), curItem);
 								AQid++;
@@ -207,9 +275,22 @@ public class BackGroundRegister extends Thread {
 												.getString("qrstring"));
 										asset.setRoom(rs.getString("room"));
 										asset.setTime(rs.getString("time"));
-										asset.setUpdater(rs.getString("lastupdater"));
-										asset.setUpdateTime(rs.getString("lastupdatetime"));
+										asset.setUpdater(rs
+												.getString("lastupdater"));
+										asset.setUpdateTime(rs
+												.getString("lastupdatetime"));
+										asset.setManufacturer(rs
+												.getString("manufacturer"));
+										asset.setModel(rs.getString("model"));
+										asset.setBroken(rs.getBoolean("broken"));
 										curItemlvl = rs.getInt("assetlvl");
+										asset.setMissing(rs
+												.getBoolean("missing"));
+										asset.setExtras(new ArrayList<String>(
+												Arrays.asList((String[]) rs
+														.getArray("extras")
+														.getArray())));
+
 									}
 
 									if (QRpriority > curItemlvl) {
@@ -275,12 +356,17 @@ public class BackGroundRegister extends Thread {
 							StrOut.close();
 							run();
 						} else {
+							ArrayList<String> extrasAL = curItem.getExtras();
+							String[] stringExtras = new String[extrasAL.size()];
+							stringExtras = extrasAL.toArray(stringExtras);
 							String addQuery = "INSERT INTO " + dataBase
 									+ "(name," + "building," + "room,"
 									+ "type," + "img," + "assetlvl,"
-									+ "qrstring,"
-									+ "time,lastupdatetime,lastupdater)"
-									+ "VALUES(?,?,?,?,?,?,?,?,?,?)";
+									+ "qrstring," + "time," + "lastupdatetime,"
+									+ "lastupdater," + "manufacturer,"
+									+ "model," + "broken," + "extras)"
+									+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,"
+									+ stringExtras + "?)";
 							try {
 								PreparedStatement addpst = conn
 										.prepareStatement(addQuery);
@@ -294,7 +380,10 @@ public class BackGroundRegister extends Thread {
 								addpst.setString(8, pack.getTime());
 								addpst.setString(9, pack.getTime());
 								addpst.setString(10, username);
-
+								addpst.setString(11, curItem.getManufacturer());
+								addpst.setString(12, curItem.getModel());
+								addpst.setBoolean(13, false);
+								addpst.setBoolean(14, false);
 								int result = addpst.executeUpdate();
 
 								if (result != 0) {
@@ -306,7 +395,6 @@ public class BackGroundRegister extends Thread {
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
-
 							StrOut.write(replyStr);
 							StrOut.flush();
 							StrOut.close();
@@ -499,15 +587,14 @@ public class BackGroundRegister extends Thread {
 
 						String createquery = "CREATE TABLE IF NOT EXISTS "
 								+ databaseName
-								+ "("
-								+ "name text NOT NULL PRIMARY KEY,"
-								+ "building text,"
-								+ "room text,"
-								+ "type text,"
-								+ "img bytea,"
-								+ "assetlvl int,"
-								+ "qrstring text UNIQUE,"
-								+ "time text,lastupdatetime text,lastupdater text)";
+								+ "(name text NOT NULL PRIMARY KEY,"
+								+ "building text," + "room text,"
+								+ "type text," + "img bytea," + "assetlvl int,"
+								+ "qrstring text UNIQUE," + "time text,"
+								+ "lastupdatetime text," + "lastupdater text,"
+								+ "manufacturer text," + "model text,"
+								+ "broken boolean," + "extras text[],"
+								+ "missing boolean)";
 						try {
 							PreparedStatement createpst = conn
 									.prepareStatement(createquery);
