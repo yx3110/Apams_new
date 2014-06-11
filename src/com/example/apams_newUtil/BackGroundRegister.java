@@ -60,6 +60,45 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					case REPORTBROKEN:
+						System.out.println("Package type = " + pack.getType());
+						apams_report_package rpack = (apams_report_package)pack;
+						boolean isBroken = rpack.getBool();
+						String brokenName = username;
+						String brokenDatabase = password;
+						String brokenQuery = "UPDATE "+ brokenDatabase+" SET broken = ? WHERE name = ?";
+						try{
+							PreparedStatement missPst = conn.prepareStatement(brokenQuery);
+							missPst.setBoolean(1, isBroken);
+							missPst.setString(2, brokenName);
+							missPst.executeUpdate();
+							missPst.close();
+						}catch(SQLException e){
+							e.printStackTrace();
+						}
+						StrOut.write("BROKENREPORTED");
+						StrOut.flush();
+						StrOut.close();
+						run();
+					case REPORTMISS:
+						System.out.println("Package type = " + pack.getType());
+						String missName = username;
+						String missDatabase = password;
+						String missQuery = "UPDATE "+ missDatabase+" SET missing = ? WHERE name = ?";
+						try{
+							PreparedStatement missPst = conn.prepareStatement(missQuery);
+							missPst.setBoolean(1, true);
+							missPst.setString(2, missName);
+							missPst.executeUpdate();
+							missPst.close();
+						}catch(SQLException e){
+							e.printStackTrace();
+						}
+						StrOut.write("MISSREPORTED");
+						StrOut.flush();
+						StrOut.close();
+						run();
+						break;
 					case QRUPDATE:
 						System.out.println("Package type = " + pack.getType());
 						apams_update_package uppack = (apams_update_package) pack;

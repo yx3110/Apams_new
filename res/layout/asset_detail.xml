@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Broken"
-            android:onClick="setBroken" />
+            android:onClick="reportBroken" />
 
         <Button
             android:id="@+id/qrquery_extras"

@@ -76,6 +76,8 @@ public class AssetDetailFragment extends Fragment {
 			.setText("Item is working: "+ mItem.isBroken());
 			((Button) rootView.findViewById(R.id.asset_detail_missing))
 			.setText("Item is missing: "+mItem.getMissing());
+			((Button) rootView.findViewById(R.id.asset_detail_extras))
+			.setText("Get extra information about item");
 			((Button) rootView.findViewById(R.id.asset_detail_name))
 					.setText(mItem.getItemName() + "\n");
 			((Button) rootView.findViewById(R.id.asset_detail_database))

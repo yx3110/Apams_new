@@ -771,7 +771,7 @@ public class MainActivity extends Activity implements
 	private apams_update_package updatePack;
 	private assetItem curQRresult;
 
-	public void setBroken(View view) {
+	public void reportBroken(View view) {
 		AlertDialog.Builder builder = new Builder(this);
 		builder.setTitle("Set Item Broken");
 		builder.setMessage("Is this item Broken?");
@@ -812,12 +812,16 @@ public class MainActivity extends Activity implements
 				(ViewGroup) findViewById(R.id.dialog));
 		builder.setView(layout);
 		builder.setNegativeButton("OK", null);
-		String extra1, extra2, extra3, extra4, extra5;
+		String extra1 = null, extra2 = null, extra3 = null, extra4 = null, extra5 = null;
+		try{
 		extra1 = this.curQRresult.getExtras().get(0);
 		extra2 = this.curQRresult.getExtras().get(1);
 		extra3 = this.curQRresult.getExtras().get(2);
 		extra4 = this.curQRresult.getExtras().get(3);
 		extra5 = this.curQRresult.getExtras().get(4);
+		}catch(Exception e){
+			
+		}
 		if (extra1 != null) {
 			((TextView) layout.findViewById(R.id.show_extra_1)).setText(extra1);
 		}
@@ -833,10 +837,6 @@ public class MainActivity extends Activity implements
 		if (extra5 != null) {
 			((TextView) layout.findViewById(R.id.show_extra_1)).setText(extra5);
 		}
-		QRresultLayout.findViewById(R.id.qrquery_confirm_update).setVisibility(
-				View.VISIBLE);
-		QRresultLayout.findViewById(R.id.qrquery_confirm_update).setEnabled(
-				true);
 	}
 
 	public void qrBuilding(View view) {
