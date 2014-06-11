@@ -162,7 +162,7 @@ public class BackGroundRegister extends Thread {
 							oOutputs.writeObject(resultpack);
 							System.out.println("return package sent");
 
-							oOutputs.close();
+							oOutputs.flush();
 							StrOut.close();
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -467,7 +467,7 @@ public class BackGroundRegister extends Thread {
 
 							oOutputs.writeObject(returnPack);
 							System.out.println("return package sent");
-							oOutputs.close();
+							oOutputs.flush();
 							IMpst.close();
 							run();
 
@@ -560,7 +560,7 @@ public class BackGroundRegister extends Thread {
 							apams_network_package resultPack = new apams_datalist_package(
 									username, resultAL, resultLVL);
 							oOutputs.writeObject(resultPack);
-							oOutputs.close();
+							oOutputs.flush();
 							datalistpst.close();
 							System.out.println("return package sent");
 							run();
@@ -593,7 +593,7 @@ public class BackGroundRegister extends Thread {
 									username, rscid, rsPriority, rsBelong,
 									profilepic);
 							oOutputs.writeObject(accResult);
-							oOutputs.close();
+							oOutputs.flush();
 							accpst.close();
 							System.out.println("return package sent");
 							run();
