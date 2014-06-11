@@ -163,7 +163,6 @@ public class BackGroundRegister extends Thread {
 							System.out.println("return package sent");
 
 							oOutputs.close();
-							outputs.close();
 							StrOut.close();
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -230,7 +229,6 @@ public class BackGroundRegister extends Thread {
 									username, AQList, AQMap);
 							oOutputs.writeObject(resultpack);
 							oOutputs.close();
-							outputs.close();
 							StrOut.close();
 							run();
 						} catch (SQLException e) {
@@ -316,7 +314,6 @@ public class BackGroundRegister extends Thread {
 												Arrays.asList((String[]) rs
 														.getArray("extras")
 														.getArray())));
-
 									}
 
 									if (QRpriority > curItemlvl) {
@@ -340,8 +337,6 @@ public class BackGroundRegister extends Thread {
 									oOutputs.writeObject(resultpack);
 								}
 								oOutputs.close();
-								outputs.close();
-
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
