@@ -142,7 +142,6 @@ public class BackGroundRegister extends Thread {
 						StrOut.write("UPDATEDONE");
 						StrOut.flush();
 						StrOut.close();
-						socket.close();
 						break;
 					case FINDPW:
 						System.out.println("Package type = " + pack.getType());
