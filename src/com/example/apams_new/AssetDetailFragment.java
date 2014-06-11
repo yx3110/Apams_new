@@ -72,6 +72,10 @@ public class AssetDetailFragment extends Fragment {
 			Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0,
 					pic.length);
 			imgview.setImageBitmap(bitpic);
+			((Button) rootView.findViewById(R.id.asset_detail_broken))
+			.setText("Item is working: "+ mItem.isBroken());
+			((Button) rootView.findViewById(R.id.asset_detail_missing))
+			.setText("Item is missing: "+mItem.getMissing());
 			((Button) rootView.findViewById(R.id.asset_detail_name))
 					.setText(mItem.getItemName() + "\n");
 			((Button) rootView.findViewById(R.id.asset_detail_database))
