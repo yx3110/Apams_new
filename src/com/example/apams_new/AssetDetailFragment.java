@@ -79,19 +79,19 @@ public class AssetDetailFragment extends Fragment {
 			((Button) rootView.findViewById(R.id.asset_detail_extras))
 			.setText("Get extra information about item");
 			((Button) rootView.findViewById(R.id.asset_detail_name))
-					.setText(mItem.getItemName() + "\n");
+					.setText(mItem.getItemName());
 			((Button) rootView.findViewById(R.id.asset_detail_database))
 					.setText("Database:"+mItem.getDatabase());
 			((Button) rootView.findViewById(R.id.asset_detail_priority))
-					.setText("Asset level:" + mItem.getItemlvl() + "\n");
+					.setText("Asset level:" + mItem.getItemlvl());
 			((Button) rootView.findViewById(R.id.asset_detail_location))
 					.setText("Stored in:" + mItem.getBuilding() + " at room:"
 							+ mItem.getRoom());
 			((Button) rootView.findViewById(R.id.asset_detial_type))
-					.setText("Item type:" + mItem.getItemType() + "\n");
+					.setText("Item type:" + mItem.getItemType());
 			((Button) rootView.findViewById(R.id.asset_detail_update))
 					.setText("Last updated by: " + mItem.getUpdater()
-							+ " At time:" + mItem.getUpdateTime() + "\n");
+							+ " At time:" + mItem.getUpdateTime());
 
 		} else {
 			Log.e("mItem", "null");
