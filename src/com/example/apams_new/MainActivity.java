@@ -979,10 +979,10 @@ public class MainActivity extends Activity implements
 			img.setImageBitmap(bitpic);
 			this.curQRresult = item;
 
-			((Button) layout.findViewById(R.id.qrquery_broken)).setText(item
-					.isBroken() + "");
-			((Button) layout.findViewById(R.id.qrquery_missing)).setText(item
-					.getMissing() + "");
+			((Button) layout.findViewById(R.id.qrquery_broken)).setText("Item broken:"+item
+					.isBroken());
+			((Button) layout.findViewById(R.id.qrquery_missing)).setText("Item missing:"+item
+					.getMissing());
 
 			Button assettype = (Button) layout.findViewById(R.id.qrquery_type);
 			Button database = (Button) layout
