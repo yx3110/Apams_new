@@ -227,6 +227,7 @@ public class BackGroundRegister extends Thread {
 								curItem.setTime(rs.getString("time"));
 								curItem.setUpdateTime(rs
 										.getString("lastupdatetime"));
+								curItem.setQRString(rs.getString("qrstring"));
 								curItem.setUpdater(rs.getString("lastUpdater"));
 								curItem.setManufacturer(rs
 										.getString("manufacturer"));

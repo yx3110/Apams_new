@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.support.v4.print.PrintHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -128,6 +129,7 @@ public class AssetDetailActivity extends FragmentActivity implements
 
 	public void printQR(View view) {
 		Bitmap bitmap = this.QRencode(mItem.getQRString(), 45, 45);
+		Log.e("QRSTRING", mItem.getQRString());
 		this.printDialog(bitmap);
 	}
 
@@ -203,6 +205,5 @@ public class AssetDetailActivity extends FragmentActivity implements
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 }
