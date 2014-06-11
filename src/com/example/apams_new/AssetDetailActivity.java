@@ -6,10 +6,12 @@ import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.apamsTCPclient;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
+import com.example.apams_newUtil.apams_report_package;
 import com.example.apams_newUtil.assetItem;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,7 +20,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An activity representing a single Asset detail screen. This activity is only
@@ -30,6 +34,7 @@ import android.widget.TextView;
  */
 public class AssetDetailActivity extends FragmentActivity implements OnTaskCompleted {
 	private assetItem mItem;
+	private AssetDetailFragment frag;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,6 +63,7 @@ public class AssetDetailActivity extends FragmentActivity implements OnTaskCompl
 					.getStringExtra(AssetDetailFragment.ARG_ITEM_ID));
 			AssetDetailFragment fragment = new AssetDetailFragment();
 			fragment.setArguments(arguments);
+			this.frag = fragment;
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.asset_detail_container, fragment).commit();
 		}
@@ -97,11 +103,13 @@ public class AssetDetailActivity extends FragmentActivity implements OnTaskCompl
 		if (extra5 != null) {
 			((TextView) layout.findViewById(R.id.show_extra_1)).setText(extra5);
 		}
+		builder.show();
 	}
 
 	public void reportMissing(View view){
-		apams_network_package pack = new apams_network_package(mItem.getItemName(),mItem.getDatabase(),packageType.REPORTMISS);
+		apams_network_package pack = new apams_report_package(mItem.getItemName(),mItem.getDatabase(),!mItem.getMissing(), packageType.REPORTMISS);
 		apamsTCPclient client = new apamsTCPclient(this);
+		client.execute(pack);
 	}
 
 	@Override
@@ -111,8 +119,11 @@ public class AssetDetailActivity extends FragmentActivity implements OnTaskCompl
 
 	@Override
 	public void onTaskCompleted(String answer) {
-		// TODO Auto-generated method stub
-		
+		if(answer.contains("MISSREPORTED")){
+			this.popMsg("Miss is reported");
+			this.mItem.setMissing(!mItem.getMissing());
+			((Button) this.frag.getView().findViewById(R.id.asset_detail_missing)).setText("Item is missing: "+mItem.getMissing());
+		}
 	}
 
 	@Override
@@ -122,8 +133,11 @@ public class AssetDetailActivity extends FragmentActivity implements OnTaskCompl
 	}
 
 	@Override
-	public void popMsg(String string) {
-		// TODO Auto-generated method stub
-		
+	public void popMsg(String msg) {
+		Context context = getApplicationContext();
+		CharSequence text = msg;
+		int duration = Toast.LENGTH_SHORT;
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.show();		
 	}
 }

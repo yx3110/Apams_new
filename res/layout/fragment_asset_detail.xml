@@ -74,7 +74,8 @@
             android:id="@+id/asset_detail_extras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button"
+            android:onClick="showExtras" />
 
         <Button
             android:id="@+id/asset_detail_update"

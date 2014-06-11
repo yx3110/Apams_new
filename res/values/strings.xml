@@ -54,5 +54,6 @@
     <string name="title_View">Asset Database</string>
     <string name="title_asset_list">Assets</string>
     <string name="title_asset_detail">Asset Detail</string>
+    <string name="extra_empty">Empty Extra Information</string>
 
 </resources>

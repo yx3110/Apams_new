@@ -204,10 +204,10 @@ public final class R {
         public static final int acc_priority=0x7f050018;
         public static final int acc_user=0x7f050005;
         public static final int action_example=0x7f050008;
-        public static final int action_forgot_password=0x7f05003a;
+        public static final int action_forgot_password=0x7f05003b;
         public static final int action_settings=0x7f050009;
-        public static final int action_sign_in_register=0x7f050038;
-        public static final int action_sign_in_short=0x7f050039;
+        public static final int action_sign_in_register=0x7f050039;
+        public static final int action_sign_in_short=0x7f05003a;
         public static final int addBuilding=0x7f050029;
         public static final int addCID=0x7f05000b;
         public static final int addNew_progress_signing_in=0x7f05000f;
@@ -222,25 +222,26 @@ public final class R {
         public static final int button_register_confirm=0x7f050015;
         public static final int create_confirm=0x7f050020;
         public static final int desc=0x7f050011;
-        public static final int error_field_required=0x7f05003f;
-        public static final int error_incorrect_password=0x7f05003e;
-        public static final int error_invalid_email=0x7f05003c;
-        public static final int error_invalid_password=0x7f05003d;
+        public static final int error_field_required=0x7f050040;
+        public static final int error_incorrect_password=0x7f05003f;
+        public static final int error_invalid_email=0x7f05003d;
+        public static final int error_invalid_password=0x7f05003e;
+        public static final int extra_empty=0x7f050035;
         public static final int hello_world=0x7f050014;
         public static final int invite_choose=0x7f050025;
         public static final int invite_generate=0x7f050026;
         public static final int invite_maxlvl=0x7f05002a;
-        public static final int invite_setlvl=0x7f050040;
+        public static final int invite_setlvl=0x7f050041;
         public static final int invite_shareinvite=0x7f05002b;
         public static final int login_findpw=0x7f050031;
-        public static final int login_progress_signing_in=0x7f05003b;
+        public static final int login_progress_signing_in=0x7f05003c;
         public static final int login_setip=0x7f050030;
         public static final int navigation_drawer_close=0x7f050007;
         public static final int navigation_drawer_open=0x7f050006;
         /**  Strings related to login 
          */
-        public static final int prompt_email=0x7f050036;
-        public static final int prompt_password=0x7f050037;
+        public static final int prompt_email=0x7f050037;
+        public static final int prompt_password=0x7f050038;
         public static final int regis_dataName=0x7f05001a;
         public static final int regis_invite=0x7f05001b;
         public static final int regis_lvl=0x7f05001c;
@@ -252,7 +253,7 @@ public final class R {
         public static final int title_View=0x7f050032;
         public static final int title_account=0x7f050001;
         public static final int title_activity_apams_register=0x7f050013;
-        public static final int title_activity_login=0x7f050035;
+        public static final int title_activity_login=0x7f050036;
         public static final int title_addNew=0x7f050002;
         public static final int title_asset_detail=0x7f050034;
         public static final int title_asset_list=0x7f050033;
