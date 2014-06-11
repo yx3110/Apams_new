@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -366,9 +367,9 @@ public class BackGroundRegister extends Thread {
 									+ "lastupdater," + "manufacturer,"
 									+ "model," + "broken," + "extras,"
 									+ "missing)"
-									+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,"
-									+ stringExtras + "?)";
+									+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 							try {
+								Array curArray = conn.createArrayOf("text", stringExtras);
 								PreparedStatement addpst = conn
 										.prepareStatement(addQuery);
 								addpst.setString(1, curItem.getItemName());
@@ -384,7 +385,8 @@ public class BackGroundRegister extends Thread {
 								addpst.setString(11, curItem.getManufacturer());
 								addpst.setString(12, curItem.getModel());
 								addpst.setBoolean(13, false);
-								addpst.setBoolean(14, false);
+								addpst.setArray(14, curArray);
+								addpst.setBoolean(15, false);
 								int result = addpst.executeUpdate();
 
 								if (result != 0) {

@@ -87,6 +87,8 @@ public class MainActivity extends Activity implements
 
 	private assetItem curItem;
 
+	private View addExtraLayout;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -372,15 +374,23 @@ public class MainActivity extends Activity implements
 		}
 		if (curItem.getPic() == null) {
 			this.popMsg("Please take a picture of the asset.");
+		}else{
+			((Button) this.findViewById(R.id.addTakePicture)).setHint(R.string.addPic);
 		}
 		if (curItem.getItemType() == null) {
 			this.popMsg("Please choose a type of the asset.");
+		}else{
+			((Button) this.findViewById(R.id.addChooseType)).setHint(R.string.addType);
 		}
 		if (curItem.getQRString() == null) {
 			this.popMsg("Please generate a QR code for the asset.");
+		}else{
+			((Button) this.findViewById(R.id.add_generateQR)).setHint(R.string.add_generateQR);
 		}
 		if (this.isAdmin && curItem.getDatabase() == null) {
 			this.popMsg("Please select a target database for the item.");
+		}else{
+			((Button) this.findViewById(R.id.add_chooseData)).setHint(R.string.add_chooseData);
 		}
 
 		apams_network_package pack = new apams_assetAdd_package(mUsername,
@@ -397,6 +407,7 @@ public class MainActivity extends Activity implements
 		LayoutInflater inflater = getLayoutInflater();
 		View layout = inflater.inflate(R.layout.add_extras,
 				(ViewGroup) findViewById(R.id.dialog));
+		this.addExtraLayout = layout;
 		builder.setView(layout);
 		builder.setNegativeButton("Cancel", null);
 		builder.show();
@@ -406,28 +417,28 @@ public class MainActivity extends Activity implements
 
 	public void confirmExtra(View view) {
 		int counter = 0;
-		if (!isEmpty((EditText) this.findViewById(R.id.extras_1))) {
-			curItem.addExtra(((EditText) this.findViewById(R.id.extras_1))
+		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_1))) {
+			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_1))
 					.getText().toString());
 			counter++;
 		}
-		if (!isEmpty((EditText) this.findViewById(R.id.extras_2))) {
-			curItem.addExtra(((EditText) this.findViewById(R.id.extras_2))
+		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_2))) {
+			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_2))
 					.getText().toString());
 			counter++;
 		}
-		if (!isEmpty((EditText) this.findViewById(R.id.extras_3))) {
-			curItem.addExtra(((EditText) this.findViewById(R.id.extras_3))
+		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_3))) {
+			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_3))
 					.getText().toString());
 			counter++;
 		}
-		if (!isEmpty((EditText) this.findViewById(R.id.extras_4))) {
-			curItem.addExtra(((EditText) this.findViewById(R.id.extras_4))
+		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_4))) {
+			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_4))
 					.getText().toString());
 			counter++;
 		}
-		if (!isEmpty((EditText) this.findViewById(R.id.extras_5))) {
-			curItem.addExtra(((EditText) this.findViewById(R.id.extras_5))
+		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_5))) {
+			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_5))
 					.getText().toString());
 			counter++;
 		}
