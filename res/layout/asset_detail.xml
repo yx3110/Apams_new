@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="qrLocation"
+            android:onClick="qrBuilding"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -54,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:onClick="qrRoom"
             android:text="Room" />
 
         <Button
@@ -85,8 +86,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Broken"
-            android:onClick="reportBroken" />
+            android:onClick="reportBroken"
+            android:text="Broken" />
 
         <Button
             android:id="@+id/qrquery_extras"

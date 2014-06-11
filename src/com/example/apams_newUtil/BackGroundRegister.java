@@ -60,38 +60,21 @@ public class BackGroundRegister extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
-					case REPORTBROKEN:
-						System.out.println("Package type = " + pack.getType());
-						apams_report_package rpack = (apams_report_package)pack;
-						boolean isBroken = rpack.getBool();
-						String brokenName = username;
-						String brokenDatabase = password;
-						String brokenQuery = "UPDATE "+ brokenDatabase+" SET broken = ? WHERE name = ?";
-						try{
-							PreparedStatement missPst = conn.prepareStatement(brokenQuery);
-							missPst.setBoolean(1, isBroken);
-							missPst.setString(2, brokenName);
-							missPst.executeUpdate();
-							missPst.close();
-						}catch(SQLException e){
-							e.printStackTrace();
-						}
-						StrOut.write("BROKENREPORTED");
-						StrOut.flush();
-						StrOut.close();
-						run();
+
 					case REPORTMISS:
 						System.out.println("Package type = " + pack.getType());
 						String missName = username;
 						String missDatabase = password;
-						String missQuery = "UPDATE "+ missDatabase+" SET missing = ? WHERE name = ?";
-						try{
-							PreparedStatement missPst = conn.prepareStatement(missQuery);
+						String missQuery = "UPDATE " + missDatabase
+								+ " SET missing = ? WHERE name = ?";
+						try {
+							PreparedStatement missPst = conn
+									.prepareStatement(missQuery);
 							missPst.setBoolean(1, true);
 							missPst.setString(2, missName);
 							missPst.executeUpdate();
 							missPst.close();
-						}catch(SQLException e){
+						} catch (SQLException e) {
 							e.printStackTrace();
 						}
 						StrOut.write("MISSREPORTED");
@@ -409,7 +392,8 @@ public class BackGroundRegister extends Thread {
 									+ "missing)"
 									+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 							try {
-								Array curArray = conn.createArrayOf("text", stringExtras);
+								Array curArray = conn.createArrayOf("text",
+										stringExtras);
 								PreparedStatement addpst = conn
 										.prepareStatement(addQuery);
 								addpst.setString(1, curItem.getItemName());

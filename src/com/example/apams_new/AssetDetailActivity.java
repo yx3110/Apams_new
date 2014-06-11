@@ -182,8 +182,7 @@ public class AssetDetailActivity extends FragmentActivity implements
 				PrintHelper photoPrinter = new PrintHelper(main);
 				photoPrinter.setScaleMode(PrintHelper.SCALE_MODE_FIT);
 				photoPrinter.printBitmap(
-						((EditText) findViewById(R.id.addNewName)).getText()
-								.toString(), bitmap);
+						mItem.getItemName(), bitmap);
 			}
 
 		});

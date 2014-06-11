@@ -732,7 +732,7 @@ public class MainActivity extends Activity implements
 	@Override
 	public void onTaskCompleted(String answer) {
 		if (answer.contains("UPDATEDONE")) {
-			this.popMsg("Updated,Please rescan code for new item details");
+			this.popMsg("Updated,Please re-scan code for new item details");
 		} else if (answer.contains("PriorityTooLow")) {
 			this.popMsg("Priority too low, please lower the priority of this asset");
 			findViewById(R.id.add_itemlvl).requestFocus();
@@ -837,6 +837,7 @@ public class MainActivity extends Activity implements
 		if (extra5 != null) {
 			((TextView) layout.findViewById(R.id.show_extra_1)).setText(extra5);
 		}
+		builder.show();
 	}
 
 	public void qrBuilding(View view) {
