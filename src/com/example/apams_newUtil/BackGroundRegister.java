@@ -163,11 +163,10 @@ public class BackGroundRegister extends Thread {
 							oOutputs.close();
 							outputs.close();
 							StrOut.close();
-							run();
-
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
+						run();
 						break;
 					case ASSETQUERY:
 						System.out.println("Package type = " + pack.getType());
@@ -337,16 +336,15 @@ public class BackGroundRegister extends Thread {
 									apams_network_package resultpack = new apams_assetQuery_package(
 											username, asset);
 									oOutputs.writeObject(resultpack);
-									System.out.println("Result package sent");
 								}
 								oOutputs.close();
 								outputs.close();
-								run();
 
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
 						}
+						run();
 
 						break;
 					case ADDASSET:
@@ -569,11 +567,9 @@ public class BackGroundRegister extends Thread {
 							datalistpst.close();
 							System.out.println("return package sent");
 							run();
-
 						} catch (SQLException e) {
 							System.out.println(e);
 						}
-
 						break;
 
 					case ACC:
@@ -604,11 +600,9 @@ public class BackGroundRegister extends Thread {
 							accpst.close();
 							System.out.println("return package sent");
 							run();
-
 						} catch (SQLException e) {
 							System.out.println(e);
 						}
-
 						break;
 
 					case CREATE:
