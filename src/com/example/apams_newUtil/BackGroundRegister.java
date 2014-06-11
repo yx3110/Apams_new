@@ -566,10 +566,11 @@ public class BackGroundRegister extends Thread {
 							oOutputs.close();
 							datalistpst.close();
 							System.out.println("return package sent");
-							run();
 						} catch (SQLException e) {
 							System.out.println(e);
 						}
+						run();
+
 						break;
 
 					case ACC:
@@ -599,10 +600,11 @@ public class BackGroundRegister extends Thread {
 							oOutputs.close();
 							accpst.close();
 							System.out.println("return package sent");
-							run();
 						} catch (SQLException e) {
 							System.out.println(e);
 						}
+						run();
+
 						break;
 
 					case CREATE:
