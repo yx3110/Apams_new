@@ -63,14 +63,16 @@ public class BackGroundRegister extends Thread {
 
 					case REPORTMISS:
 						System.out.println("Package type = " + pack.getType());
+						apams_report_package rpack = (apams_report_package) pack;
 						String missName = username;
 						String missDatabase = password;
+						boolean bool = rpack.getBool();
 						String missQuery = "UPDATE " + missDatabase
 								+ " SET missing = ? WHERE name = ?";
 						try {
 							PreparedStatement missPst = conn
 									.prepareStatement(missQuery);
-							missPst.setBoolean(1, true);
+							missPst.setBoolean(1, bool);
 							missPst.setString(2, missName);
 							missPst.executeUpdate();
 							missPst.close();
