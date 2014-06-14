@@ -981,17 +981,17 @@ public class MainActivity extends Activity implements
 
 			((Button) layout.findViewById(R.id.qrquery_broken)).setText("Item broken:"+item
 					.isBroken());
-			((Button) layout.findViewById(R.id.qrquery_missing)).setText("Item missing:"+item
+			((TextView) layout.findViewById(R.id.qrquery_missing)).setText("Item missing:"+item
 					.getMissing());
 
-			Button assettype = (Button) layout.findViewById(R.id.qrquery_type);
-			Button database = (Button) layout
+			TextView assettype = (TextView) layout.findViewById(R.id.qrquery_type);
+			TextView database = (TextView) layout
 					.findViewById(R.id.qrquery_database);
 			Button building = (Button) layout
 					.findViewById(R.id.qrquery_building);
 			Button room = (Button) layout.findViewById(R.id.qrquery_room);
-			Button itemlvl = (Button) layout.findViewById(R.id.qrquery_itemlvl);
-			Button time = (Button) layout.findViewById(R.id.qrquery_time);
+			TextView itemlvl = (TextView) layout.findViewById(R.id.qrquery_itemlvl);
+			TextView time = (TextView) layout.findViewById(R.id.qrquery_time);
 			Button confirm = (Button) layout
 					.findViewById(R.id.qrquery_confirm_update);
 			confirm.setVisibility(View.INVISIBLE);

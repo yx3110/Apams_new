@@ -27,35 +27,40 @@
                 android:src="@drawable/ic_launcher" />
         </RelativeLayout>
 
-        <Button
+        <TextView
             android:id="@+id/asset_detail_database"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <Button
+        <TextView
             android:id="@+id/asset_detail_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <Button
+        <TextView
             android:id="@+id/asset_detail_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <Button
+        <TextView
             android:id="@+id/asset_detail_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <Button
+        <TextView
             android:id="@+id/asset_detial_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <Button
             android:id="@+id/asset_detail_missing"
@@ -64,11 +69,12 @@
             android:text="Button" 
             android:onClick="reportMissing"/>
 
-        <Button
+        <TextView
             android:id="@+id/asset_detail_broken"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Button" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <Button
             android:id="@+id/asset_detail_extras"
