@@ -309,7 +309,7 @@ public class MainActivity extends Activity implements
 		String queryDatabase;
 		if (this.isAdmin) {
 			Spinner dataSpinner = (Spinner) this
-					.findViewById(R.id.inspect_spinner);
+					.findViewById(R.id.inspect_spinner_data);
 			queryDatabase = (String) dataSpinner.getSelectedItem();
 		} else {
 			queryDatabase = this.database;
@@ -742,11 +742,11 @@ public class MainActivity extends Activity implements
 			this.printDialog(bitmap);
 
 			Button typeButton = (Button) findViewById(R.id.addChooseType);
-			typeButton.setText(R.string.add_chooseData);
+			typeButton.setHint(R.string.add_chooseData);
 			Button pictureItem = (Button) findViewById(R.id.addTakePicture);
-			pictureItem.setText(R.string.addPic);
+			pictureItem.setHint(R.string.addPic);
 			Button QRButton = (Button) findViewById(R.id.add_generateQR);
-			QRButton.setText(R.string.add_generateQR);
+			QRButton.setHint(R.string.add_generateQR);
 			this.curItem = new assetItem();
 		} else if (answer.contains("GOOD")) {
 			popMsg("Database created!Stay in this dialog to create more or click quit if you are finished.");

@@ -4,32 +4,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <Button
+        android:id="@+id/inspect_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
+        android:onClick="assetQuery"
+        android:text="@string/create_confirm" />
+
     <TextView
         android:id="@+id/inspect_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp"
+        android:layout_marginTop="40dp"
         android:text="@string/hello_world"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Spinner
-        android:id="@+id/inspect_spinner"
-        android:layout_width="wrap_content"
+        android:id="@+id/inspect_spinner_data"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/inspect_message"
-        android:layout_marginTop="40dp" />
+        android:layout_below="@+id/inspect_message" />
 
-    <Button
-        android:id="@+id/inspect_confirm"
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/inspect_spinner"
+        android:layout_below="@+id/inspect_spinner_data"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="@string/create_confirm"
-        android:onClick= "assetQuery" />
+        android:layout_marginTop="68dp"
+        android:text="Please choose sort by"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Spinner
+        android:id="@+id/inspect_spinner_sortby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1" />
 
 </RelativeLayout>

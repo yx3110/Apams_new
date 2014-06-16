@@ -72,22 +72,22 @@ public class AssetDetailFragment extends Fragment {
 			Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0,
 					pic.length);
 			imgview.setImageBitmap(bitpic);
-			((Button) rootView.findViewById(R.id.asset_detail_broken))
-			.setText("Item is working: "+ mItem.isBroken());
+			((TextView) rootView.findViewById(R.id.asset_detail_broken))
+			.setText("Item is broken: "+ mItem.isBroken());
 			((Button) rootView.findViewById(R.id.asset_detail_missing))
 			.setText("Item is missing: "+mItem.getMissing());
 			((Button) rootView.findViewById(R.id.asset_detail_extras))
 			.setText("Get extra information about item");
-			((Button) rootView.findViewById(R.id.asset_detail_name))
-					.setText(mItem.getItemName());
-			((Button) rootView.findViewById(R.id.asset_detail_database))
+			((TextView) rootView.findViewById(R.id.asset_detail_name))
+					.setText("Item name: "+mItem.getItemName());
+			((TextView) rootView.findViewById(R.id.asset_detail_database))
 					.setText("Database:"+mItem.getDatabase());
-			((Button) rootView.findViewById(R.id.asset_detail_priority))
+			((TextView) rootView.findViewById(R.id.asset_detail_priority))
 					.setText("Asset level:" + mItem.getItemlvl());
-			((Button) rootView.findViewById(R.id.asset_detail_location))
+			((TextView) rootView.findViewById(R.id.asset_detail_location))
 					.setText("Stored in:" + mItem.getBuilding() + " at room:"
 							+ mItem.getRoom());
-			((Button) rootView.findViewById(R.id.asset_detial_type))
+			((TextView) rootView.findViewById(R.id.asset_detial_type))
 					.setText("Item type:" + mItem.getItemType());
 			((Button) rootView.findViewById(R.id.asset_detail_update))
 					.setText("Last updated by: " + mItem.getUpdater()

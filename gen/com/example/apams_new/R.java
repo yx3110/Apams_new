@@ -39,9 +39,9 @@ public final class R {
         public static final int acc_checkData=0x7f080013;
         public static final int acc_invite=0x7f080011;
         public static final int acc_manageInvite=0x7f080012;
-        public static final int action_forgot_password=0x7f08006c;
-        public static final int action_search=0x7f08006b;
-        public static final int action_settings=0x7f08006a;
+        public static final int action_forgot_password=0x7f08006e;
+        public static final int action_search=0x7f08006d;
+        public static final int action_settings=0x7f08006c;
         public static final int addBuilding=0x7f08002f;
         public static final int addCID=0x7f08002c;
         public static final int addChooseType=0x7f080032;
@@ -89,9 +89,10 @@ public final class R {
         public static final int findPw_CID=0x7f080045;
         public static final int findPw_cid=0x7f080043;
         public static final int findPw_email=0x7f080044;
-        public static final int inspect_confirm=0x7f080069;
-        public static final int inspect_message=0x7f080067;
-        public static final int inspect_spinner=0x7f080068;
+        public static final int inspect_confirm=0x7f080067;
+        public static final int inspect_message=0x7f080068;
+        public static final int inspect_spinner_data=0x7f080069;
+        public static final int inspect_spinner_sortby=0x7f08006b;
         public static final int invitationcode_detail=0x7f08005a;
         public static final int invitationcode_detail_container=0x7f080019;
         public static final int invitationcode_list=0x7f08001a;
@@ -137,6 +138,7 @@ public final class R {
         public static final int sign_in_button=0x7f080023;
         public static final int singleqr=0x7f080066;
         public static final int status_text=0x7f08000c;
+        public static final int textView1=0x7f08006a;
         public static final int textView_CID=0x7f08000f;
         public static final int textView_database=0x7f08000d;
         public static final int textView_priority=0x7f08000e;

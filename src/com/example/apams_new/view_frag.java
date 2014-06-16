@@ -23,16 +23,20 @@ public class view_frag extends Fragment implements OnTaskCompleted {
 			Bundle savedInstanceState) {
 
 		View rootView = inflater.inflate(R.layout.view_frag, container, false);
-		Spinner datalist = (Spinner) rootView
-				.findViewById(R.id.inspect_spinner);
+		
+		Spinner datalistSpinner = (Spinner) rootView
+				.findViewById(R.id.inspect_spinner_data);
+		
+		Spinner sortBy = (Spinner) rootView
+				.findViewById(R.id.inspect_spinner_sortby);
 
 		TextView message = (TextView) rootView
 				.findViewById(R.id.inspect_message);
 		Bundle args = this.getArguments();
 		boolean isAdmin = args.getBoolean("isAdmin");
 		if (!isAdmin) {
-			datalist.setVisibility(View.INVISIBLE);
-			datalist.setEnabled(false);
+			datalistSpinner.setVisibility(View.INVISIBLE);
+			datalistSpinner.setEnabled(false);
 			message.setText("Click confirm to inspect the items your are managing");
 		} else {
 			message.setText("Please select the database your want to inspect");
@@ -40,10 +44,14 @@ public class view_frag extends Fragment implements OnTaskCompleted {
 				popMsg("Please create a database first");
 			}
 			String[] dataarray = new String[this.datalist.size()];
+			String[] sortByStr = new String[]{"Location","Name","Type","Manufacturer"};
 			dataarray = this.datalist.toArray(dataarray);
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(),
+			ArrayAdapter<String> dataadapter = new ArrayAdapter<String>(this.getActivity(),
 					android.R.layout.simple_spinner_item, dataarray);
-			datalist.setAdapter(adapter);
+			ArrayAdapter<String> sortadapter = new ArrayAdapter<String>(this.getActivity(),
+					android.R.layout.simple_spinner_item, sortByStr);
+			datalistSpinner.setAdapter(dataadapter);
+			sortBy.setAdapter(sortadapter);
 		}
 		return rootView;
 	}
