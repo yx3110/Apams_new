@@ -314,8 +314,25 @@ public class MainActivity extends Activity implements
 		} else {
 			queryDatabase = this.database;
 		}
+		Spinner sortBySpinner = (Spinner) this.findViewById(R.id.inspect_spinner_sortby);
+		String sortByStr = (String)sortBySpinner.getSelectedItem();
+		assetItem.sortBy sortBy = null;
+		if(sortByStr.equals("Location")){
+			sortBy = sortBy.LOCATION;
+
+		}else if(sortByStr.equals("Type")){
+			sortBy = sortBy.TYPE;
+
+		}else if(sortByStr.equals("Manufacturer")){
+			sortBy = sortBy.MANUFACTURER;
+
+		}else if(sortByStr.equals("Broken")){
+			sortBy = sortBy.BROKEN;
+		}else if(sortByStr.equals("Missing")){
+			sortBy = sortBy.MISSING;
+		}
 		apams_network_package pack = new apams_assetQuery_package(
-				this.mUsername, queryDatabase);
+				this.mUsername, queryDatabase,sortBy);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
 	}

@@ -25,6 +25,11 @@ public class assetItem implements Serializable {
 	private ArrayList<String> extras;
 	private boolean broken;
 	private boolean missing;
+	private sortBy sortBy;
+
+	public enum sortBy {
+		LOCATION, TYPE, BROKEN, MISSING, MANUFACTURER;
+	}
 
 	public assetItem() {
 		this.extras = new ArrayList<String>();
@@ -44,6 +49,12 @@ public class assetItem implements Serializable {
 
 	public String getManufacturer() {
 		return this.manufacturer;
+	}
+	public sortBy getSortBy(){
+		return this.sortBy;
+	}
+	public void setSortBy(sortBy sortBy){
+		this.sortBy = sortBy;
 	}
 
 	public String getModel() {
@@ -164,8 +175,27 @@ public class assetItem implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Name: " + this.getItemName() + ",Type: " + this.getItemType()
-				+ ",Level: " + this.getItemlvl();
+		switch (this.sortBy) {
+		case TYPE:
+			return "Name: " + this.getItemName() + ",Type: "
+					+ this.getItemType() + ",Level: " + this.getItemlvl();
+		case LOCATION:
+			return "Building:" + this.getBuilding() + ", Room:"
+					+ this.getRoom() + ", Name:" + this.getItemName();
+		case BROKEN:
+			return "Name: " + this.getItemName() + ",Type: "
+					+ this.getItemType() + ",Level: " + this.getItemlvl();
+		case MISSING:
+			return "Name: " + this.getItemName() + ",Type: "
+					+ this.getItemType() + ",Level: " + this.getItemlvl();
+		case MANUFACTURER:
+			return "Manufacturer:" + this.getManufacturer() + ", Model:"
+					+ this.getModel() + ", Type:" + this.getItemType()
+					+ ", Name" + this.getItemName();
+		default:
+			return null;
+		}
+
 	}
 
 	public void setMissing(boolean boolean1) {

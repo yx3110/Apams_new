@@ -44,7 +44,7 @@ public class view_frag extends Fragment implements OnTaskCompleted {
 				popMsg("Please create a database first");
 			}
 			String[] dataarray = new String[this.datalist.size()];
-			String[] sortByStr = new String[]{"Location","Name","Type","Manufacturer"};
+			String[] sortByStr = new String[]{"Location","Type","Manufacturer","Broken","Missing"};
 			dataarray = this.datalist.toArray(dataarray);
 			ArrayAdapter<String> dataadapter = new ArrayAdapter<String>(this.getActivity(),
 					android.R.layout.simple_spinner_item, dataarray);

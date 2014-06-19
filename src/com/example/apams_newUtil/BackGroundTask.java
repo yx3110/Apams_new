@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
+import com.example.apams_newUtil.assetItem.sortBy;
 
 public class BackGroundTask extends Thread {
 	private ServerSocket ssocket;
@@ -176,6 +177,7 @@ public class BackGroundTask extends Thread {
 
 						String lvlQuery = "SELECT priority FROM user_information WHERE username = ?";
 						int prioritylvl = 0;
+						sortBy sortBy = AQpack.getSortBy();
 						try {
 							PreparedStatement lvlpst = conn
 									.prepareStatement(lvlQuery);
@@ -221,6 +223,7 @@ public class BackGroundTask extends Thread {
 								curItem.setExtras(new ArrayList<String>(Arrays
 										.asList((String[]) rs
 												.getArray("extras").getArray())));
+								curItem.setSortBy(sortBy);
 								AQList.add(curItem);
 								AQMap.put(String.valueOf(AQid), curItem);
 								AQid++;
