@@ -77,8 +77,6 @@ public class BackGroundTask extends Thread {
 							oOutputs.writeObject(resultPack);
 							oOutputs.close();
 							getpicpst.close();
-							
-							
 						}catch(SQLException e){
 							
 						}

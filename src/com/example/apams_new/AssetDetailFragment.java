@@ -112,7 +112,6 @@ public class AssetDetailFragment extends Fragment implements OnTaskCompleted {
 
 	@Override
 	public void onPackReceived(apams_network_package pack) {
-
 		ImageView imgview = (ImageView) this.rootView
 				.findViewById(R.id.asset_detail_image);
 		byte[] pic = pack.getPic();
