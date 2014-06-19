@@ -260,7 +260,7 @@ public class MainActivity extends Activity implements
 		String answer = new BigInteger(200, random).toString(32).substring(0,
 				14);
 		((Button) view).setText(answer);
-		this.popMsg("Code generated but not activiated,press the same button to generate again");
+		this.popMsg("Code generated but not activated,press the same button to generate again");
 	}
 
 	public void confirmInvite(View view) {
@@ -742,7 +742,7 @@ public class MainActivity extends Activity implements
 			this.printDialog(bitmap);
 
 			Button typeButton = (Button) findViewById(R.id.addChooseType);
-			typeButton.setHint(R.string.add_chooseData);
+			typeButton.setHint(R.string.addType);
 			Button pictureItem = (Button) findViewById(R.id.addTakePicture);
 			pictureItem.setHint(R.string.addPic);
 			Button QRButton = (Button) findViewById(R.id.add_generateQR);

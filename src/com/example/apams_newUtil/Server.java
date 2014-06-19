@@ -28,7 +28,7 @@ public class Server {
 			System.out.println("Server socket created");
 			
 			while(true){
-				BackGroundRegister thread = new BackGroundRegister(serverSocket,conn);
+				BackGroundTask thread = new BackGroundTask(serverSocket,conn);
 				thread.run();
 			}
 			

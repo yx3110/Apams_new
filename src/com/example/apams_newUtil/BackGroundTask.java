@@ -22,11 +22,11 @@ import java.util.HashMap;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 
-public class BackGroundRegister extends Thread {
+public class BackGroundTask extends Thread {
 	private ServerSocket ssocket;
 	private Connection conn;
 
-	public BackGroundRegister(ServerSocket ssocket, Connection conn) {
+	public BackGroundTask(ServerSocket ssocket, Connection conn) {
 		this.conn = conn;
 		this.ssocket = ssocket;
 	}
