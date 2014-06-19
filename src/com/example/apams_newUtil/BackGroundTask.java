@@ -178,6 +178,7 @@ public class BackGroundTask extends Thread {
 						String lvlQuery = "SELECT priority FROM user_information WHERE username = ?";
 						int prioritylvl = 0;
 						sortBy sortBy = AQpack.getSortBy();
+						System.out.print(sortBy);
 						try {
 							PreparedStatement lvlpst = conn
 									.prepareStatement(lvlQuery);
