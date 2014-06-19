@@ -29,6 +29,7 @@ public class apams_assetQuery_package extends apams_network_package {
 			assetItem.sortBy sortBy) {
 		super(username, packageType.ASSETQUERY);
 		this.database = database;
+		this.sortBy = sortBy;
 	}
 
 	public apams_assetQuery_package(String username, assetItem item) {
