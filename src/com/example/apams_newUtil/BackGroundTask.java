@@ -61,24 +61,103 @@ public class BackGroundTask extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					case UPDATEBUILDING:
+						System.out.println("Package type = " + pack.getType());
+
+						apams_update_package buildingPack = (apams_update_package) pack;
+						String buildingDatabase = buildingPack.getDatabase();
+						String buildingName = buildingPack.getItemName();
+						String newBuilding = buildingPack.getNewBuilding();
+
+						String buildingQuery = "UPDATE " + buildingDatabase
+								+ " SET building = ? WHERE name = ?";
+						try {
+							PreparedStatement missPst = conn
+									.prepareStatement(buildingQuery);
+							missPst.setString(1, newBuilding);
+							missPst.setString(2, buildingName);
+							missPst.executeUpdate();
+							missPst.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						StrOut.write("MISSREPORTED");
+						StrOut.flush();
+						StrOut.close();
+						run();
+						break;
+					case UPDATEROOM:
+						System.out.println("Package type = " + pack.getType());
+
+						apams_update_package roomPack = (apams_update_package) pack;
+						String roomDatabase = roomPack.getDatabase();
+						String roomName = roomPack.getItemName();
+						String newRoom = roomPack.getNewRoom();
+
+						String roomQuery = "UPDATE " + roomDatabase
+								+ " SET room = ? WHERE name = ?";
+						try {
+							PreparedStatement missPst = conn
+									.prepareStatement(roomQuery);
+							missPst.setString(1, newRoom);
+							missPst.setString(2, roomName);
+							missPst.executeUpdate();
+							missPst.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						StrOut.write("MISSREPORTED");
+						StrOut.flush();
+						StrOut.close();
+						run();
+						break;
+					case UPDATEBROKEN:
+						System.out.println("Package type = " + pack.getType());
+
+						apams_update_package brokenPack = (apams_update_package) pack;
+						String brokenDatabase = brokenPack.getDatabase();
+						String brokenName = brokenPack.getItemName();
+						boolean brokenBool = brokenPack.isBroken();
+
+						String brokenQuery = "UPDATE " + brokenDatabase
+								+ " SET broken = ? WHERE name = ?";
+						try {
+							PreparedStatement missPst = conn
+									.prepareStatement(brokenQuery);
+							missPst.setBoolean(1, brokenBool);
+							missPst.setString(2, brokenName);
+							missPst.executeUpdate();
+							missPst.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						StrOut.write("MISSREPORTED");
+						StrOut.flush();
+						StrOut.close();
+						run();
+						break;
+
 					case GETPIC:
 						System.out.println("Package type = " + pack.getType());
 						String picItemName = pack.getUsername();
 						String itemdb = pack.getPassword();
-						String getPicQuery = "SELECT img FROM "+itemdb+ " WHERE name = ?";
-						try{
-							PreparedStatement getpicpst = conn.prepareStatement(getPicQuery);
+						String getPicQuery = "SELECT img FROM " + itemdb
+								+ " WHERE name = ?";
+						try {
+							PreparedStatement getpicpst = conn
+									.prepareStatement(getPicQuery);
 							getpicpst.setString(1, picItemName);
 							ResultSet rs = getpicpst.executeQuery();
-							apams_network_package resultPack = new apams_network_package(picItemName,packageType.GETPIC);
-							while(rs.next()){
+							apams_network_package resultPack = new apams_network_package(
+									picItemName, packageType.GETPIC);
+							while (rs.next()) {
 								resultPack.setPic(rs.getBytes("img"));
 							}
 							oOutputs.writeObject(resultPack);
 							oOutputs.close();
 							getpicpst.close();
-						}catch(SQLException e){
-							
+						} catch (SQLException e) {
+
 						}
 						run();
 						break;
@@ -105,65 +184,7 @@ public class BackGroundTask extends Thread {
 						StrOut.close();
 						run();
 						break;
-					case QRUPDATE:
-						System.out.println("Package type = " + pack.getType());
-						apams_update_package uppack = (apams_update_package) pack;
-						String updateDatabase = uppack.getDatabase();
-						String itemName = uppack.getItemName();
-						if (uppack.getNewBuilding() != null) {
-							String QRupdateQuery = "UPDATE " + updateDatabase
-									+ " SET building = ? WHERE name = ?";
-							try {
-								PreparedStatement uppst = conn
-										.prepareStatement(QRupdateQuery);
-								uppst.setString(1, uppack.getNewBuilding());
-								uppst.setString(2, itemName);
-								uppst.close();
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-						}
-						if (uppack.getNewRoom() != null) {
-							String QRupdateQuery = "UPDATE " + updateDatabase
-									+ " SET room = ? WHERE name = ?";
-							try {
-								PreparedStatement uppst = conn
-										.prepareStatement(QRupdateQuery);
-								uppst.setString(1, uppack.getNewRoom());
-								uppst.setString(2, itemName);
-								uppst.close();
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-						}
-						if (uppack.getNewLvl() != 0) {
-							String QRupdateQuery = "UPDATE " + updateDatabase
-									+ " SET assetlvl = ? WHERE name = ?";
-							try {
-								PreparedStatement uppst = conn
-										.prepareStatement(QRupdateQuery);
-								uppst.setInt(1, uppack.getNewLvl());
-								uppst.setString(2, itemName);
-								uppst.close();
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-						}
-						String QRupdateQuery = "UPDATE " + updateDatabase
-								+ " SET broken = ? WHERE name = ?";
-						try {
-							PreparedStatement uppst = conn
-									.prepareStatement(QRupdateQuery);
-							uppst.setBoolean(1, uppack.isBroken());
-							uppst.setString(2, itemName);
-							uppst.close();
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-						StrOut.write("UPDATEDONE");
-						StrOut.flush();
-						StrOut.close();
-						break;
+
 					case FINDPW:
 						System.out.println("Package type = " + pack.getType());
 						String pwQuery = "SELECT password FROM user_information WHERE username = ? AND cid = ?";
@@ -222,14 +243,14 @@ public class BackGroundTask extends Thread {
 							AQpst.setInt(1, prioritylvl);
 							ResultSet rs = AQpst.executeQuery();
 							while (rs.next()) {
-								
+
 								assetItem curItem = new assetItem();
 								curItem.setSortBy(sortBy);
 
 								curItem.setBuilding(rs.getString("building"));
 								curItem.setId(String.valueOf(AQid));
 								curItem.setDatabase(database);
-								
+
 								curItem.setItemlvl(rs.getInt("assetlvl"));
 								curItem.setItemName(rs.getString("name"));
 								curItem.setItemType(rs.getString("type"));
@@ -247,7 +268,7 @@ public class BackGroundTask extends Thread {
 								curItem.setExtras(new ArrayList<String>(Arrays
 										.asList((String[]) rs
 												.getArray("extras").getArray())));
-								
+
 								AQList.add(curItem);
 								AQMap.put(String.valueOf(AQid), curItem);
 								AQid++;
@@ -878,5 +899,4 @@ public class BackGroundTask extends Thread {
 			run();
 		}
 	}
-
 }

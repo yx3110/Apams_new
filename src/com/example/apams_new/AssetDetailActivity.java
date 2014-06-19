@@ -151,7 +151,6 @@ public class AssetDetailActivity extends FragmentActivity implements
 
 	@Override
 	public void onPackReceived(apams_network_package pack) {
-		// TODO Auto-generated method stub
 
 	}
 

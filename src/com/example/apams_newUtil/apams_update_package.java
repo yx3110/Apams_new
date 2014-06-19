@@ -13,12 +13,19 @@ public class apams_update_package extends apams_network_package {
 	private boolean broken;
 	private String database;
 	private String itemName;
+	public apams_update_package(String itemName,String database,boolean broken) {
+		super(itemName,packageType.UPDATEBROKEN);
+	this.itemName = itemName;
+	this.database = database;
+	this.broken = broken;
+	}
 
-	public apams_update_package(String username) {
-		super(username, packageType.QRUPDATE);
-		this.newlvl = 0;
-		this.newBuilding = null;
-		this.newRoom = null;
+	public apams_update_package(String itemName2, String database2,
+			String string,packageType type) {
+		super(itemName2,type);
+		this.itemName = itemName2;
+		this.newRoom = string;
+		this.database = database2;
 	}
 
 	public void setNewPic(byte[] newPic) {

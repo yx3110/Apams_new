@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:onClick="qrBuilding"
-            android:text="Large Text"
+            android:text="Building"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
@@ -101,16 +101,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/qrquery_confirm_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:onClick="qrConfirmUpdate"
-                android:text="Confirm Update"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
         </RelativeLayout>
     </LinearLayout>
 

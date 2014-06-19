@@ -104,7 +104,6 @@ public class MainActivity extends Activity implements
 		datalist = new ArrayList<String>();
 		lvllist = new ArrayList<String>();
 		this.curItem = new assetItem();
-		this.updatePack = new apams_update_package(mUsername);
 
 		apams_network_package pack = new apams_network_package(mUsername,
 				packageType.DATALIST);
@@ -314,25 +313,26 @@ public class MainActivity extends Activity implements
 		} else {
 			queryDatabase = this.database;
 		}
-		Spinner sortBySpinner = (Spinner) this.findViewById(R.id.inspect_spinner_sortby);
-		String sortByStr = (String)sortBySpinner.getSelectedItem();
+		Spinner sortBySpinner = (Spinner) this
+				.findViewById(R.id.inspect_spinner_sortby);
+		String sortByStr = (String) sortBySpinner.getSelectedItem();
 		assetItem.sortBy sortBy = null;
-		if(sortByStr.equals("Location")){
+		if (sortByStr.equals("Location")) {
 			sortBy = sortBy.LOCATION;
 
-		}else if(sortByStr.equals("Type")){
+		} else if (sortByStr.equals("Type")) {
 			sortBy = sortBy.TYPE;
 
-		}else if(sortByStr.equals("Manufacturer")){
+		} else if (sortByStr.equals("Manufacturer")) {
 			sortBy = sortBy.MANUFACTURER;
 
-		}else if(sortByStr.equals("Broken")){
+		} else if (sortByStr.equals("Broken")) {
 			sortBy = sortBy.BROKEN;
-		}else if(sortByStr.equals("Missing")){
+		} else if (sortByStr.equals("Missing")) {
 			sortBy = sortBy.MISSING;
 		}
 		apams_network_package pack = new apams_assetQuery_package(
-				this.mUsername, queryDatabase,sortBy);
+				this.mUsername, queryDatabase, sortBy);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
 		task.execute(pack);
 	}
@@ -391,23 +391,27 @@ public class MainActivity extends Activity implements
 		}
 		if (curItem.getPic() == null) {
 			this.popMsg("Please take a picture of the asset.");
-		}else{
-			((Button) this.findViewById(R.id.addTakePicture)).setHint(R.string.addPic);
+		} else {
+			((Button) this.findViewById(R.id.addTakePicture))
+					.setHint(R.string.addPic);
 		}
 		if (curItem.getItemType() == null) {
 			this.popMsg("Please choose a type of the asset.");
-		}else{
-			((Button) this.findViewById(R.id.addChooseType)).setHint(R.string.addType);
+		} else {
+			((Button) this.findViewById(R.id.addChooseType))
+					.setHint(R.string.addType);
 		}
 		if (curItem.getQRString() == null) {
 			this.popMsg("Please generate a QR code for the asset.");
-		}else{
-			((Button) this.findViewById(R.id.add_generateQR)).setHint(R.string.add_generateQR);
+		} else {
+			((Button) this.findViewById(R.id.add_generateQR))
+					.setHint(R.string.add_generateQR);
 		}
 		if (this.isAdmin && curItem.getDatabase() == null) {
 			this.popMsg("Please select a target database for the item.");
-		}else{
-			((Button) this.findViewById(R.id.add_chooseData)).setHint(R.string.add_chooseData);
+		} else {
+			((Button) this.findViewById(R.id.add_chooseData))
+					.setHint(R.string.add_chooseData);
 		}
 
 		apams_network_package pack = new apams_assetAdd_package(mUsername,
@@ -435,28 +439,28 @@ public class MainActivity extends Activity implements
 	public void confirmExtra(View view) {
 		int counter = 0;
 		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_1))) {
-			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_1))
-					.getText().toString());
+			curItem.addExtra(((EditText) addExtraLayout
+					.findViewById(R.id.extras_1)).getText().toString());
 			counter++;
 		}
 		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_2))) {
-			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_2))
-					.getText().toString());
+			curItem.addExtra(((EditText) addExtraLayout
+					.findViewById(R.id.extras_2)).getText().toString());
 			counter++;
 		}
 		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_3))) {
-			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_3))
-					.getText().toString());
+			curItem.addExtra(((EditText) addExtraLayout
+					.findViewById(R.id.extras_3)).getText().toString());
 			counter++;
 		}
 		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_4))) {
-			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_4))
-					.getText().toString());
+			curItem.addExtra(((EditText) addExtraLayout
+					.findViewById(R.id.extras_4)).getText().toString());
 			counter++;
 		}
 		if (!isEmpty((EditText) addExtraLayout.findViewById(R.id.extras_5))) {
-			curItem.addExtra(((EditText) addExtraLayout.findViewById(R.id.extras_5))
-					.getText().toString());
+			curItem.addExtra(((EditText) addExtraLayout
+					.findViewById(R.id.extras_5)).getText().toString());
 			counter++;
 		}
 		this.popMsg("In total " + counter + " extra informations added");
@@ -568,11 +572,8 @@ public class MainActivity extends Activity implements
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
-			this.updatePack.setNewPic(byteArray);
-			QRresultLayout.findViewById(R.id.qrquery_confirm_update)
-					.setVisibility(View.VISIBLE);
-			QRresultLayout.findViewById(R.id.qrquery_confirm_update)
-					.setEnabled(true);
+
+			// TODO:
 		}
 		if (requestCode == RESULT_QR_SCAN && resultCode == RESULT_OK) {
 			String contents = data.getStringExtra("SCAN_RESULT");
@@ -785,10 +786,9 @@ public class MainActivity extends Activity implements
 	}
 
 	// QR SCAN RESULT BUTTON FUNCTIONS
-	private apams_update_package updatePack;
 	private assetItem curQRresult;
 
-	public void reportBroken(View view) {
+	public void reportBroken(final View view) {
 		AlertDialog.Builder builder = new Builder(this);
 		builder.setTitle("Set Item Broken");
 		builder.setMessage("Is this item Broken?");
@@ -796,7 +796,13 @@ public class MainActivity extends Activity implements
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				updatePack.setBroken(true);
+				apams_network_package pack = new apams_update_package(
+						curQRresult.getItemName(), curQRresult.getDatabase(),
+						true);
+				apamsTCPclient task = new apamsTCPclient();
+				task.execute(pack);
+				((Button) view).setText("" + true);
+
 			}
 		});
 
@@ -804,14 +810,16 @@ public class MainActivity extends Activity implements
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				updatePack.setBroken(false);
+				apams_network_package pack = new apams_update_package(
+						curQRresult.getItemName(), curQRresult.getDatabase(),
+						false);
+				apamsTCPclient task = new apamsTCPclient();
+				task.execute(pack);
+				((Button) view).setText("" + false);
+
 			}
 		});
 		builder.show();
-		QRresultLayout.findViewById(R.id.qrquery_confirm_update).setVisibility(
-				View.VISIBLE);
-		QRresultLayout.findViewById(R.id.qrquery_confirm_update).setEnabled(
-				true);
 	}
 
 	public void qrImage(View view) {
@@ -830,14 +838,14 @@ public class MainActivity extends Activity implements
 		builder.setView(layout);
 		builder.setNegativeButton("OK", null);
 		String extra1 = null, extra2 = null, extra3 = null, extra4 = null, extra5 = null;
-		try{
-		extra1 = this.curQRresult.getExtras().get(0);
-		extra2 = this.curQRresult.getExtras().get(1);
-		extra3 = this.curQRresult.getExtras().get(2);
-		extra4 = this.curQRresult.getExtras().get(3);
-		extra5 = this.curQRresult.getExtras().get(4);
-		}catch(Exception e){
-			
+		try {
+			extra1 = this.curQRresult.getExtras().get(0);
+			extra2 = this.curQRresult.getExtras().get(1);
+			extra3 = this.curQRresult.getExtras().get(2);
+			extra4 = this.curQRresult.getExtras().get(3);
+			extra5 = this.curQRresult.getExtras().get(4);
+		} catch (Exception e) {
+
 		}
 		if (extra1 != null) {
 			((TextView) layout.findViewById(R.id.show_extra_1)).setText(extra1);
@@ -857,7 +865,7 @@ public class MainActivity extends Activity implements
 		builder.show();
 	}
 
-	public void qrBuilding(View view) {
+	public void qrBuilding(final View view) {
 		final EditText building = new EditText(this);
 
 		building.setHint("New Building");
@@ -870,25 +878,25 @@ public class MainActivity extends Activity implements
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (!isEmpty(building)) {
-							updatePack.setNewBuilding(building.getText()
+							apams_network_package pack = new apams_update_package(
+									curQRresult.getItemName(), curQRresult
+											.getDatabase(), building.getText()
+											.toString(),
+									packageType.UPDATEBUILDING);
+							apamsTCPclient task = new apamsTCPclient();
+							task.execute(pack);
+							((Button) view).setText(building.getText()
 									.toString());
-							QRresultLayout.findViewById(
-									R.id.qrquery_confirm_update).setVisibility(
-									View.VISIBLE);
-							QRresultLayout.findViewById(
-									R.id.qrquery_confirm_update).setEnabled(
-									true);
-
 						}
 					}
 				});
 		builder.show();
 	}
 
-	public void qrRoom(View view) {
+	public void qrRoom(final View view) {
 		final EditText room = new EditText(this);
 
-		room.setHint("New Building");
+		room.setHint("New room");
 		AlertDialog.Builder builder = new Builder(this);
 		builder.setNegativeButton("Cancel", null);
 		builder.setView(room);
@@ -898,53 +906,17 @@ public class MainActivity extends Activity implements
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						if (!isEmpty(room)) {
-							updatePack
-									.setNewBuilding(room.getText().toString());
-							QRresultLayout.findViewById(
-									R.id.qrquery_confirm_update).setVisibility(
-									View.VISIBLE);
-							QRresultLayout.findViewById(
-									R.id.qrquery_confirm_update).setEnabled(
-									true);
+							apams_network_package pack = new apams_update_package(
+									curQRresult.getItemName(), curQRresult
+											.getDatabase(), room.getText()
+											.toString(), packageType.UPDATEROOM);
+							apamsTCPclient task = new apamsTCPclient();
+							task.execute(pack);
+							((Button) view).setText(room.getText().toString());
 						}
 					}
 				});
 		builder.show();
-	}
-
-	public void qrPriority(View view) {
-		AlertDialog.Builder builder = new Builder(this);
-		final EditText priority = new EditText(this);
-		priority.setHint("New Priority Level");
-
-		builder.setNegativeButton("Cancel", null);
-		builder.setView(priority);
-		builder.setPositiveButton("Confirm",
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						if (!isEmpty(priority)) {
-							updatePack.setNewLvl(Integer.parseInt(priority
-									.getText().toString()));
-							QRresultLayout.findViewById(
-									R.id.qrquery_confirm_update).setVisibility(
-									View.VISIBLE);
-							QRresultLayout.findViewById(
-									R.id.qrquery_confirm_update).setEnabled(
-									true);
-						}
-					}
-				});
-		builder.show();
-	}
-
-	public void qrConfirmUpdate(View view) {
-		this.updatePack.setDatabase(this.curQRresult.getDatabase());
-		this.updatePack.setItemName(this.curQRresult.getItemName());
-		apams_network_package pack = this.updatePack;
-		apamsTCPclient task = new apamsTCPclient(this);
-		task.execute(pack);
 	}
 
 	@Override
@@ -996,23 +968,21 @@ public class MainActivity extends Activity implements
 			img.setImageBitmap(bitpic);
 			this.curQRresult = item;
 
-			((Button) layout.findViewById(R.id.qrquery_broken)).setText("Item broken:"+item
-					.isBroken());
-			((TextView) layout.findViewById(R.id.qrquery_missing)).setText("Item missing:"+item
-					.getMissing());
+			((Button) layout.findViewById(R.id.qrquery_broken))
+					.setText("Item broken:" + item.isBroken());
+			((TextView) layout.findViewById(R.id.qrquery_missing))
+					.setText("Item missing:" + item.getMissing());
 
-			TextView assettype = (TextView) layout.findViewById(R.id.qrquery_type);
+			TextView assettype = (TextView) layout
+					.findViewById(R.id.qrquery_type);
 			TextView database = (TextView) layout
 					.findViewById(R.id.qrquery_database);
 			Button building = (Button) layout
 					.findViewById(R.id.qrquery_building);
 			Button room = (Button) layout.findViewById(R.id.qrquery_room);
-			TextView itemlvl = (TextView) layout.findViewById(R.id.qrquery_itemlvl);
+			TextView itemlvl = (TextView) layout
+					.findViewById(R.id.qrquery_itemlvl);
 			TextView time = (TextView) layout.findViewById(R.id.qrquery_time);
-			Button confirm = (Button) layout
-					.findViewById(R.id.qrquery_confirm_update);
-			confirm.setVisibility(View.INVISIBLE);
-			confirm.setEnabled(false);
 			assettype.setText("Type:" + item.getItemType());
 			database.setText("Database:" + item.getDatabase());
 			building.setText("Located in building:" + item.getBuilding());
