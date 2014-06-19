@@ -223,6 +223,7 @@ public class BackGroundTask extends Thread {
 										.asList((String[]) rs
 												.getArray("extras").getArray())));
 								curItem.setSortBy(sortBy);
+								
 								AQList.add(curItem);
 								AQMap.put(String.valueOf(AQid), curItem);
 								AQid++;

@@ -27,7 +27,7 @@ public class assetItem implements Serializable {
 	private boolean missing;
 	private sortBy sortBy;
 
-	public enum sortBy {
+	public static enum sortBy {
 		LOCATION, TYPE, BROKEN, MISSING, MANUFACTURER;
 	}
 
@@ -175,7 +175,7 @@ public class assetItem implements Serializable {
 
 	@Override
 	public String toString() {
-		switch (this.sortBy) {
+		switch (this.getSortBy()) {
 		case TYPE:
 			return "Name: " + this.getItemName() + ",Type: "
 					+ this.getItemType() + ",Level: " + this.getItemlvl();
@@ -183,11 +183,9 @@ public class assetItem implements Serializable {
 			return "Building:" + this.getBuilding() + ", Room:"
 					+ this.getRoom() + ", Name:" + this.getItemName();
 		case BROKEN:
-			return "Name: " + this.getItemName() + ",Type: "
-					+ this.getItemType() + ",Level: " + this.getItemlvl();
+			return "Name: " + this.getItemName() + ", Is Broken: "+ this.isBroken();
 		case MISSING:
-			return "Name: " + this.getItemName() + ",Type: "
-					+ this.getItemType() + ",Level: " + this.getItemlvl();
+			return "Name: " + this.getItemName() + ", Is Missing: "+this.getMissing();
 		case MANUFACTURER:
 			return "Manufacturer:" + this.getManufacturer() + ", Model:"
 					+ this.getModel() + ", Type:" + this.getItemType()
