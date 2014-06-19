@@ -799,7 +799,23 @@ public class MainActivity extends Activity implements
 				apams_network_package pack = new apams_update_package(
 						curQRresult.getItemName(), curQRresult.getDatabase(),
 						true);
-				apamsTCPclient task = new apamsTCPclient();
+				apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted(){
+
+					@Override
+					public void onTaskCompleted(String answer) {
+						
+					}
+
+					@Override
+					public void onPackReceived(apams_network_package pack) {
+						
+					}
+
+					@Override
+					public void popMsg(String string) {
+						
+					}
+				});
 				task.execute(pack);
 				((Button) view).setText("" + true);
 
@@ -813,9 +829,25 @@ public class MainActivity extends Activity implements
 				apams_network_package pack = new apams_update_package(
 						curQRresult.getItemName(), curQRresult.getDatabase(),
 						false);
-				apamsTCPclient task = new apamsTCPclient();
+				apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted(){
+
+					@Override
+					public void onTaskCompleted(String answer) {
+						
+					}
+
+					@Override
+					public void onPackReceived(apams_network_package pack) {
+						
+					}
+
+					@Override
+					public void popMsg(String string) {
+						
+					}
+				});
 				task.execute(pack);
-				((Button) view).setText("" + false);
+				((Button) view).setText("Item is Broken:" + false);
 
 			}
 		});
@@ -883,9 +915,25 @@ public class MainActivity extends Activity implements
 											.getDatabase(), building.getText()
 											.toString(),
 									packageType.UPDATEBUILDING);
-							apamsTCPclient task = new apamsTCPclient();
+							apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted(){
+
+								@Override
+								public void onTaskCompleted(String answer) {
+									
+								}
+
+								@Override
+								public void onPackReceived(apams_network_package pack) {
+									
+								}
+
+								@Override
+								public void popMsg(String string) {
+									
+								}
+							});
 							task.execute(pack);
-							((Button) view).setText(building.getText()
+							((Button) view).setText("Located in building:" + building.getText()
 									.toString());
 						}
 					}
@@ -910,9 +958,25 @@ public class MainActivity extends Activity implements
 									curQRresult.getItemName(), curQRresult
 											.getDatabase(), room.getText()
 											.toString(), packageType.UPDATEROOM);
-							apamsTCPclient task = new apamsTCPclient();
+							apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted(){
+
+								@Override
+								public void onTaskCompleted(String answer) {
+									
+								}
+
+								@Override
+								public void onPackReceived(apams_network_package pack) {
+									
+								}
+
+								@Override
+								public void popMsg(String string) {
+									
+								}
+							});
 							task.execute(pack);
-							((Button) view).setText(room.getText().toString());
+							((Button) view).setText("Located in room: "+ room.getText().toString());
 						}
 					}
 				});
