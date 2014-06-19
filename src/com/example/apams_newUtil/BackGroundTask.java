@@ -208,7 +208,6 @@ public class BackGroundTask extends Thread {
 								curItem.setItemlvl(rs.getInt("assetlvl"));
 								curItem.setItemName(rs.getString("name"));
 								curItem.setItemType(rs.getString("type"));
-								curItem.setPic(rs.getBytes("img"));
 								curItem.setRoom(rs.getString("room"));
 								curItem.setTime(rs.getString("time"));
 								curItem.setUpdateTime(rs

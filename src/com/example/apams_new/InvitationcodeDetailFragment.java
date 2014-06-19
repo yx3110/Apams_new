@@ -71,10 +71,10 @@ public class InvitationcodeDetailFragment extends Fragment {
 	public void setView() {
 		if (mItem != null) {
 			View rootView = this.getView();
-			ImageButton imgb = (ImageButton) rootView
-					.findViewById(R.id.invite_detail_qr);
-			imgb.setImageBitmap(this.QRencode(mItem.getCode(),
-					imgb.getLayoutParams().width, imgb.getLayoutParams().height));
+			//ImageButton imgb = (ImageButton) rootView
+					//.findViewById(R.id.invite_detail_qr);
+			//imgb.setImageBitmap(this.QRencode(mItem.getCode(),
+				//	imgb.getLayoutParams().width, imgb.getLayoutParams().height));
 
 			TextView belonglvl = (TextView) rootView
 					.findViewById(R.id.invite_belongandlvl);
