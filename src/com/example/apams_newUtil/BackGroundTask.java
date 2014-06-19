@@ -231,6 +231,7 @@ public class BackGroundTask extends Thread {
 							apams_network_package resultpack = new apams_assetQuery_package(
 									username, AQList, AQMap);
 							oOutputs.writeObject(resultpack);
+							System.out.println("Return package sent");
 							oOutputs.close();
 							StrOut.close();
 							run();
