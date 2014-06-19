@@ -201,10 +201,14 @@ public class BackGroundTask extends Thread {
 							AQpst.setInt(1, prioritylvl);
 							ResultSet rs = AQpst.executeQuery();
 							while (rs.next()) {
+								
 								assetItem curItem = new assetItem();
+								curItem.setSortBy(sortBy);
+
 								curItem.setBuilding(rs.getString("building"));
 								curItem.setId(String.valueOf(AQid));
 								curItem.setDatabase(database);
+								
 								curItem.setItemlvl(rs.getInt("assetlvl"));
 								curItem.setItemName(rs.getString("name"));
 								curItem.setItemType(rs.getString("type"));
@@ -222,7 +226,6 @@ public class BackGroundTask extends Thread {
 								curItem.setExtras(new ArrayList<String>(Arrays
 										.asList((String[]) rs
 												.getArray("extras").getArray())));
-								curItem.setSortBy(sortBy);
 								
 								AQList.add(curItem);
 								AQMap.put(String.valueOf(AQid), curItem);

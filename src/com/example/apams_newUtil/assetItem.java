@@ -28,7 +28,7 @@ public class assetItem implements Serializable {
 	private sortBy sortBy;
 
 	public static enum sortBy {
-		LOCATION, TYPE, BROKEN, MISSING, MANUFACTURER;
+		LOCATION, TYPE, BROKEN, MISSING, MANUFACTURER
 	}
 
 	public assetItem() {

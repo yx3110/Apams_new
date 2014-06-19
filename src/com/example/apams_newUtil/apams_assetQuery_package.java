@@ -2,6 +2,7 @@ package com.example.apams_newUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.example.apams_newUtil.assetItem;;
 
 public class apams_assetQuery_package extends apams_network_package {
 
@@ -66,11 +67,11 @@ public class apams_assetQuery_package extends apams_network_package {
 		return this.database;
 	}
 
-	public com.example.apams_newUtil.assetItem.sortBy getSortBy() {
+	public assetItem.sortBy getSortBy() {
 		return this.sortBy;
 	}
 
-	public void setSortBy(com.example.apams_newUtil.assetItem.sortBy sortBy) {
+	public void setSortBy(assetItem.sortBy sortBy) {
 		this.sortBy = sortBy;
 	}
 
