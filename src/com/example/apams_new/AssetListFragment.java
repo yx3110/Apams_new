@@ -79,10 +79,13 @@ public class AssetListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.assetList = ((AssetListActivity) this.getActivity()).assetList;
-		
-		setListAdapter(((AssetListActivity)this.getActivity()).arrayAdapter);
-		
+		Bundle bundle = this.getActivity().getIntent().getExtras();
+		this.assetList = (ArrayList<assetItem>) bundle.getSerializable("assetList");
+
+		// TODO:
+		setListAdapter(new ArrayAdapter<assetItem>(getActivity(),
+				android.R.layout.simple_list_item_activated_1,
+				android.R.id.text1, this.assetList));
 	}
 
 	@Override
