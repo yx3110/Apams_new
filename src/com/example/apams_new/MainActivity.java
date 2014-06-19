@@ -333,8 +333,11 @@ public class MainActivity extends Activity implements
 		}
 		apams_network_package pack = new apams_assetQuery_package(
 				this.mUsername, queryDatabase,sortBy);
-		apamsTCPclient_package task = new apamsTCPclient_package(this);
-		task.execute(pack);
+		
+		Intent intent = new Intent(this,AssetListActivity.class);
+		intent.putExtra("pack", pack);
+		this.startActivity(intent);
+
 	}
 
 	public void confirmAddItem(View view) {
@@ -585,6 +588,7 @@ public class MainActivity extends Activity implements
 		if (requestCode == RESULT_TAKE_PIC && resultCode == RESULT_OK) {
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
+			imageBitmap = this.scaleDownBitmap(imageBitmap, 1, this.getBaseContext());
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
@@ -630,6 +634,17 @@ public class MainActivity extends Activity implements
 			task.execute(pack);
 		}
 	}
+	public static Bitmap scaleDownBitmap(Bitmap photo, int newHeight, Context context) {
+
+		final float densityMultiplier = context.getResources().getDisplayMetrics().density;        
+
+		int h= (int) (newHeight*densityMultiplier);
+		int w= (int) (h * photo.getWidth()/((double) photo.getHeight()));
+
+		photo=Bitmap.createScaledBitmap(photo, w, h, true);
+
+		return photo;
+		}
 
 	public void chooseItemType(View view) {
 
@@ -1023,13 +1038,7 @@ public class MainActivity extends Activity implements
 			new AlertDialog.Builder(this).setTitle(item.getItemName())
 					.setView(layout).setNegativeButton("OK", null).show();
 			break;
-		case ASSETRESULT:
-			Intent AssetIntent = new Intent(this, AssetListActivity.class);
-			apams_assetQuery_package RSpack = (apams_assetQuery_package) pack;
-			AssetIntent.putExtra("assetList", RSpack.getItemList());
-			AssetIntent.putExtra("assetMap", RSpack.getItemMap());
-			this.startActivity(AssetIntent);
-			break;
+
 
 		default:
 			break;
