@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.apams_newUtil.OnTaskCompleted;
+import com.example.apams_newUtil.apamsTCPclient_package;
+import com.example.apams_newUtil.apams_network_package;
+import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.assetItem;
 
 /**
@@ -21,7 +25,7 @@ import com.example.apams_newUtil.assetItem;
  * contained in a {@link AssetListActivity} in two-pane mode (on tablets) or a
  * {@link AssetDetailActivity} on handsets.
  */
-public class AssetDetailFragment extends Fragment {
+public class AssetDetailFragment extends Fragment implements OnTaskCompleted {
 	/**
 	 * The fragment argument representing the item ID that this fragment
 	 * represents.
@@ -32,6 +36,8 @@ public class AssetDetailFragment extends Fragment {
 	 * The dummy content this fragment is presenting.
 	 */
 	private assetItem mItem;
+
+	private View rootView;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,26 +68,24 @@ public class AssetDetailFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_asset_detail,
 				container, false);
-
+		this.rootView = rootView;
 		// Show the dummy content as text in a TextView.
 		if (mItem != null) {
-			ImageView imgview = (ImageView) rootView
-					.findViewById(R.id.asset_detail_image);
-			byte[] pic = mItem.getPic();
-			Log.e("pic", pic.toString());
-			Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0,
-					pic.length);
-			imgview.setImageBitmap(bitpic);
+			apams_network_package pack = new apams_network_package(
+					mItem.getItemName(),mItem.getDatabase(), packageType.GETPIC);
+			apamsTCPclient_package task = new apamsTCPclient_package(this);
+			task.execute(pack);
+
 			((TextView) rootView.findViewById(R.id.asset_detail_broken))
-			.setText("Item is broken: "+ mItem.isBroken());
+					.setText("Item is broken: " + mItem.isBroken());
 			((Button) rootView.findViewById(R.id.asset_detail_missing))
-			.setText("Item is missing: "+mItem.getMissing());
+					.setText("Item is missing: " + mItem.getMissing());
 			((Button) rootView.findViewById(R.id.asset_detail_extras))
-			.setText("Get extra information about item");
+					.setText("Get extra information about item");
 			((TextView) rootView.findViewById(R.id.asset_detail_name))
-					.setText("Item name: "+mItem.getItemName());
+					.setText("Item name: " + mItem.getItemName());
 			((TextView) rootView.findViewById(R.id.asset_detail_database))
-					.setText("Database:"+mItem.getDatabase());
+					.setText("Database:" + mItem.getDatabase());
 			((TextView) rootView.findViewById(R.id.asset_detail_priority))
 					.setText("Asset level:" + mItem.getItemlvl());
 			((TextView) rootView.findViewById(R.id.asset_detail_location))
@@ -96,6 +100,28 @@ public class AssetDetailFragment extends Fragment {
 		} else {
 			Log.e("mItem", "null");
 		}
+
 		return rootView;
+	}
+
+	@Override
+	public void onTaskCompleted(String answer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onPackReceived(apams_network_package pack) {
+
+		ImageView imgview = (ImageView) this.rootView
+				.findViewById(R.id.asset_detail_image);
+		byte[] pic = pack.getPic();
+		Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0, pic.length);
+		imgview.setImageBitmap(bitpic);
+	}
+
+	@Override
+	public void popMsg(String string) {
+
 	}
 }

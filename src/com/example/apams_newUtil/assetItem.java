@@ -177,8 +177,8 @@ public class assetItem implements Serializable {
 	public String toString() {
 		switch (this.getSortBy()) {
 		case TYPE:
-			return "Name: " + this.getItemName() + ",Type: "
-					+ this.getItemType() + ",Level: " + this.getItemlvl();
+			return  "Type: "
+					+ this.getItemType() + ",Name: " + this.getItemName() +",Level: " + this.getItemlvl();
 		case LOCATION:
 			return "Building:" + this.getBuilding() + ", Room:"
 					+ this.getRoom() + ", Name:" + this.getItemName();

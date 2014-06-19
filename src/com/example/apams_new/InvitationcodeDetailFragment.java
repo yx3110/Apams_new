@@ -71,10 +71,10 @@ public class InvitationcodeDetailFragment extends Fragment {
 	public void setView() {
 		if (mItem != null) {
 			View rootView = this.getView();
-			//ImageButton imgb = (ImageButton) rootView
-					//.findViewById(R.id.invite_detail_qr);
-			//imgb.setImageBitmap(this.QRencode(mItem.getCode(),
-				//	imgb.getLayoutParams().width, imgb.getLayoutParams().height));
+			ImageButton imgb = (ImageButton) rootView
+					.findViewById(R.id.invite_detail_qr);
+			imgb.setImageBitmap(this.QRencode(mItem.getCode(),
+					imgb.getLayoutParams().width, imgb.getLayoutParams().height));
 
 			TextView belonglvl = (TextView) rootView
 					.findViewById(R.id.invite_belongandlvl);
@@ -83,19 +83,19 @@ public class InvitationcodeDetailFragment extends Fragment {
 			TextView activation = (TextView) rootView
 					.findViewById(R.id.invite_activation);
 			belonglvl.setText("Database: " + mItem.getBelongto()
-					+ ";\nPriority level: " + mItem.getLevel()+";");
-			date.setText("Date of issue: " + mItem.getTime()+";");
+					+ ";\nPriority level: " + mItem.getLevel() + ";");
+			date.setText("Date of issue: " + mItem.getTime() + ";");
 			String yes = mItem.getActivated() ? "Yes" : "No";
 			String activatedBy = mItem.getActivated() ? mItem.getActivatedBy()
 					: "N/A";
 			activation.setText("Activated: " + yes + ";\nActivated by: "
-					+ activatedBy+";");
+					+ activatedBy + ";");
 		}
 	}
 
 	public Bitmap QRencode(String content, int width, int height) {
-		   int smallerDimension = width < height ? width : height;
-		   smallerDimension = smallerDimension * 3/4;
+		int smallerDimension = width < height ? width : height;
+		smallerDimension = smallerDimension * 3 / 4;
 		QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(content, null,
 				Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),
 				smallerDimension);

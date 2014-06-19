@@ -13,7 +13,7 @@ public class apams_network_package implements Serializable {
 	public enum packageType {
 		REGISTER_AD, REGISTER_N, LOGIN, QUERY, CREATE, ACC, DATALIST, PROFILE, INVITECREATE, INVITEMANAGE,
 		ADDASSET, ASSETQUERY, ASSETRESULT, QRQUERY, QRRESULT, FINDPW, FRESHCHECK, QRUPDATE,
-		REPORTMISS, REPORTBROKEN
+		REPORTMISS, REPORTBROKEN, GETPIC
 	}
 
 	private packageType type;
@@ -21,7 +21,7 @@ public class apams_network_package implements Serializable {
 	private String password;
 	private String CID;
 	private String time;
-
+	private byte[] pic;
 	public apams_network_package(String username, packageType type) {
 		this.username = username;
 		this.type = type;
@@ -69,6 +69,13 @@ public class apams_network_package implements Serializable {
 
 	public String getCID() {
 		return this.CID;
+	}
+
+	public byte[] getPic() {
+		return this.pic;
+	}
+	public void setPic(byte[] pic){
+		this.pic = pic;
 	}
 
 }

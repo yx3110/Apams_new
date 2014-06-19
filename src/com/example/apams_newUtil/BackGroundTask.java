@@ -61,7 +61,29 @@ public class BackGroundTask extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
-
+					case GETPIC:
+						System.out.println("Package type = " + pack.getType());
+						String picItemName = pack.getUsername();
+						String itemdb = pack.getPassword();
+						String getPicQuery = "SELECT img FROM "+itemdb+ " WHERE name = ?";
+						try{
+							PreparedStatement getpicpst = conn.prepareStatement(getPicQuery);
+							getpicpst.setString(1, picItemName);
+							ResultSet rs = getpicpst.executeQuery();
+							apams_network_package resultPack = new apams_network_package(picItemName,packageType.GETPIC);
+							while(rs.next()){
+								resultPack.setPic(rs.getBytes("img"));
+							}
+							oOutputs.writeObject(resultPack);
+							oOutputs.close();
+							getpicpst.close();
+							
+							
+						}catch(SQLException e){
+							
+						}
+						run();
+						break;
 					case REPORTMISS:
 						System.out.println("Package type = " + pack.getType());
 						apams_report_package rpack = (apams_report_package) pack;
