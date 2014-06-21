@@ -65,7 +65,7 @@ public class BackGroundTask extends Thread {
 						System.out.println("Package type = " + pack.getType());
 						String locPicItemName = pack.getUsername();
 						String locitemdb = pack.getPassword();
-						String getLocPicQuery = "SELECT img FROM " + locitemdb
+						String getLocPicQuery = "SELECT locmap FROM " + locitemdb
 								+ " WHERE name = ?";
 						try {
 							PreparedStatement getpicpst = conn
