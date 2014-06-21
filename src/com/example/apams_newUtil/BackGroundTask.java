@@ -691,7 +691,7 @@ public class BackGroundTask extends Thread {
 								+ databaseName
 								+ "(name text NOT NULL PRIMARY KEY,"
 								+ "building text," + "room text,"
-								+ "type text," + "img bytea,"+"locmap bytea" + "assetlvl int,"
+								+ "type text," + "img bytea,"+"locmap bytea," + "assetlvl int,"
 								+ "qrstring text UNIQUE," + "time text,"
 								+ "lastupdatetime text," + "lastupdater text,"
 								+ "manufacturer text," + "model text,"
