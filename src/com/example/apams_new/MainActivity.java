@@ -38,6 +38,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -82,6 +85,7 @@ public class MainActivity extends Activity implements
 	private String database;
 
 	private View createLayout;
+	
 	private View inviteLayout;
 	private View QRresultLayout;
 
@@ -496,6 +500,12 @@ public class MainActivity extends Activity implements
 			return false;
 	}
 
+	public void setMap(View view) {
+		Intent intent = new Intent(Intent.ACTION_PICK,
+				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		startActivityForResult(intent, RESULT_CHOOSE_MAP);
+	}
+
 	public void generateQR(View view) {
 		SecureRandom random = new SecureRandom();
 		String codeString = new BigInteger(200, random).toString(32).substring(
@@ -534,6 +544,7 @@ public class MainActivity extends Activity implements
 	private final int RESULT_TAKE_PIC = 2;
 	private final int RESULT_QR_SCAN = 3;
 	private final int RESULT_UPDATE_PIC = 4;
+	private final int RESULT_CHOOSE_MAP = 5;
 
 	public void apams_scan_barcode(View view) {
 		try {
@@ -629,6 +640,26 @@ public class MainActivity extends Activity implements
 					byteArray);
 			apamsTCPclient task = new apamsTCPclient(this);
 			task.execute(pack);
+		}
+		if (requestCode == RESULT_CHOOSE_MAP) {
+			Bundle extras = data.getExtras();
+			Bitmap imageBitmap = (Bitmap) extras.get("data");
+			View drawView = new apamsDrawView(this,imageBitmap);
+			Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Please indicate location on map");
+			builder.setView(drawView);
+			builder.setNegativeButton("Cancel", null);
+			builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			
+
 		}
 	}
 
@@ -799,21 +830,21 @@ public class MainActivity extends Activity implements
 				apams_network_package pack = new apams_update_package(
 						curQRresult.getItemName(), curQRresult.getDatabase(),
 						true);
-				apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted(){
+				apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted() {
 
 					@Override
 					public void onTaskCompleted(String answer) {
-						
+
 					}
 
 					@Override
 					public void onPackReceived(apams_network_package pack) {
-						
+
 					}
 
 					@Override
 					public void popMsg(String string) {
-						
+
 					}
 				});
 				task.execute(pack);
@@ -829,21 +860,21 @@ public class MainActivity extends Activity implements
 				apams_network_package pack = new apams_update_package(
 						curQRresult.getItemName(), curQRresult.getDatabase(),
 						false);
-				apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted(){
+				apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted() {
 
 					@Override
 					public void onTaskCompleted(String answer) {
-						
+
 					}
 
 					@Override
 					public void onPackReceived(apams_network_package pack) {
-						
+
 					}
 
 					@Override
 					public void popMsg(String string) {
-						
+
 					}
 				});
 				task.execute(pack);
@@ -915,26 +946,29 @@ public class MainActivity extends Activity implements
 											.getDatabase(), building.getText()
 											.toString(),
 									packageType.UPDATEBUILDING);
-							apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted(){
+							apamsTCPclient task = new apamsTCPclient(
+									new OnTaskCompleted() {
 
-								@Override
-								public void onTaskCompleted(String answer) {
-									
-								}
+										@Override
+										public void onTaskCompleted(
+												String answer) {
 
-								@Override
-								public void onPackReceived(apams_network_package pack) {
-									
-								}
+										}
 
-								@Override
-								public void popMsg(String string) {
-									
-								}
-							});
+										@Override
+										public void onPackReceived(
+												apams_network_package pack) {
+
+										}
+
+										@Override
+										public void popMsg(String string) {
+
+										}
+									});
 							task.execute(pack);
-							((Button) view).setText("Located in building:" + building.getText()
-									.toString());
+							((Button) view).setText("Located in building:"
+									+ building.getText().toString());
 						}
 					}
 				});
@@ -958,25 +992,29 @@ public class MainActivity extends Activity implements
 									curQRresult.getItemName(), curQRresult
 											.getDatabase(), room.getText()
 											.toString(), packageType.UPDATEROOM);
-							apamsTCPclient task = new apamsTCPclient(new OnTaskCompleted(){
+							apamsTCPclient task = new apamsTCPclient(
+									new OnTaskCompleted() {
 
-								@Override
-								public void onTaskCompleted(String answer) {
-									
-								}
+										@Override
+										public void onTaskCompleted(
+												String answer) {
 
-								@Override
-								public void onPackReceived(apams_network_package pack) {
-									
-								}
+										}
 
-								@Override
-								public void popMsg(String string) {
-									
-								}
-							});
+										@Override
+										public void onPackReceived(
+												apams_network_package pack) {
+
+										}
+
+										@Override
+										public void popMsg(String string) {
+
+										}
+									});
 							task.execute(pack);
-							((Button) view).setText("Located in room: "+ room.getText().toString());
+							((Button) view).setText("Located in room: "
+									+ room.getText().toString());
 						}
 					}
 				});
