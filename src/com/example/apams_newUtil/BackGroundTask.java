@@ -294,7 +294,6 @@ public class BackGroundTask extends Thread {
 								curItem.setExtras(new ArrayList<String>(Arrays
 										.asList((String[]) rs
 												.getArray("extras").getArray())));
-								curItem.setLocMap(rs.getBytes("locmap"));
 
 								AQList.add(curItem);
 								AQMap.put(String.valueOf(AQid), curItem);
