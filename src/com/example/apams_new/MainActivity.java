@@ -39,6 +39,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -85,13 +87,15 @@ public class MainActivity extends Activity implements
 	private String database;
 
 	private View createLayout;
-	
+
 	private View inviteLayout;
 	private View QRresultLayout;
 
 	private assetItem curItem;
 
 	private View addExtraLayout;
+
+	private Paint mPaint;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +113,16 @@ public class MainActivity extends Activity implements
 		lvllist = new ArrayList<String>();
 		this.curItem = new assetItem();
 
+		
+		mPaint = new Paint();
+	    mPaint.setAntiAlias(true);
+	    mPaint.setDither(true);
+	    mPaint.setColor(Color.GREEN);
+	    mPaint.setStyle(Paint.Style.STROKE);
+	    mPaint.setStrokeJoin(Paint.Join.ROUND);
+	    mPaint.setStrokeCap(Paint.Cap.ROUND);
+	    mPaint.setStrokeWidth(12);  
+		
 		apams_network_package pack = new apams_network_package(mUsername,
 				packageType.DATALIST);
 		apamsTCPclient_package task = new apamsTCPclient_package(this);
@@ -583,8 +597,8 @@ public class MainActivity extends Activity implements
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
+			// TODO
 
-			// TODO:
 		}
 		if (requestCode == RESULT_QR_SCAN && resultCode == RESULT_OK) {
 			String contents = data.getStringExtra("SCAN_RESULT");
@@ -642,24 +656,49 @@ public class MainActivity extends Activity implements
 			task.execute(pack);
 		}
 		if (requestCode == RESULT_CHOOSE_MAP) {
-			Bundle extras = data.getExtras();
-			Bitmap imageBitmap = (Bitmap) extras.get("data");
-			View drawView = new apamsDrawView(this,imageBitmap);
+			
+			
+			Uri selectedImage = data.getData();
+			String[] filePathColumn = { MediaStore.Images.Media.DATA };
+			Cursor cursor = getContentResolver().query(selectedImage,
+					filePathColumn, null, null, null);
+			cursor.moveToFirst();
+			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+			final String picturePath = cursor.getString(columnIndex);
+			cursor.close();
+
+			int targetW = 1000;
+			int targetH = 900;
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inJustDecodeBounds = true;
+			BitmapFactory.decodeFile(picturePath, options);
+			int photoW = options.outWidth;
+			int photoH = options.outHeight;
+			int scale = Math.min(photoW / targetW, photoH / targetH);
+
+			options.inSampleSize = scale;
+			options.inJustDecodeBounds = false;
+			options.inPurgeable = true;
+			Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
+			final View drawView = new apamsDrawView(this, bitmap,mPaint);
+
 			Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Please indicate location on map");
 			builder.setView(drawView);
 			builder.setNegativeButton("Cancel", null);
-			builder.setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+			builder.setPositiveButton("Ok",
+					new DialogInterface.OnClickListener() {
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
-			
-
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Bitmap resultMap = ((apamsDrawView) drawView).getBitmap();
+							ByteArrayOutputStream stream = new ByteArrayOutputStream();
+							resultMap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+							byte[] byteArray = stream.toByteArray();
+							curItem.setLocMap(byteArray);
+						}
+					});
+			builder.show();
 		}
 	}
 

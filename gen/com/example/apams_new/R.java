@@ -62,6 +62,7 @@ public final class R {
         public static final int asset_detail_extras=0x7f080057;
         public static final int asset_detail_image=0x7f08004f;
         public static final int asset_detail_location=0x7f080052;
+        public static final int asset_detail_map=0x7f080035;
         public static final int asset_detail_missing=0x7f080055;
         public static final int asset_detail_name=0x7f080053;
         public static final int asset_detail_printQR=0x7f080059;
@@ -69,7 +70,6 @@ public final class R {
         public static final int asset_detail_update=0x7f080058;
         public static final int asset_detial_type=0x7f080054;
         public static final int asset_list=0x7f080018;
-        public static final int button1=0x7f080035;
         public static final int button_register_confirm=0x7f080047;
         public static final int checkBox_owner=0x7f08004c;
         public static final int container=0x7f080016;

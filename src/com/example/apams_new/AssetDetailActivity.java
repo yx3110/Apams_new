@@ -6,6 +6,7 @@ import com.example.apams_newUtil.Contents;
 import com.example.apams_newUtil.OnTaskCompleted;
 import com.example.apams_newUtil.QRCodeEncoder;
 import com.example.apams_newUtil.apamsTCPclient;
+import com.example.apams_newUtil.apamsTCPclient_package;
 import com.example.apams_newUtil.apams_network_package;
 import com.example.apams_newUtil.apams_network_package.packageType;
 import com.example.apams_newUtil.apams_report_package;
@@ -20,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
@@ -151,7 +153,15 @@ public class AssetDetailActivity extends FragmentActivity implements
 
 	@Override
 	public void onPackReceived(apams_network_package pack) {
-
+		Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Location map");
+		ImageView imgview = new ImageView(this);
+		byte[] pic = pack.getPic();
+		Bitmap bitpic = new BitmapFactory().decodeByteArray(pic, 0, pic.length);
+		imgview.setImageBitmap(bitpic);
+		builder.setView(imgview);
+		builder.setNegativeButton("OK", null);
+		builder.show();
 	}
 
 	@Override
@@ -161,6 +171,14 @@ public class AssetDetailActivity extends FragmentActivity implements
 		int duration = Toast.LENGTH_SHORT;
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
+	}
+	
+	public void showLocMap(View view){
+		
+		apams_network_package pack = new apams_network_package(
+				mItem.getItemName(),mItem.getDatabase(), packageType.GETLOCPIC);
+		apamsTCPclient_package task = new apamsTCPclient_package(this);
+		task.execute(pack);
 	}
 
 	protected void printDialog(final Bitmap bitmap) {

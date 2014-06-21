@@ -3,6 +3,8 @@ package com.example.apams_newUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import android.graphics.Bitmap;
+
 public class assetItem implements Serializable {
 	/**
 	 * 
@@ -26,6 +28,7 @@ public class assetItem implements Serializable {
 	private boolean broken;
 	private boolean missing;
 	private sortBy sortBy;
+	private byte[] locMap;
 
 	public static enum sortBy {
 		LOCATION, TYPE, BROKEN, MISSING, MANUFACTURER
@@ -33,6 +36,9 @@ public class assetItem implements Serializable {
 
 	public assetItem() {
 		this.extras = new ArrayList<String>();
+	}
+	public byte[] getLocMap(){
+		return this.locMap;
 	}
 
 	public void setBroken(boolean broken) {
@@ -203,5 +209,10 @@ public class assetItem implements Serializable {
 
 	public boolean getMissing() {
 		return this.missing;
+	}
+
+
+	public void setLocMap(byte[] byteArray) {
+		this.locMap = byteArray;
 	}
 }

@@ -61,6 +61,32 @@ public class BackGroundTask extends Thread {
 					PreparedStatement insertpst;
 
 					switch (pack.getType()) {
+					case GETLOCPIC:
+						System.out.println("Package type = " + pack.getType());
+						String locPicItemName = pack.getUsername();
+						String locitemdb = pack.getPassword();
+						String getLocPicQuery = "SELECT img FROM " + locitemdb
+								+ " WHERE name = ?";
+						try {
+							PreparedStatement getpicpst = conn
+									.prepareStatement(getLocPicQuery);
+							getpicpst.setString(1, locPicItemName);
+							ResultSet rs = getpicpst.executeQuery();
+							apams_network_package resultPack = new apams_network_package(
+									locPicItemName, packageType.GETLOCPIC);
+							while (rs.next()) {
+								resultPack.setPic(rs.getBytes("locmap"));
+							}
+							oOutputs.writeObject(resultPack);
+							oOutputs.close();
+							getpicpst.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						run();
+						
+
+						break;
 					case UPDATEBUILDING:
 						System.out.println("Package type = " + pack.getType());
 
@@ -268,6 +294,7 @@ public class BackGroundTask extends Thread {
 								curItem.setExtras(new ArrayList<String>(Arrays
 										.asList((String[]) rs
 												.getArray("extras").getArray())));
+								curItem.setLocMap(rs.getBytes("locmap"));
 
 								AQList.add(curItem);
 								AQMap.put(String.valueOf(AQid), curItem);
@@ -431,12 +458,12 @@ public class BackGroundTask extends Thread {
 							stringExtras = extrasAL.toArray(stringExtras);
 							String addQuery = "INSERT INTO " + dataBase
 									+ "(name," + "building," + "room,"
-									+ "type," + "img," + "assetlvl,"
+									+ "type," + "img," +"locmap,"+ "assetlvl,"
 									+ "qrstring," + "time," + "lastupdatetime,"
 									+ "lastupdater," + "manufacturer,"
 									+ "model," + "broken," + "extras,"
 									+ "missing)"
-									+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+									+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 							try {
 								Array curArray = conn.createArrayOf("text",
 										stringExtras);
@@ -447,16 +474,17 @@ public class BackGroundTask extends Thread {
 								addpst.setString(3, curItem.getRoom());
 								addpst.setString(4, curItem.getItemType());
 								addpst.setBytes(5, curItem.getPic());
-								addpst.setInt(6, curItem.getItemlvl());
-								addpst.setString(7, curItem.getQRString());
-								addpst.setString(8, pack.getTime());
+								addpst.setBytes(6, curItem.getLocMap());
+								addpst.setInt(7, curItem.getItemlvl());
+								addpst.setString(8, curItem.getQRString());
 								addpst.setString(9, pack.getTime());
-								addpst.setString(10, username);
-								addpst.setString(11, curItem.getManufacturer());
-								addpst.setString(12, curItem.getModel());
-								addpst.setBoolean(13, false);
-								addpst.setArray(14, curArray);
-								addpst.setBoolean(15, false);
+								addpst.setString(10, pack.getTime());
+								addpst.setString(11, username);
+								addpst.setString(12, curItem.getManufacturer());
+								addpst.setString(13, curItem.getModel());
+								addpst.setBoolean(14, false);
+								addpst.setArray(15, curArray);
+								addpst.setBoolean(16, false);
 								int result = addpst.executeUpdate();
 
 								if (result != 0) {
@@ -662,7 +690,7 @@ public class BackGroundTask extends Thread {
 								+ databaseName
 								+ "(name text NOT NULL PRIMARY KEY,"
 								+ "building text," + "room text,"
-								+ "type text," + "img bytea," + "assetlvl int,"
+								+ "type text," + "img bytea,"+"locmap bytea" + "assetlvl int,"
 								+ "qrstring text UNIQUE," + "time text,"
 								+ "lastupdatetime text," + "lastupdater text,"
 								+ "manufacturer text," + "model text,"

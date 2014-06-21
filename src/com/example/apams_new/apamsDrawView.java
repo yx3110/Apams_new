@@ -22,9 +22,10 @@ public class apamsDrawView extends View {
 	private Paint circlePaint;
 	private Path circlePath;
 
-	public apamsDrawView(Context c,Bitmap bitmap) {
+	public apamsDrawView(Context c, Bitmap bitmap,Paint mPaint) {
 		super(c);
 		context = c;
+		this.mPaint = mPaint;
 		mPath = new Path();
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 		mBitmap = bitmap;
@@ -35,7 +36,18 @@ public class apamsDrawView extends View {
 		circlePaint.setStyle(Paint.Style.STROKE);
 		circlePaint.setStrokeJoin(Paint.Join.MITER);
 		circlePaint.setStrokeWidth(4f);
+		
 
+	}
+
+	public Bitmap getBitmap() {
+
+		this.setDrawingCacheEnabled(true);
+		this.buildDrawingCache();
+		Bitmap bmp = Bitmap.createBitmap(this.getDrawingCache());
+		this.setDrawingCacheEnabled(false);
+
+		return bmp;
 	}
 
 	@Override
@@ -72,14 +84,14 @@ public class apamsDrawView extends View {
 		}
 	}
 
-	private void touch_up() {
+/*	private void touch_up() {
 		mPath.lineTo(mX, mY);
 		circlePath.reset();
 		// commit the path to our offscreen
 		mCanvas.drawPath(mPath, mPaint);
 		// kill this so we don't double draw
 		mPath.reset();
-	}
+	}*/
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -95,10 +107,10 @@ public class apamsDrawView extends View {
 			touch_move(x, y);
 			invalidate();
 			break;
-		case MotionEvent.ACTION_UP:
+	/*	case MotionEvent.ACTION_UP:
 			touch_up();
 			invalidate();
-			break;
+			break;*/
 		}
 		return true;
 	}

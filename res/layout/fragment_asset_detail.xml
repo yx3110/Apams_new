@@ -77,6 +77,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <Button
+            android:id="@+id/asset_detail_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Item location on map"
+            android:onClick="showLocMap" />
+
+        <Button
             android:id="@+id/asset_detail_extras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
