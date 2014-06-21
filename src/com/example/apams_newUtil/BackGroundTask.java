@@ -475,6 +475,7 @@ public class BackGroundTask extends Thread {
 								addpst.setString(4, curItem.getItemType());
 								addpst.setBytes(5, curItem.getPic());
 								addpst.setBytes(6, curItem.getLocMap());
+								System.out.println("locmap saved");
 								addpst.setInt(7, curItem.getItemlvl());
 								addpst.setString(8, curItem.getQRString());
 								addpst.setString(9, pack.getTime());
