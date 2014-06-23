@@ -22,13 +22,12 @@ public class apamsDrawView extends View {
 	private Paint circlePaint;
 	private Path circlePath;
 
-	public apamsDrawView(Context c, Bitmap bitmap,Paint mPaint) {
+	public apamsDrawView(Context c,Paint mPaint) {
 		super(c);
 		context = c;
 		this.mPaint = mPaint;
 		mPath = new Path();
 		mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-		mBitmap = bitmap;
 		circlePaint = new Paint();
 		circlePath = new Path();
 		circlePaint.setAntiAlias(true);
@@ -40,6 +39,9 @@ public class apamsDrawView extends View {
 
 	}
 
+	public void setBitmap(Bitmap bitmap){
+		this.mBitmap = bitmap;
+	}
 	public Bitmap getBitmap() {
 
 		this.setDrawingCacheEnabled(true);

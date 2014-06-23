@@ -597,7 +597,6 @@ public class MainActivity extends Activity implements
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
-			// TODO
 
 		}
 		if (requestCode == RESULT_QR_SCAN && resultCode == RESULT_OK) {
@@ -667,8 +666,8 @@ public class MainActivity extends Activity implements
 			final String picturePath = cursor.getString(columnIndex);
 			cursor.close();
 
-			int targetW = 1000;
-			int targetH = 900;
+			int targetW =600;
+			int targetH =600;
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inJustDecodeBounds = true;
 			BitmapFactory.decodeFile(picturePath, options);
@@ -680,8 +679,11 @@ public class MainActivity extends Activity implements
 			options.inJustDecodeBounds = false;
 			options.inPurgeable = true;
 			Bitmap bitmap = BitmapFactory.decodeFile(picturePath, options);
-			final View drawView = new apamsDrawView(this, bitmap,mPaint);
+			final View drawView = new apamsDrawView(this,mPaint);
 
+			((apamsDrawView) drawView).setBitmap(bitmap);
+
+			
 			Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Please indicate location on map");
 			builder.setView(drawView);
